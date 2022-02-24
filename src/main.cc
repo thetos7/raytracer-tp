@@ -1,5 +1,7 @@
 
 
-void main(char** args) {
-
+int main(int argc, char *argv[])
+{
+    
+    return 0;
 }
