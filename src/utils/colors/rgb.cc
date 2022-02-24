@@ -5,7 +5,7 @@
 
 namespace colors
 {
-    RGB::RGB(int r, int g, int b)
+    RGB::RGB(unsigned int r, unsigned int g, unsigned int b)
         : r{ r }
         , g{ g }
         , b{ b }
