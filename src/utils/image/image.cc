@@ -36,17 +36,13 @@ namespace image
         outfile.open(filename, ios::out | ios::trunc);
         if (outfile.is_open())
         {
-            outfile << "P6 " << width_ << " " << height_ << " 255\n";
-            for (size_t y = 0; y < height_; ++y)
+            outfile << "P6\n" << width_ << " " << height_ << "\n255\n";
+            for (auto it = pixels_.begin(); it != pixels_.end(); it++)
             {
-                for (size_t x = 0; x < width_; ++x)
-                {
-                    colors::RGB pixel = pixel_get(x, y);
-                    outfile << static_cast<char>(pixel.r)
-                            << static_cast<char>(pixel.g)
-                            << static_cast<char>(pixel.b);
-                }
-                outfile << '\n';
+                colors::RGB pixel = *it;
+                outfile << static_cast<char>(pixel.r)
+                        << static_cast<char>(pixel.g)
+                        << static_cast<char>(pixel.b);
             }
             outfile.close();
         }
