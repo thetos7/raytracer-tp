@@ -9,8 +9,9 @@ namespace colors
         unsigned int r;
         unsigned int g;
         unsigned int b;
+        RGB();
         RGB(unsigned int r, unsigned int g, unsigned int b);
     };
 
-    std::ostream &operator<<(const std::ostream &out, RGB &color);
+    std::ostream &operator<<(std::ostream &out, const RGB &color);
 } // namespace colors

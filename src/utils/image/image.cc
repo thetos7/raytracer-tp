@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+#include "utils/colors/rgb.hh"
+
 namespace image
 {
     Image::Image(int width, int height)

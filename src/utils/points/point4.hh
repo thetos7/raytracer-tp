@@ -1,7 +1,7 @@
 #pragma once
 #include <ostream>
 
-#include "vectors/vector4.hh"
+#include "utils/vectors/vector4.hh"
 
 namespace points
 {
@@ -22,5 +22,5 @@ namespace points
         Point4 operator-(const vectors::Vector4 &vect);
     };
 
-    std::ostream &operator<<(const std::ostream &out, Point4 &point);
+    std::ostream &operator<<(std::ostream &out, Point4 &point);
 } // namespace points

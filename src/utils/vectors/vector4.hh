@@ -23,5 +23,5 @@ namespace vectors
         Vector4 operator*(const double &scalar);
 
     };
-    std::ostream& operator<<(const std::ostream& out, Vector4 &vect);
+    std::ostream& operator<<(std::ostream& out, Vector4 &vect);
 } // namespace vectors

@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 
-#include "vectors/vector3.hh"
+#include "utils/vectors/vector3.hh"
 
 namespace points
 {
@@ -28,7 +28,7 @@ namespace points
         return Point3{ this->x - vect.x, this->y - vect.y, this->z - vect.z };
     }
 
-    std::ostream &operator<<(const std::ostream &out, Point3 &point)
+    std::ostream &operator<<(std::ostream &out, Point3 &point)
     {
         return out << "Point3{" << point.x << ", " << point.y << ", " << point.z
                    << "}";

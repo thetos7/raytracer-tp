@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "colors/rgb.hh"
+#include "utils/colors/rgb.hh"
 
 namespace image
 {

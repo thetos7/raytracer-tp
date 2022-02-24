@@ -43,7 +43,7 @@ namespace vectors
                         this->z - other.z };
     }
 
-    std::ostream &operator<<(const std::ostream &out, Vector3 &vect)
+    std::ostream &operator<<(std::ostream &out, Vector3 &vect)
     {
         return out << "Vector3{" << vect.x << ", " << vect.y << ", " << vect.z
                    << "}";

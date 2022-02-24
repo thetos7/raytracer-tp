@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 
-#include "vectors/vector4.hh"
+#include "utils/vectors/vector4.hh"
 
 namespace points
 {
@@ -31,7 +31,7 @@ namespace points
                        this->w - vect.w };
     }
 
-    std::ostream &operator<<(const std::ostream &out, Point4 &point)
+    std::ostream &operator<<(std::ostream &out, Point4 &point)
     {
         return out << "Point4{" << point.x << ", " << point.y << ", " << point.z
                    << ", " << point.w << "}";

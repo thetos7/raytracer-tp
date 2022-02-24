@@ -46,7 +46,7 @@ namespace vectors
                         this->w - other.w };
     }
 
-    std::ostream &operator<<(const std::ostream &out, Vector4 &vect)
+    std::ostream &operator<<(std::ostream &out, Vector4 &vect)
     {
         return out << "Vector4{" << vect.x << ", " << vect.y << ", " << vect.z
                    << ", " << vect.w << "}";
