@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 
-#include "utils/vectors/vector3.hh"
+#include "vectors/vector3.hh"
 
 namespace points
 {

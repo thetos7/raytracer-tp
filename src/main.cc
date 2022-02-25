@@ -2,8 +2,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "utils/colors/rgb.hh"
-#include "utils/image/image.hh"
+#include "colors/rgb.hh"
+#include "image/image.hh"
 
 int main(int argc, char *argv[])
 {

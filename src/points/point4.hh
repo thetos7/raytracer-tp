@@ -1,7 +1,7 @@
 #pragma once
 #include <ostream>
 
-#include "utils/vectors/vector4.hh"
+#include "vectors/vector4.hh"
 
 namespace points
 {
