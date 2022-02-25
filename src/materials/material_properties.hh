@@ -1,3 +1,5 @@
+#pragma once
+
 #include "vectors/vector3.hh"
 
 namespace raytracer::materials
