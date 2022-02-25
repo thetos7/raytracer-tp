@@ -1,4 +1,5 @@
 #pragma once
+
 #include <ostream>
 
 namespace vectors
@@ -6,7 +7,7 @@ namespace vectors
     class Vector4
     {
     public:
-    double w;
+        double w;
         double x;
         double y;
         double z;
@@ -21,7 +22,6 @@ namespace vectors
         Vector4 operator+(const Vector4 &other);
         Vector4 operator-(const Vector4 &other);
         Vector4 operator*(const double &scalar);
-
     };
-    std::ostream& operator<<(std::ostream& out, Vector4 &vect);
+    std::ostream &operator<<(std::ostream &out, Vector4 &vect);
 } // namespace vectors

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <ostream>
 
 #include "vectors/vector3.hh"
