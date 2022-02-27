@@ -12,7 +12,7 @@ namespace raytracer
     {
     public:
     private:
-        std::vector<Light> lights_;
+        std::vector<lights::Light> lights_;
         std::vector<Object> objects_;
         Camera camera_;
     };

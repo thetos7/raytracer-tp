@@ -1,13 +1,12 @@
 #pragma once
 
-namespace raytracer {
+namespace raytracer::lights
+{
 
     class Light
     {
     public:
-        
     private:
-    
     };
-    
-} // namespace raytracer
+
+} // namespace raytracer::lights
