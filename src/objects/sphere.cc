@@ -13,13 +13,13 @@ namespace raytracer
         , radius_{ radius }
     {}
 
-    virtual double Sphere::intersects_ray(const Ray &ray)
+    double Sphere::intersects_ray(const Ray &ray)
     {
         return -1; // TODO
     }
 
-    virtual vectors::Vector3 Sphere::get_normal(double u, double v)
+    vectors::Vector3 Sphere::get_normal(double u, double v)
     {
-        return vectors::Vector3::null(); // TODO
+        return vectors::Vector3::zero(); // TODO
     }
 } // namespace raytracer
