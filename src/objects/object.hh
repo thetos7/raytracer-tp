@@ -14,7 +14,7 @@ namespace raytracer
     class Object
     {
     public:
-        using MaterialPtr = std::shared_ptr<materials::Texture_Material>;
+        using MaterialPtr = std::shared_ptr<materials::TextureMaterial>;
         Object(MaterialPtr material_);
 
         virtual std::optional<Intersection> intersects_ray(const Ray &ray) = 0;
