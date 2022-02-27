@@ -10,12 +10,12 @@ namespace raytracer
         , direction_{ direction }
     {}
 
-    const points::Point3 &Ray::origin_get()
+    const points::Point3 &Ray::origin_get() const
     {
         return origin_;
     }
 
-    const vectors::Vector3 &Ray::direction_get()
+    const vectors::Vector3 &Ray::direction_get() const
     {
         return direction_;
     }

@@ -10,8 +10,8 @@ namespace raytracer
     public:
         Ray(points::Point3 &origin, vectors::Vector3 &direction);
 
-        const points::Point3 &origin_get();
-        const vectors::Vector3 &direction_get();
+        const points::Point3 &origin_get() const;
+        const vectors::Vector3 &direction_get() const;
     private:
         points::Point3 &origin_;
         vectors::Vector3 &direction_;
