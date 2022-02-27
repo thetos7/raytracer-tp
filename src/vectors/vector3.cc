@@ -16,6 +16,16 @@ namespace vectors
         return Vector3{ 0, 0, 0 };
     }
 
+    Vector3 Vector3::up()
+    {
+        return Vector3{ 0, 0, 1 };
+    }
+
+    Vector3 Vector3::all(double value)
+    {
+        return Vector3{ value, value, value };
+    }
+
     Vector3::Vector3(double x, double y, double z)
         : x{ x }
         , y{ y }

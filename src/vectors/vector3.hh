@@ -13,6 +13,8 @@ namespace vectors
 
         static Vector3 unit();
         static Vector3 zero();
+        static Vector3 up();
+        static Vector3 all(double value);
 
         Vector3(double x, double y, double z);
 
