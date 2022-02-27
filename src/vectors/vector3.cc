@@ -45,33 +45,33 @@ namespace vectors
         return this->x * other.x + this->y * other.y + this->z * other.z;
     }
 
-    Vector3 Vector3::operator*(const double &scalar)
+    Vector3 Vector3::operator*(const double &scalar) const
     {
         return Vector3{ this->x * scalar, this->y * scalar, this->z * scalar };
     }
 
-    Vector3 Vector3::operator/(const double &scalar)
+    Vector3 Vector3::operator/(const double &scalar) const
     {
         return Vector3{ x / scalar, y / scalar, z / scalar };
     }
 
-    Vector3 Vector3::operator*(const Vector3 &other)
+    Vector3 Vector3::operator*(const Vector3 &other) const
     {
         return Vector3{ x * other.x, y * other.y, z * other.z };
     }
 
-    Vector3 Vector3::operator/(const Vector3 &other)
+    Vector3 Vector3::operator/(const Vector3 &other) const
     {
         return Vector3{ x / other.x, y / other.y, z / other.z };
     }
 
-    Vector3 Vector3::operator+(const Vector3 &other)
+    Vector3 Vector3::operator+(const Vector3 &other) const
     {
         return Vector3{ this->x + other.x, this->y + other.y,
                         this->z + other.z };
     }
 
-    Vector3 Vector3::operator-(const Vector3 &other)
+    Vector3 Vector3::operator-(const Vector3 &other) const
     {
         return Vector3{ this->x - other.x, this->y - other.y,
                         this->z - other.z };

@@ -20,12 +20,12 @@ namespace vectors
         double norm();
         Vector3 normalized();
 
-        Vector3 operator+(const Vector3 &other);
-        Vector3 operator-(const Vector3 &other);
-        Vector3 operator*(const double &scalar);
-        Vector3 operator/(const double &scalar);
-        Vector3 operator*(const Vector3 &other);
-        Vector3 operator/(const Vector3 &other);
+        Vector3 operator+(const Vector3 &other) const;
+        Vector3 operator-(const Vector3 &other) const;
+        Vector3 operator*(const double &scalar) const;
+        Vector3 operator/(const double &scalar) const;
+        Vector3 operator*(const Vector3 &other) const;
+        Vector3 operator/(const Vector3 &other) const;
     };
     std::ostream &operator<<(std::ostream &out, Vector3 &vect);
 } // namespace vectors
