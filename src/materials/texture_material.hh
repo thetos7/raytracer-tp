@@ -5,7 +5,7 @@
 
 namespace raytracer::materials
 {
-    class Texture_Material
+    class TextureMaterial
     {
     public:
         virtual const MaterialProperties
