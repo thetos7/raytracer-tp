@@ -19,11 +19,12 @@ namespace points
         , z{ z }
     {}
 
-    Point3 Point3::operator+(const vectors::Vector3 &vect)
+    Point3 Point3::operator+(const vectors::Vector3 &vect) const
     {
         return Point3{ this->x + vect.x, this->y + vect.y, this->z + vect.z };
     }
-    Point3 Point3::operator-(const vectors::Vector3 &vect)
+
+    Point3 Point3::operator-(const vectors::Vector3 &vect) const
     {
         return Point3{ this->x - vect.x, this->y - vect.y, this->z - vect.z };
     }
