@@ -1,5 +1,7 @@
 #include "uniform_material.hh"
 
+#include "intersection/intersection.hh"
+
 namespace raytracer::materials
 {
     UniformTexture::UniformTexture(vectors::Vector3 &diffuse,

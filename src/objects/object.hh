@@ -11,6 +11,12 @@
 
 namespace raytracer
 {
+    class Intersection;
+    namespace materials
+    {
+        class TextureMaterial;
+    } // namespace materials
+
     class Object
     {
     public:

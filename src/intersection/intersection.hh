@@ -8,6 +8,8 @@
 
 namespace raytracer
 {
+    class Object;
+
     class Intersection
     {
     public:
