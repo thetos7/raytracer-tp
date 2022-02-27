@@ -50,6 +50,12 @@ namespace vectors
         return this->x * other.x + this->y * other.y + this->z * other.z;
     }
 
+    Vector3 Vector3::cross(const Vector3 &other) const
+    {
+        return Vector3{ y * other.z - z * other.y, z * other.x - x * other.y,
+                        x * other.y - y * other.x };
+    }
+
     Vector3 Vector3::operator*(const double &scalar) const
     {
         return Vector3{ this->x * scalar, this->y * scalar, this->z * scalar };

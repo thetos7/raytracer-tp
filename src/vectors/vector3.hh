@@ -17,6 +17,7 @@ namespace vectors
         Vector3(double x, double y, double z);
 
         double dot(const Vector3 &other) const;
+        Vector3 cross(const Vector3 &other) const;
         double norm() const;
         double square_norm() const;
         Vector3 normalized() const;
