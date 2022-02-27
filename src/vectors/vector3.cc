@@ -22,12 +22,17 @@ namespace vectors
         , z{ z }
     {}
 
-    double Vector3::norm()
+    double Vector3::square_norm() const
     {
-        return sqrt(x * x + y * y + z * z);
+        return this->dot(*this);
     }
 
-    Vector3 Vector3::normalized()
+    double Vector3::norm() const
+    {
+        return sqrt(square_norm());
+    }
+
+    Vector3 Vector3::normalized() const
     {
         auto norm_ = norm();
         if (norm_ != 0.)
@@ -40,7 +45,7 @@ namespace vectors
         }
     }
 
-    double Vector3::dot(const Vector3 &other)
+    double Vector3::dot(const Vector3 &other) const
     {
         return this->x * other.x + this->y * other.y + this->z * other.z;
     }
@@ -77,7 +82,12 @@ namespace vectors
                         this->z - other.z };
     }
 
-    std::ostream &operator<<(std::ostream &out, Vector3 &vect)
+    Vector3 operator*(const double &scalar, const Vector3 vect)
+    {
+        return vect * scalar;
+    }
+
+    std::ostream &operator<<(std::ostream &out, const Vector3 &vect)
     {
         return out << "Vector3{" << vect.x << ", " << vect.y << ", " << vect.z
                    << "}";

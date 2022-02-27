@@ -16,9 +16,10 @@ namespace vectors
 
         Vector3(double x, double y, double z);
 
-        double dot(const Vector3 &other);
-        double norm();
-        Vector3 normalized();
+        double dot(const Vector3 &other) const;
+        double norm() const;
+        double square_norm() const;
+        Vector3 normalized() const;
 
         Vector3 operator+(const Vector3 &other) const;
         Vector3 operator-(const Vector3 &other) const;
@@ -27,5 +28,8 @@ namespace vectors
         Vector3 operator*(const Vector3 &other) const;
         Vector3 operator/(const Vector3 &other) const;
     };
-    std::ostream &operator<<(std::ostream &out, Vector3 &vect);
+
+    Vector3 operator*(const double &scalar, const Vector3 vect);
+
+    std::ostream &operator<<(std::ostream &out, const Vector3 &vect);
 } // namespace vectors
