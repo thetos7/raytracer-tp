@@ -34,9 +34,9 @@ namespace points
         return vectors::Vector3{ x - other.x, y - other.y, z - other.z };
     }
 
-    std::ostream &operator<<(std::ostream &out, Point3 &point)
+    std::ostream &operator<<(std::ostream &out, const Point3 &point)
     {
-        return out << "Point3{" << point.x << ", " << point.y << ", " << point.z
-                   << "}";
+        return out << "Point3(" << point.x << ", " << point.y << ", " << point.z
+                   << ")";
     }
 } // namespace points

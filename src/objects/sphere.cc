@@ -52,4 +52,10 @@ namespace raytracer
             + intersection.t * intersection.ray.direction_get();
         return (intersectionPoint - center_).normalized();
     }
+
+    std::ostream &Sphere::print(std::ostream &out) const
+    {
+        return out << "Sphere{ center: " << center_ << ", radius: " << radius_
+                   << " }";
+    }
 } // namespace raytracer

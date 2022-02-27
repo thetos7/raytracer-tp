@@ -18,6 +18,7 @@ namespace raytracer
         virtual vectors::Vector3 get_normal(Intersection intersection) override;
 
     private:
+        virtual std::ostream &print(std::ostream &out) const override;
         points::Point3 center_;
         double radius_;
     };

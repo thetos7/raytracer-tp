@@ -105,8 +105,8 @@ namespace vectors
 
     std::ostream &operator<<(std::ostream &out, const Vector3 &vect)
     {
-        return out << "Vector3{" << vect.x << ", " << vect.y << ", " << vect.z
-                   << "}";
+        return out << "Vector3(" << vect.x << ", " << vect.y << ", " << vect.z
+                   << ")";
     }
 
 } // namespace vectors

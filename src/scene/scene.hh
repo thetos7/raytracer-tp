@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+#include <ostream>
 #include <vector>
 
 #include "camera/camera.hh"
@@ -11,22 +13,26 @@ namespace raytracer
     class Scene
     {
     public:
+        using LightCollection = std::vector<std::shared_ptr<lights::Light>>;
+        using ObjectCollection = std::vector<std::shared_ptr<Object>>;
         Scene(const Camera &camera);
-        Scene(const Camera &camera, std::vector<Object> objects,
-              const std::vector<lights::Light> lights);
+        Scene(const Camera &camera, ObjectCollection objects,
+              const LightCollection lights);
 
         Camera &camera();
         const Camera &camera() const;
 
-        std::vector<lights::Light> &lights();
-        const std::vector<lights::Light> &lights() const;
+        LightCollection &lights();
+        const LightCollection &lights() const;
 
-        std::vector<Object> &objects();
-        const std::vector<Object> &objects() const;
+        ObjectCollection &objects();
+        const ObjectCollection &objects() const;
 
     private:
-        std::vector<lights::Light> lights_;
-        std::vector<Object> objects_;
+        LightCollection lights_;
+        ObjectCollection objects_;
         Camera camera_;
     };
+
+    std::ostream &operator<<(std::ostream &out, const Scene &scene);
 } // namespace raytracer

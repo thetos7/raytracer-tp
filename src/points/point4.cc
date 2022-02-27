@@ -33,7 +33,7 @@ namespace points
 
     std::ostream &operator<<(std::ostream &out, Point4 &point)
     {
-        return out << "Point4{" << point.x << ", " << point.y << ", " << point.z
-                   << ", " << point.w << "}";
+        return out << "Point4(" << point.x << ", " << point.y << ", " << point.z
+                   << ", " << point.w << ")";
     }
 } // namespace points

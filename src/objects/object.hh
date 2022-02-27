@@ -29,6 +29,12 @@ namespace raytracer
         get_texture(Intersection intersection);
 
     private:
+        virtual std::ostream &print(std::ostream &out) const = 0;
+
         MaterialPtr material_;
+
+        friend std::ostream &operator<<(std::ostream&out, const Object &obj);
     };
+
+    std::ostream &operator<<(std::ostream&out, const Object &obj);
 } // namespace raytracer

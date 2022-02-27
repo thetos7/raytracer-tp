@@ -13,5 +13,8 @@ namespace raytracer::lights
 
         const points::Point3 position;
         const vectors::Vector3 intensity;
+
+    private:
+        virtual std::ostream &print(std::ostream &out) const override;
     };
 } // namespace raytracer::lights

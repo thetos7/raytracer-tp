@@ -6,4 +6,10 @@ namespace raytracer::lights
         : position{ position }
         , intensity{ intensity }
     {}
+
+    std::ostream &PointLight::print(std::ostream &out) const
+    {
+        return out << "PointLight{ position: " << position
+                   << ", intensity: " << intensity << " }";
+    }
 } // namespace raytracer::lights

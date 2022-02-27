@@ -23,5 +23,5 @@ namespace points
         vectors::Vector3 operator-(const Point3 &other) const;
     };
 
-    std::ostream &operator<<(std::ostream &out, Point3 &point);
+    std::ostream &operator<<(std::ostream &out, const Point3 &point);
 } // namespace points

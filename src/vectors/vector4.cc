@@ -53,8 +53,8 @@ namespace vectors
 
     std::ostream &operator<<(std::ostream &out, Vector4 &vect)
     {
-        return out << "Vector4{" << vect.x << ", " << vect.y << ", " << vect.z
-                   << ", " << vect.w << "}";
+        return out << "Vector4(" << vect.x << ", " << vect.y << ", " << vect.z
+                   << ", " << vect.w << ")";
     }
 
 } // namespace vectors
