@@ -8,7 +8,9 @@ namespace raytracer
     class Ray
     {
     public:
-        Ray(points::Point3 &origin, const vectors::Vector3 &direction);
+        Ray(const points::Point3 &origin, const vectors::Vector3 &direction);
+
+        static Ray AtoB(const points::Point3 &origin, const points::Point3 &target);
 
         const points::Point3 &origin_get() const;
         const vectors::Vector3 &direction_get() const;
