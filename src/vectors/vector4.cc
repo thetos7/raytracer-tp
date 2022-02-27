@@ -34,6 +34,11 @@ namespace vectors
                         this->w * scalar };
     }
 
+    Vector4 Vector4::operator/(const double &scalar)
+    {
+        return Vector4{ x / scalar, y / scalar, z / scalar, w / scalar };
+    }
+
     Vector4 Vector4::operator+(const Vector4 &other)
     {
         return Vector4{ this->x + other.x, this->y + other.y, this->z + other.z,

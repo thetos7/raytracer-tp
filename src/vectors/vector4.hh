@@ -22,6 +22,7 @@ namespace vectors
         Vector4 operator+(const Vector4 &other);
         Vector4 operator-(const Vector4 &other);
         Vector4 operator*(const double &scalar);
+        Vector4 operator/(const double &scalar);
     };
     std::ostream &operator<<(std::ostream &out, Vector4 &vect);
 } // namespace vectors

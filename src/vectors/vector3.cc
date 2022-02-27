@@ -1,5 +1,6 @@
 #include "vector3.hh"
 
+#include <cmath>
 #include <ostream>
 #include <string>
 
@@ -21,6 +22,24 @@ namespace vectors
         , z{ z }
     {}
 
+    double Vector3::norm()
+    {
+        return sqrt(x * x + y * y + z * z);
+    }
+
+    Vector3 Vector3::normalized()
+    {
+        auto norm_ = norm();
+        if (norm_ != 0.)
+        {
+            return *this / norm_;
+        }
+        else
+        {
+            return zero();
+        }
+    }
+
     double Vector3::dot(const Vector3 &other)
     {
         return this->x * other.x + this->y * other.y + this->z * other.z;
@@ -29,6 +48,21 @@ namespace vectors
     Vector3 Vector3::operator*(const double &scalar)
     {
         return Vector3{ this->x * scalar, this->y * scalar, this->z * scalar };
+    }
+
+    Vector3 Vector3::operator/(const double &scalar)
+    {
+        return Vector3{ x / scalar, y / scalar, z / scalar };
+    }
+
+    Vector3 Vector3::operator*(const Vector3 &other)
+    {
+        return Vector3{ x * other.x, y * other.y, z * other.z };
+    }
+
+    Vector3 Vector3::operator/(const Vector3 &other)
+    {
+        return Vector3{ x / other.x, y / other.y, z / other.z };
     }
 
     Vector3 Vector3::operator+(const Vector3 &other)
