@@ -8,12 +8,13 @@ namespace raytracer
     class Ray
     {
     public:
-        Ray(points::Point3 &origin, vectors::Vector3 &direction);
+        Ray(points::Point3 &origin, const vectors::Vector3 &direction);
 
         const points::Point3 &origin_get() const;
         const vectors::Vector3 &direction_get() const;
+
     private:
-        points::Point3 &origin_;
-        vectors::Vector3 &direction_;
+        points::Point3 origin_;
+        vectors::Vector3 direction_;
     };
 } // namespace raytracer
