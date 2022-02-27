@@ -6,7 +6,7 @@
 
 namespace raytracer::lights
 {
-    class PointLight : Light
+    class PointLight : public Light
     {
     public:
         PointLight(points::Point3 position, vectors::Vector3 intensity);

@@ -8,7 +8,7 @@
 
 namespace raytracer
 {
-    class Sphere : Object
+    class Sphere : public Object
     {
     public:
         Sphere(const points::Point3 &center, double radius,

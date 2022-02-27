@@ -4,8 +4,8 @@
 
 namespace raytracer::materials
 {
-    UniformTexture::UniformTexture(vectors::Vector3 &diffuse,
-                                     vectors::Vector3 &specular)
+    UniformTexture::UniformTexture(const vectors::Vector3 &diffuse,
+                                   const vectors::Vector3 &specular)
         : properties_{ diffuse, specular }
     {}
 
