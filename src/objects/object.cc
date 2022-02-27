@@ -9,8 +9,8 @@ namespace raytracer
         : material_{ material }
     {}
 
-    const materials::MaterialProperties Object::get_texture(double u, double v)
+    const materials::MaterialProperties Object::get_texture(Intersection intersection)
     {
-        return material_->get_point_properties(u, v);
+        return material_->get_point_properties(intersection);
     }
 } // namespace raytracer

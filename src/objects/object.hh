@@ -1,7 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 
+#include "intersection/intersection.hh"
 #include "materials/material_properties.hh"
 #include "materials/texture_material.hh"
 #include "ray/ray.hh"
@@ -13,12 +15,12 @@ namespace raytracer
     {
     public:
         using MaterialPtr = std::shared_ptr<materials::Texture_Material>;
-        Object(MaterialPtr  material_);
+        Object(MaterialPtr material_);
 
-        virtual double intersects_ray(const Ray &ray) = 0;
-        virtual vectors::Vector3 get_normal(double u, double v) = 0;
-        virtual const materials::MaterialProperties get_texture(double u,
-                                                                double v);
+        virtual std::optional<Intersection> intersects_ray(const Ray &ray) = 0;
+        virtual vectors::Vector3 get_normal(Intersection intersection) = 0;
+        virtual const materials::MaterialProperties
+        get_texture(Intersection intersection);
 
     private:
         MaterialPtr material_;

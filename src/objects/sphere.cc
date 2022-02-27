@@ -1,5 +1,6 @@
 #include "sphere.hh"
 
+#include <optional>
 #include "object.hh"
 #include "points/point3.hh"
 #include "vectors/vector3.hh"
@@ -13,12 +14,12 @@ namespace raytracer
         , radius_{ radius }
     {}
 
-    double Sphere::intersects_ray(const Ray &ray)
+    std::optional<Intersection> Sphere::intersects_ray(const Ray &ray)
     {
-        return -1; // TODO
+        return std::nullopt; // TODO
     }
 
-    vectors::Vector3 Sphere::get_normal(double u, double v)
+    vectors::Vector3 Sphere::get_normal(Intersection intersection)
     {
         return vectors::Vector3::zero(); // TODO
     }
