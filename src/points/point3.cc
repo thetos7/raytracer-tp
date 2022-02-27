@@ -29,6 +29,11 @@ namespace points
         return Point3{ this->x - vect.x, this->y - vect.y, this->z - vect.z };
     }
 
+    vectors::Vector3 Point3::operator-(const Point3 &other) const
+    {
+        return vectors::Vector3{ x - other.x, y - other.y, z - other.z };
+    }
+
     std::ostream &operator<<(std::ostream &out, Point3 &point)
     {
         return out << "Point3{" << point.x << ", " << point.y << ", " << point.z
