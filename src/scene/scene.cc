@@ -1,14 +1,14 @@
 #include "scene.hh"
 
 #include <sstream>
-
 namespace raytracer
 {
 
     namespace
     {
         template <class T>
-        std::string join(std::vector<std::shared_ptr<T>> vec, std::string delimiter)
+        std::string join(std::vector<std::shared_ptr<T>> vec,
+                         std::string delimiter)
         {
             std::ostringstream oss;
             for (auto it = vec.begin(); it != vec.end(); ++it)
@@ -62,6 +62,21 @@ namespace raytracer
     const Scene::ObjectCollection &Scene::objects() const
     {
         return objects_;
+    }
+
+    std::optional<Intersection> Scene::cast_ray(const Ray &ray) const
+    {
+        std::optional<Intersection> minIntersection;
+        for (const auto &obj : objects_)
+        {
+            const auto intersection = obj->intersects_ray(ray);
+            if (intersection
+                && (!minIntersection || minIntersection->t > intersection->t))
+            {
+                minIntersection = intersection;
+            }
+        }
+        return minIntersection;
     }
 
     std::ostream &operator<<(std::ostream &out, const Scene &scene)

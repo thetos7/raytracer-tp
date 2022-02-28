@@ -3,10 +3,13 @@
 #include <memory>
 #include <ostream>
 #include <vector>
+#include <optional>
 
 #include "camera/camera.hh"
 #include "lights/light.hh"
 #include "objects/object.hh"
+#include "intersection/intersection.hh"
+#include "ray/ray.hh"
 
 namespace raytracer
 {
@@ -27,6 +30,8 @@ namespace raytracer
 
         ObjectCollection &objects();
         const ObjectCollection &objects() const;
+
+        std::optional<Intersection> cast_ray(const Ray &ray) const;
 
     private:
         LightCollection lights_;
