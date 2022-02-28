@@ -1,6 +1,7 @@
 #include "sphere.hh"
 
 #include <cmath>
+#include <iostream>
 #include <optional>
 
 #include "object.hh"
@@ -19,31 +20,31 @@ namespace raytracer
     std::optional<Intersection> Sphere::intersects_ray(const Ray &ray)
     {
         auto originToCenter = center_ - ray.origin_get();
-        auto d = originToCenter.dot(ray.direction_get());
-        auto distanceClosestToCenter =
-            std::sqrt(originToCenter.square_norm() + d * d);
-        // closest point is not included in the sphere
-        if (distanceClosestToCenter > radius_)
+
+        auto proj = originToCenter.dot(ray.direction_get());
+
+        auto distCenter = std::sqrt(originToCenter.square_norm() - proj * proj);
+
+        if (distCenter > radius_)
         {
-            return std::nullopt;
+            return {};
         }
 
-        auto f = std::sqrt(radius_ * radius_
-                           + distanceClosestToCenter * distanceClosestToCenter);
+        auto f = std::sqrt(radius_ * radius_ - distCenter * distCenter);
 
-        auto tI1 = d - f;
+        auto tI1 = proj - f;
         if (tI1 > 0)
         {
             return Intersection{ ray, tI1, 0, 0, this };
         }
 
-        auto tI2 = d + f;
+        auto tI2 = proj + f;
         if (tI2 > 0)
         {
             return Intersection{ ray, tI2, 0, 0, this };
         }
         // all intersection points are behind the origin of the ray
-        return std::nullopt;
+        return {};
     }
 
     vectors::Vector3 Sphere::get_normal(Intersection intersection)
