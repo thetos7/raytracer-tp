@@ -14,6 +14,19 @@ namespace colors
         , b{ b }
     {}
 
+    RGB RGB::gray(unsigned int scale)
+    {
+        return RGB{ scale, scale, scale };
+    }
+    RGB RGB::white()
+    {
+        return RGB::gray(255);
+    }
+    RGB RGB::black()
+    {
+        return RGB{};
+    }
+
     std::ostream &operator<<(std::ostream &out, const RGB &color)
     {
         return out << "RGB{" << color.r << ", " << color.g << ", " << color.b
