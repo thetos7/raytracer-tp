@@ -9,7 +9,7 @@ namespace raytracer
         , focus{ focus }
         , up{ up.normalized() }
         , forward{ (focus - position).normalized() }
-        , left{ up.cross(forward).normalized() }
+        , right{ up.cross(forward).normalized() }
         , fov{ fov }
         , aspectRatio{ aspectRatio }
         , zMin{ zMin }
@@ -20,7 +20,7 @@ namespace raytracer
         return out << "Camera{ position: " << camera.position
                    << ", focus: " << camera.focus << ", up: " << camera.up
                    << ", forward: " << camera.forward
-                   << ", left: " << camera.left << ", fov: " << camera.fov
+                   << ", right: " << camera.right << ", fov: " << camera.fov
                    << ", aspectRatio: " << camera.aspectRatio
                    << ", zMin: " << camera.zMin << " }";
     }

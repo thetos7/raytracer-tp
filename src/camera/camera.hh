@@ -18,7 +18,7 @@ namespace raytracer
         const points::Point3 focus;
         const vectors::Vector3 up;
         const vectors::Vector3 forward;
-        const vectors::Vector3 left;
+        const vectors::Vector3 right;
         const double fov;
         const double aspectRatio;
         const double zMin;
