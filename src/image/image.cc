@@ -29,7 +29,7 @@ namespace image
         pixels_[pixel_index(x, y)] = color;
     }
 
-    void Image::save_ppm(const char *filename)
+    void Image::save_ppm(const char *filename) const
     {
         using std::ios;
         std::ofstream outfile;

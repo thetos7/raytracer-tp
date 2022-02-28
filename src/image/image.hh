@@ -13,7 +13,7 @@ namespace image
         colors::RGB &pixel_get(int x, int y);
         void pixel_set(int x, int y, const colors::RGB &color);
 
-        void save_ppm(const char *filename);
+        void save_ppm(const char *filename) const;
 
     private:
         size_t pixel_index(int x, int y);
