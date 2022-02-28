@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <ostream>
 
 #include "objects/object.hh"
 #include "points/point3.hh"
@@ -19,13 +20,17 @@ namespace raytracer
                      const double v, ObjectPtr object);
 
         /** Original ray */
-        const Ray ray;
+        Ray ray;
         /** Object UV coordinates (for texture mapping) */
-        const double u;
-        const double v;
+        double u;
+        double v;
         /** Ray parameter ('distance') */
-        const double t;
+        double t;
         /** Intersected object */
         ObjectPtr object;
     };
+
+    std::ostream &operator<<(std::ostream &out,
+                             const Intersection &intersection);
+
 } // namespace raytracer

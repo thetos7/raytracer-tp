@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 #include "points/point3.hh"
 #include "vectors/vector3.hh"
 
@@ -10,7 +12,8 @@ namespace raytracer
     public:
         Ray(const points::Point3 &origin, const vectors::Vector3 &direction);
 
-        static Ray AtoB(const points::Point3 &origin, const points::Point3 &target);
+        static Ray AtoB(const points::Point3 &origin,
+                        const points::Point3 &target);
 
         const points::Point3 &origin_get() const;
         const vectors::Vector3 &direction_get() const;
@@ -18,5 +21,9 @@ namespace raytracer
     private:
         points::Point3 origin_;
         vectors::Vector3 direction_;
+
+        friend std::ostream &operator<<(std::ostream &out, const Ray &ray);
     };
+
+    std::ostream &operator<<(std::ostream &out, const Ray &ray);
 } // namespace raytracer

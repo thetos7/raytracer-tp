@@ -24,4 +24,10 @@ namespace raytracer
     {
         return direction_;
     }
+
+    std::ostream &operator<<(std::ostream &out, const Ray &ray)
+    {
+        return out << "Ray{ origin: " << ray.origin_
+                   << ", direction: " << ray.direction_ << " }";
+    }
 } // namespace raytracer
