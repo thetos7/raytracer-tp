@@ -103,6 +103,11 @@ namespace vectors
         return vect * scalar;
     }
 
+    Vector3 operator-(const Vector3 &vect)
+    {
+        return Vector3{ -vect.x, -vect.y, -vect.z };
+    }
+
     std::ostream &operator<<(std::ostream &out, const Vector3 &vect)
     {
         return out << "Vector3(" << vect.x << ", " << vect.y << ", " << vect.z

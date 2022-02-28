@@ -33,6 +33,7 @@ namespace vectors
     };
 
     Vector3 operator*(const double &scalar, const Vector3 vect);
+    Vector3 operator-(const Vector3 &vect);
 
     std::ostream &operator<<(std::ostream &out, const Vector3 &vect);
 } // namespace vectors
