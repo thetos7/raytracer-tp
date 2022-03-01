@@ -2,6 +2,8 @@
 
 #include <ostream>
 
+#include "vectors/vector3.hh"
+
 namespace colors
 {
     struct RGB
@@ -15,6 +17,7 @@ namespace colors
         static RGB gray(unsigned int scale);
         static RGB white();
         static RGB black();
+        static RGB from_linear(vectors::Vector3 linearColor);
     };
 
     std::ostream &operator<<(std::ostream &out, const RGB &color);
