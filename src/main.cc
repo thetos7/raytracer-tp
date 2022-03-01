@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     constexpr double fieldOfView = (90. / 180.) * M_PI;
 
     auto greyUniform = std::make_shared<UniformTexture>(UniformTexture{
-        Vector3::all(0.7),
+        Vector3(0.9, 0.2, 0.2),
         Vector3::all(0.),
     });
     const auto camPos = Point3::origin();
