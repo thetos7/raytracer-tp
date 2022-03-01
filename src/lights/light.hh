@@ -2,17 +2,27 @@
 
 #include <ostream>
 
-namespace raytracer::lights
+#include "vectors/vector3.hh"
+
+namespace raytracer
 {
-
-    class Light
+    class Intersection;
+    namespace lights
     {
-    public:
-    private:
-        virtual std::ostream &print(std::ostream &out) const = 0;
 
-        friend std::ostream &operator<<(std::ostream &out, const Light &light);
-    };
+        class Light
+        {
+        public:
+            virtual vectors::Vector3
+            get_illumination(const Intersection &intersection) const = 0;
 
-    std::ostream &operator<<(std::ostream &out, const Light &light);
-} // namespace raytracer::lights
+        private:
+            virtual std::ostream &print(std::ostream &out) const = 0;
+
+            friend std::ostream &operator<<(std::ostream &out,
+                                            const Light &light);
+        };
+
+        std::ostream &operator<<(std::ostream &out, const Light &light);
+    } // namespace lights
+} // namespace raytracer
