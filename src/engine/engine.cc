@@ -46,8 +46,13 @@ namespace raytracer
                 {
                     auto &props =
                         intersection->object->get_texture(*intersection);
-
-                    output->pixel_set(x, y, RGB::from_linear(props.diffuse));
+                    auto color = vectors::Vector3::zero();
+                    for (const auto &light : scene.lights())
+                    {
+                        color += props.diffuse
+                            * light->get_illumination(*intersection);
+                    }
+                    output->pixel_set(x, y, RGB::from_linear(color));
                 }
             }
         }
