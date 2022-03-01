@@ -39,7 +39,10 @@ namespace raytracer
                 auto intersection = scene.cast_ray(ray);
                 if (intersection)
                 {
-                    output->pixel_set(x, y, RGB::white());
+                    auto &props =
+                        intersection->object->get_texture(*intersection);
+
+                    output->pixel_set(x, y, RGB::from_linear(props.diffuse));
                 }
             }
         }
