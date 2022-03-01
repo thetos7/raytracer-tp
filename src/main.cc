@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     using namespace vectors;
     using raytracer::materials::UniformTexture;
     using raytracer::lights::PointLight;
-    using raytracer::Sphere;
+    using raytracer::objects::Sphere;
     using raytracer::Scene;
     using raytracer::Camera;
 

@@ -6,7 +6,7 @@
 #include "object.hh"
 #include "points/point3.hh"
 
-namespace raytracer
+namespace raytracer::objects
 {
     class Sphere : public Object
     {

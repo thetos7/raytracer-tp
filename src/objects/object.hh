@@ -17,24 +17,30 @@ namespace raytracer
         class TextureMaterial;
     } // namespace materials
 
-    class Object
+    namespace objects
     {
-    public:
-        using MaterialPtr = std::shared_ptr<materials::TextureMaterial>;
-        Object(MaterialPtr material_);
 
-        virtual std::optional<Intersection> intersects_ray(const Ray &ray) = 0;
-        virtual vectors::Vector3 get_normal(Intersection intersection) = 0;
-        virtual const materials::MaterialProperties
-        get_texture(Intersection intersection);
+        class Object
+        {
+        public:
+            using MaterialPtr = std::shared_ptr<materials::TextureMaterial>;
+            Object(MaterialPtr material_);
 
-    private:
-        virtual std::ostream &print(std::ostream &out) const = 0;
+            virtual std::optional<Intersection>
+            intersects_ray(const Ray &ray) = 0;
+            virtual vectors::Vector3 get_normal(Intersection intersection) = 0;
+            virtual const materials::MaterialProperties
+            get_texture(Intersection intersection);
 
-        MaterialPtr material_;
+        private:
+            virtual std::ostream &print(std::ostream &out) const = 0;
 
-        friend std::ostream &operator<<(std::ostream&out, const Object &obj);
-    };
+            MaterialPtr material_;
 
-    std::ostream &operator<<(std::ostream&out, const Object &obj);
+            friend std::ostream &operator<<(std::ostream &out,
+                                            const Object &obj);
+        };
+
+        std::ostream &operator<<(std::ostream &out, const Object &obj);
+    } // namespace objects
 } // namespace raytracer

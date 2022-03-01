@@ -8,7 +8,7 @@
 #include "points/point3.hh"
 #include "vectors/vector3.hh"
 
-namespace raytracer
+namespace raytracer::objects
 {
     Sphere::Sphere(const points::Point3 &center, double radius,
                    Object::MaterialPtr material)
@@ -59,4 +59,4 @@ namespace raytracer
         return out << "Sphere{ center: " << center_ << ", radius: " << radius_
                    << " }";
     }
-} // namespace raytracer
+} // namespace raytracer::objects

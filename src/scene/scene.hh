@@ -1,14 +1,14 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <ostream>
 #include <vector>
-#include <optional>
 
 #include "camera/camera.hh"
+#include "intersection/intersection.hh"
 #include "lights/light.hh"
 #include "objects/object.hh"
-#include "intersection/intersection.hh"
 #include "ray/ray.hh"
 
 namespace raytracer
@@ -17,7 +17,7 @@ namespace raytracer
     {
     public:
         using LightCollection = std::vector<std::shared_ptr<lights::Light>>;
-        using ObjectCollection = std::vector<std::shared_ptr<Object>>;
+        using ObjectCollection = std::vector<std::shared_ptr<objects::Object>>;
         Scene(const Camera &camera);
         Scene(const Camera &camera, ObjectCollection objects,
               const LightCollection lights);

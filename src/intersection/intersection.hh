@@ -9,12 +9,15 @@
 
 namespace raytracer
 {
-    class Object;
+    namespace objects
+    {
+        class Object;
+    } // namespace objects
 
     class Intersection
     {
     public:
-        using ObjectPtr = const Object *;
+        using ObjectPtr = const objects::Object *;
 
         Intersection(const Ray ray, const double t, const double u,
                      const double v, ObjectPtr object);
