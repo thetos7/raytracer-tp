@@ -1,5 +1,7 @@
 #include "point_light.hh"
 
+#include <iostream>
+
 #include "intersection/intersection.hh"
 #include "scene/scene.hh"
 
@@ -19,15 +21,21 @@ namespace raytracer::lights
     vectors::Vector3
     PointLight::get_illumination(const Intersection &intersection) const
     {
-        static constexpr auto EPSILON = 0.0001;
+        static constexpr auto EPSILON = 0.000000001;
         const auto target = intersection.intersection_point();
-        const auto normal = intersection.normal();
-        const auto ray = Ray::AtoB(position, target);
-        const auto light_cast = intersection.scene->cast_ray(ray);
-        const bool illuminated = !light_cast
-            || light_cast->t <= (target - position).norm() + EPSILON;
+        const auto ray = [&]() {
+            auto r = Ray::AtoB(position, target);
+            r.origin += r.direction * EPSILON;
+            return r;
+        }();
+
+        const auto light_intersection = *intersection.scene->cast_ray(ray);
+        const auto reference_distance = (target - position).norm() + EPSILON;
+
+        const bool illuminated = light_intersection.t <= reference_distance;
         if (illuminated)
         {
+            const auto normal = intersection.normal();
             return -ray.direction.dot(normal) * intensity;
         }
         return vectors::Vector3::zero();
