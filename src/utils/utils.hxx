@@ -18,4 +18,10 @@ namespace utils
         }
         return oss.str();
     }
+
+    template <typename T>
+    inline int signum(const T &value)
+    {
+        return (T(0) < value) - (value < T(0));
+    }
 } // namespace utils
