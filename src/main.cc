@@ -1,66 +1,25 @@
 #include <cmath>
-#include <fstream>
 #include <iostream>
 #include <memory>
 
-#include "colors/rgb.hh"
+#include "engine/engine.hh"
 #include "image/image.hh"
-#include "intersection/intersection.hh"
-#include "lights/light.hh"
 #include "lights/point_light.hh"
 #include "materials/uniform_material.hh"
-#include "objects/object.hh"
 #include "objects/sphere.hh"
 #include "points/point3.hh"
 #include "scene/scene.hh"
 #include "vectors/vector3.hh"
 
-using Image = image::Image;
-using namespace raytracer;
-
-std::shared_ptr<Image> raytrace(const Scene &scene, const int &height)
-{
-    using namespace colors;
-    const auto &camera = scene.camera();
-    const auto width =
-        static_cast<int>(std::round(camera.aspectRatio * height));
-    auto output = std::make_shared<Image>(width, height);
-    const auto imagePlaneWidthHalf = std::tan(camera.fov / 2.) * camera.zMin;
-    const auto imagePlaneWidth = imagePlaneWidthHalf * 2;
-    const auto pixelSize = imagePlaneWidth / width;
-    const auto imagePlaneCenter =
-        camera.position + camera.forward * camera.zMin;
-    const auto floatImageWidthHalf = static_cast<double>(width) / 2;
-    const auto floatImageHeightHalf = static_cast<double>(height) / 2;
-
-    for (auto y = 0; y < height; ++y)
-    {
-        for (auto x = 0; x < width; ++x)
-        {
-            const auto rayOrigin = imagePlaneCenter
-                + (x - floatImageWidthHalf) * camera.right * pixelSize
-                + (y - floatImageHeightHalf) * camera.up * pixelSize;
-            // std::cout << "ray origin: " << rayOrigin << "\n";
-            const auto rayDirection = rayOrigin - camera.position;
-
-            const Ray ray{ rayOrigin, rayDirection };
-            auto intersection = scene.cast_ray(ray);
-            if (intersection)
-            {
-                output->pixel_set(x, y, RGB::white());
-            }
-        }
-    }
-
-    return output;
-}
-
 int main(int argc, char *argv[])
 {
     using namespace points;
     using namespace vectors;
-    using namespace materials;
-    using namespace lights;
+    using raytracer::materials::UniformTexture;
+    using raytracer::lights::PointLight;
+    using raytracer::Sphere;
+    using raytracer::Scene;
+    using raytracer::Camera;
 
     constexpr int height = 480;
     constexpr double aspectRatio = 16. / 9.;
@@ -95,7 +54,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Scene built:" << std::endl;
     std::cout << scene << std::endl;
-    const auto output = raytrace(scene, height);
+    const auto output = raytracer::raytrace(scene, height);
     output->save_ppm("result.ppm");
     return 0;
 }
