@@ -66,36 +66,94 @@ namespace vectors
                         x * other.y - y * other.x };
     }
 
+    Vector3 &Vector3::operator+=(const Vector3 &other)
+    {
+        x += other.x;
+        y += other.y;
+        z += other.z;
+        return *this;
+    }
+
+    Vector3 &Vector3::operator-=(const Vector3 &other)
+    {
+        x -= other.x;
+        y -= other.y;
+        z -= other.z;
+        return *this;
+    }
+
+    Vector3 &Vector3::operator*=(const double &scalar)
+    {
+        x *= scalar;
+        y *= scalar;
+        z *= scalar;
+        return *this;
+    }
+
+    Vector3 &Vector3::operator/=(const double &scalar)
+    {
+        x /= scalar;
+        y /= scalar;
+        z /= scalar;
+        return *this;
+    }
+
+    Vector3 &Vector3::operator*=(const Vector3 &other)
+    {
+        x *= other.x;
+        y *= other.y;
+        z *= other.z;
+        return *this;
+    }
+
+    Vector3 &Vector3::operator/=(const Vector3 &other)
+    {
+        x /= other.x;
+        y /= other.y;
+        z /= other.z;
+        return *this;
+    }
+
     Vector3 Vector3::operator*(const double &scalar) const
     {
-        return Vector3{ this->x * scalar, this->y * scalar, this->z * scalar };
+        Vector3 copy = *this;
+        copy *= scalar;
+        return copy;
     }
 
     Vector3 Vector3::operator/(const double &scalar) const
     {
-        return Vector3{ x / scalar, y / scalar, z / scalar };
+        Vector3 copy = *this;
+        copy /= scalar;
+        return copy;
     }
 
     Vector3 Vector3::operator*(const Vector3 &other) const
     {
-        return Vector3{ x * other.x, y * other.y, z * other.z };
+        Vector3 copy = *this;
+        copy *= other;
+        return copy;
     }
 
     Vector3 Vector3::operator/(const Vector3 &other) const
     {
-        return Vector3{ x / other.x, y / other.y, z / other.z };
+        Vector3 copy = *this;
+        copy /= other;
+        return copy;
     }
 
     Vector3 Vector3::operator+(const Vector3 &other) const
     {
-        return Vector3{ this->x + other.x, this->y + other.y,
-                        this->z + other.z };
+        Vector3 copy = *this;
+        copy += other;
+        return copy;
     }
 
     Vector3 Vector3::operator-(const Vector3 &other) const
     {
-        return Vector3{ this->x - other.x, this->y - other.y,
-                        this->z - other.z };
+        Vector3 copy = *this;
+        copy -= other;
+        return copy;
     }
 
     Vector3 operator*(const double &scalar, const Vector3 vect)
