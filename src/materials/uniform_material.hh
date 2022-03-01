@@ -11,8 +11,8 @@ namespace raytracer::materials
     public:
         UniformTexture(const vectors::Vector3 &diffuse,
                        const vectors::Vector3 &specular);
-        const MaterialProperties
-        get_point_properties(Intersection intersection) override;
+        const MaterialProperties &
+        get_point_properties(Intersection intersection) const override;
 
     private:
         const MaterialProperties properties_;

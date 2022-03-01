@@ -9,8 +9,8 @@ namespace raytracer::materials
         : properties_{ diffuse, specular }
     {}
 
-    const MaterialProperties
-    UniformTexture::get_point_properties(Intersection intersection)
+    const MaterialProperties &
+    UniformTexture::get_point_properties(Intersection intersection) const
     {
         return properties_;
     }

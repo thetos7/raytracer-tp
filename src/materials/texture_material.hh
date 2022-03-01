@@ -12,8 +12,8 @@ namespace raytracer
         class TextureMaterial
         {
         public:
-            virtual const MaterialProperties
-            get_point_properties(Intersection intersection) = 0;
+            virtual const MaterialProperties &
+            get_point_properties(Intersection intersection) const = 0;
         };
     } // namespace materials
 } // namespace raytracer

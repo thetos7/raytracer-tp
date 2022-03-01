@@ -9,8 +9,8 @@ namespace raytracer::objects
         : material_{ material }
     {}
 
-    const materials::MaterialProperties
-    Object::get_texture(Intersection intersection)
+    const materials::MaterialProperties &
+    Object::get_texture(Intersection intersection) const
     {
         return material_->get_point_properties(intersection);
     }
@@ -19,4 +19,4 @@ namespace raytracer::objects
     {
         return obj.print(out);
     }
-} // namespace raytracer
+} // namespace raytracer::objects

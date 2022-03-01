@@ -29,8 +29,8 @@ namespace raytracer
             virtual std::optional<Intersection>
             intersects_ray(const Ray &ray) = 0;
             virtual vectors::Vector3 get_normal(Intersection intersection) = 0;
-            virtual const materials::MaterialProperties
-            get_texture(Intersection intersection);
+            virtual const materials::MaterialProperties &
+            get_texture(Intersection intersection) const;
 
         private:
             virtual std::ostream &print(std::ostream &out) const = 0;
