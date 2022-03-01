@@ -19,14 +19,34 @@ namespace points
         , z{ z }
     {}
 
+    Point3 &Point3::operator+=(const vectors::Vector3 &vect)
+    {
+        x += vect.x;
+        y += vect.y;
+        z += vect.z;
+        return *this;
+    }
+
+    Point3 &Point3::operator-=(const vectors::Vector3 &vect)
+    {
+        x += vect.x;
+        y += vect.y;
+        z += vect.z;
+        return *this;
+    }
+
     Point3 Point3::operator+(const vectors::Vector3 &vect) const
     {
-        return Point3{ this->x + vect.x, this->y + vect.y, this->z + vect.z };
+        auto copy = *this;
+        copy += vect;
+        return copy;
     }
 
     Point3 Point3::operator-(const vectors::Vector3 &vect) const
     {
-        return Point3{ this->x - vect.x, this->y - vect.y, this->z - vect.z };
+        auto copy = *this;
+        copy -= vect;
+        return copy;
     }
 
     vectors::Vector3 Point3::operator-(const Point3 &other) const

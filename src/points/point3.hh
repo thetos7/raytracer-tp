@@ -18,6 +18,9 @@ namespace points
 
         Point3(double x, double y, double z);
 
+        Point3 &operator+=(const vectors::Vector3 &vect);
+        Point3 &operator-=(const vectors::Vector3 &vect);
+
         Point3 operator+(const vectors::Vector3 &vect) const;
         Point3 operator-(const vectors::Vector3 &vect) const;
         vectors::Vector3 operator-(const Point3 &other) const;
