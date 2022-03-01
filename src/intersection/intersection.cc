@@ -1,8 +1,11 @@
 #include "intersection.hh"
 
+#include "objects/object.hh"
+
 namespace raytracer
 {
     using ObjectPtr = Intersection::ObjectPtr;
+
     Intersection::Intersection(const Ray ray, const double t, const double u,
                                const double v, ObjectPtr object)
         : ray{ ray }
@@ -11,6 +14,21 @@ namespace raytracer
         , object{ object }
         , t{ t }
     {}
+
+    points::Point3 Intersection::intersection_point() const
+    {
+        return ray.origin + ray.direction * t;
+    }
+
+    vectors::Vector3 Intersection::object_normal() const
+    {
+        return object->get_normal(*this);
+    }
+
+    vectors::Vector3 Intersection::normal() const
+    {
+        return object_normal();
+    }
 
     std::ostream &operator<<(std::ostream &out,
                              const Intersection &intersection)

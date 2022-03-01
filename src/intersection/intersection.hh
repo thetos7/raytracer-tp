@@ -5,6 +5,7 @@
 
 #include "points/point3.hh"
 #include "ray/ray.hh"
+#include "vectors/vector3.hh"
 
 namespace raytracer
 {
@@ -35,6 +36,10 @@ namespace raytracer
 
         /** Scene in which the intersection occured */
         const Scene *scene;
+
+        points::Point3 intersection_point() const;
+        vectors::Vector3 object_normal() const;
+        vectors::Vector3 normal() const;
     };
 
     std::ostream &operator<<(std::ostream &out,
