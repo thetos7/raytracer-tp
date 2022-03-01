@@ -24,7 +24,7 @@ namespace raytracer
         {
         public:
             using MaterialPtr = std::shared_ptr<materials::TextureMaterial>;
-            Object(MaterialPtr material_);
+            Object(MaterialPtr material);
 
             virtual std::optional<Intersection>
             intersects_ray(const Ray &ray) = 0;
@@ -32,10 +32,10 @@ namespace raytracer
             virtual const materials::MaterialProperties &
             get_texture(Intersection intersection) const;
 
+            MaterialPtr material;
+
         private:
             virtual std::ostream &print(std::ostream &out) const = 0;
-
-            MaterialPtr material_;
 
             friend std::ostream &operator<<(std::ostream &out,
                                             const Object &obj);

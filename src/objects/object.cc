@@ -6,13 +6,13 @@
 namespace raytracer::objects
 {
     Object::Object(Object::MaterialPtr material)
-        : material_{ material }
+        : material{ material }
     {}
 
     const materials::MaterialProperties &
     Object::get_texture(Intersection intersection) const
     {
-        return material_->get_point_properties(intersection);
+        return material->get_point_properties(intersection);
     }
 
     std::ostream &operator<<(std::ostream &out, const Object &obj)
