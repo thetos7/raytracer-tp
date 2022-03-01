@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 
+#include "colors/rgb.hh"
 #include "engine/engine.hh"
 #include "image/image.hh"
 #include "lights/point_light.hh"
@@ -10,7 +11,6 @@
 #include "points/point3.hh"
 #include "scene/scene.hh"
 #include "vectors/vector3.hh"
-#include "colors/rgb.hh"
 
 int main(int argc, char *argv[])
 {
@@ -36,12 +36,18 @@ int main(int argc, char *argv[])
         Vector3(0.9, 0.7, 0.2),
         Vector3::all(0.),
     });
+    auto greenUniform = std::make_shared<UniformTexture>(UniformTexture{
+        Vector3(0.1, 0.7, 0.1),
+        Vector3::all(0.),
+    });
 
     const auto camPos = Point3::origin();
     const auto camPoint = Point3(4, 0, 0);
     const auto redSphere = std::make_shared<Sphere>(camPoint, 1., redUniform);
     const auto orangeSphere =
         std::make_shared<Sphere>(Point3(4, -1, 1), 1., orangeUniform);
+    const auto greenSphere =
+        std::make_shared<Sphere>(Point3(3, 0, 1), .5, greenUniform);
 
     Scene scene{
         Camera{
@@ -55,6 +61,7 @@ int main(int argc, char *argv[])
         Scene::ObjectCollection{
             redSphere,
             orangeSphere,
+            greenSphere,
         },
         Scene::LightCollection{
             std::make_shared<PointLight>(Point3::origin() + Vector3::up() * 3,
