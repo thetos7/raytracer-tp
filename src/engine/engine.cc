@@ -37,7 +37,7 @@ namespace raytracer
                     + (x - floatImageWidthHalf) * camera.right * pixelSize
                     + ((height - y) - floatImageHeightHalf) * camera.up
                         * pixelSize;
-                // std::cout << "ray origin: " << rayOrigin << "\n";
+
                 const auto rayDirection = rayOrigin - camera.position;
 
                 const Ray ray{ rayOrigin, rayDirection };
