@@ -14,18 +14,24 @@ namespace raytracer
                                     const colors::RGB &background_color)
     {
         using namespace colors;
+
         const auto &camera = scene.camera();
+
         const auto width =
             static_cast<int>(std::round(camera.aspectRatio * height));
+
         auto output = std::make_shared<Image>(width, height);
         output->fill(background_color);
 
         const auto imagePlaneWidthHalf =
             std::tan(camera.fov / 2.) * camera.zMin;
         const auto imagePlaneWidth = imagePlaneWidthHalf * 2;
+
         const auto pixelSize = imagePlaneWidth / width;
+
         const auto imagePlaneCenter =
             camera.position + camera.forward * camera.zMin;
+
         const auto floatImageWidthHalf = static_cast<double>(width) / 2;
         const auto floatImageHeightHalf = static_cast<double>(height) / 2;
 
@@ -42,8 +48,11 @@ namespace raytracer
 
                 const Ray ray{ rayOrigin, rayDirection };
                 auto intersection = scene.cast_ray(ray);
+
                 if (intersection)
                 {
+                    // shading
+                    // TODO: extract to shader function/object
                     auto &props =
                         intersection->object->get_texture(*intersection);
                     auto color = vectors::Vector3::zero();
@@ -52,6 +61,8 @@ namespace raytracer
                         color += props.diffuse
                             * light->get_illumination(*intersection);
                     }
+
+                    // painting
                     output->pixel_set(x, y, RGB::from_linear(color));
                 }
             }
