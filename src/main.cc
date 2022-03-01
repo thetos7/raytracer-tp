@@ -7,6 +7,7 @@
 #include "image/image.hh"
 #include "lights/point_light.hh"
 #include "materials/uniform_material.hh"
+#include "objects/plane.hh"
 #include "objects/sphere.hh"
 #include "points/point3.hh"
 #include "scene/scene.hh"
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
     using raytracer::materials::UniformTexture;
     using raytracer::lights::PointLight;
     using raytracer::objects::Sphere;
+    using raytracer::objects::Plane;
     using raytracer::Scene;
     using raytracer::Camera;
     using colors::RGB;
@@ -28,6 +30,10 @@ int main(int argc, char *argv[])
     constexpr int width = height * aspectRatio;
     constexpr double fieldOfView = (90. / 180.) * M_PI;
 
+    auto lightGreyUniform = std::make_shared<UniformTexture>(UniformTexture{
+        Vector3::all(0.8),
+        Vector3::all(0.),
+    });
     auto redUniform = std::make_shared<UniformTexture>(UniformTexture{
         Vector3(0.9, 0.2, 0.2),
         Vector3::all(0.),
@@ -49,6 +55,9 @@ int main(int argc, char *argv[])
     const auto greenSphere =
         std::make_shared<Sphere>(Point3(3, 0, 1), .5, greenUniform);
 
+    auto lightGreyPlane = std::make_shared<Plane>(
+        Point3(0, 0, -1), Vector3::up(), lightGreyUniform);
+
     Scene scene{
         Camera{
             camPos,
@@ -62,6 +71,7 @@ int main(int argc, char *argv[])
             redSphere,
             orangeSphere,
             greenSphere,
+            lightGreyPlane,
         },
         Scene::LightCollection{
             std::make_shared<PointLight>(Point3::origin() + Vector3::up() * 3,
