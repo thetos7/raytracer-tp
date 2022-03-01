@@ -18,6 +18,7 @@ namespace colors
         static RGB white();
         static RGB black();
         static RGB from_linear(vectors::Vector3 linearColor);
+        static RGB from_hex(unsigned int code);
     };
 
     std::ostream &operator<<(std::ostream &out, const RGB &color);

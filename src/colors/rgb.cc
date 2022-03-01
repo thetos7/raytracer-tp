@@ -46,6 +46,16 @@ namespace colors
         };
     }
 
+    RGB RGB::from_hex(unsigned int code)
+    {
+        static constexpr auto byte = 0xFF;
+        return RGB{
+            (code >> 16) & byte,
+            (code >> 8) & byte,
+            code & byte,
+        };
+    }
+
     std::ostream &operator<<(std::ostream &out, const RGB &color)
     {
         return out << "RGB{" << color.r << ", " << color.g << ", " << color.b
