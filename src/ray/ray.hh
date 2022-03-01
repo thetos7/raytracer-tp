@@ -15,12 +15,10 @@ namespace raytracer
         static Ray AtoB(const points::Point3 &origin,
                         const points::Point3 &target);
 
-        const points::Point3 &origin_get() const;
-        const vectors::Vector3 &direction_get() const;
+        points::Point3 origin;
+        vectors::Vector3 direction;
 
     private:
-        points::Point3 origin_;
-        vectors::Vector3 direction_;
 
         friend std::ostream &operator<<(std::ostream &out, const Ray &ray);
     };

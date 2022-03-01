@@ -19,9 +19,9 @@ namespace raytracer::objects
 
     std::optional<Intersection> Sphere::intersects_ray(const Ray &ray)
     {
-        auto originToCenter = center_ - ray.origin_get();
+        auto originToCenter = center_ - ray.origin;
 
-        auto proj = originToCenter.dot(ray.direction_get());
+        auto proj = originToCenter.dot(ray.direction);
 
         auto distCenter = std::sqrt(originToCenter.square_norm() - proj * proj);
 
