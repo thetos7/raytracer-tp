@@ -23,16 +23,12 @@ namespace raytracer::lights
     {
         static constexpr auto EPSILON = 0.000000001;
         const auto target = intersection.intersection_point();
-        const auto ray = [&]() {
-            auto r = Ray::AtoB(position, target);
-            r.origin += r.direction * EPSILON;
-            return r;
-        }();
+        const auto ray = Ray::AtoB(position, target);
 
         const auto light_intersection = *intersection.scene->cast_ray(ray);
-        const auto reference_distance = (target - position).norm() + EPSILON;
+        const auto reference_distance = (target - position).norm() - EPSILON;
 
-        const bool illuminated = light_intersection.t <= reference_distance;
+        const bool illuminated = light_intersection.t >= reference_distance;
         if (illuminated)
         {
             const auto normal = intersection.normal();
