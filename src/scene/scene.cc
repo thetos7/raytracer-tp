@@ -1,28 +1,12 @@
 #include "scene.hh"
 
 #include <sstream>
+
+#include "utils/utils.hh"
+
 namespace raytracer
 {
-
-    namespace
-    {
-        template <class T>
-        std::string join(std::vector<std::shared_ptr<T>> vec,
-                         std::string delimiter)
-        {
-            std::ostringstream oss;
-            for (auto it = vec.begin(); it != vec.end(); ++it)
-            {
-                oss << **it;
-                if (it != vec.end() - 1)
-                {
-                    oss << delimiter;
-                }
-            }
-            return oss.str();
-        }
-    } // namespace
-
+    using utils::join;
     Scene::Scene(const Camera &camera)
         : Scene{ camera, {}, {} }
     {}
