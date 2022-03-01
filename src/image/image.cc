@@ -48,4 +48,12 @@ namespace image
         }
     }
 
+    void Image::fill(colors::RGB color)
+    {
+        for (auto &pixel : pixels_)
+        {
+            pixel = color;
+        }
+    }
+
 } // namespace image

@@ -15,6 +15,8 @@ namespace image
 
         void save_ppm(const char *filename) const;
 
+        void fill(colors::RGB color);
+
     private:
         size_t pixel_index(int x, int y);
 
