@@ -26,13 +26,20 @@ int main(int argc, char *argv[])
     constexpr int width = height * aspectRatio;
     constexpr double fieldOfView = (90. / 180.) * M_PI;
 
-    auto greyUniform = std::make_shared<UniformTexture>(UniformTexture{
+    auto redUniform = std::make_shared<UniformTexture>(UniformTexture{
         Vector3(0.9, 0.2, 0.2),
         Vector3::all(0.),
     });
+    auto orangeUniform = std::make_shared<UniformTexture>(UniformTexture{
+        Vector3(0.9, 0.7, 0.2),
+        Vector3::all(0.),
+    });
+
     const auto camPos = Point3::origin();
     const auto camPoint = Point3(4, 0, 0);
-    const auto sphere = std::make_shared<Sphere>(camPoint, 1., greyUniform);
+    const auto redSphere = std::make_shared<Sphere>(camPoint, 1., redUniform);
+    const auto orangeSphere =
+        std::make_shared<Sphere>(Point3(4, -1, 1), 1., orangeUniform);
 
     Scene scene{
         Camera{
@@ -44,7 +51,8 @@ int main(int argc, char *argv[])
             0.5,
         },
         Scene::ObjectCollection{
-            sphere,
+            redSphere,
+            orangeSphere,
         },
         Scene::LightCollection{
             std::make_shared<PointLight>(Point3::origin() + Vector3::up() * 3,
