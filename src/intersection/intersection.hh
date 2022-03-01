@@ -3,12 +3,13 @@
 #include <memory>
 #include <ostream>
 
-#include "objects/object.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"
 
 namespace raytracer
 {
+    class Scene;
+
     namespace objects
     {
         class Object;
@@ -31,6 +32,9 @@ namespace raytracer
         double t;
         /** Intersected object */
         ObjectPtr object;
+
+        /** Scene in which the intersection occured */
+        const Scene *scene;
     };
 
     std::ostream &operator<<(std::ostream &out,

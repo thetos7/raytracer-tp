@@ -76,6 +76,7 @@ namespace raytracer
                 minIntersection = intersection;
             }
         }
+        minIntersection->scene = this;
         return minIntersection;
     }
 

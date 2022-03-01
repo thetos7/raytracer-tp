@@ -13,6 +13,8 @@
 
 namespace raytracer
 {
+    class Intersection;
+
     class Scene
     {
     public:
