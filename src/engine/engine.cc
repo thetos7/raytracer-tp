@@ -58,8 +58,9 @@ namespace raytracer
                     auto color = vectors::Vector3::zero();
                     for (const auto &light : scene.lights())
                     {
-                        color += props.diffuse
-                            * light->get_illumination(*intersection);
+                        const auto illuination =
+                            light->get_illumination(*intersection);
+                        color += props.diffuse * illuination;
                     }
 
                     // painting
