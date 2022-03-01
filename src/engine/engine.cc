@@ -3,19 +3,23 @@
 #include <cmath>
 #include <memory>
 
+#include "colors/rgb.hh"
 #include "image/image.hh"
 #include "scene/scene.hh"
 
 namespace raytracer
 {
     using image::Image;
-    std::shared_ptr<Image> raytrace(const Scene &scene, const int &height)
+    std::shared_ptr<Image> raytrace(const Scene &scene, const int &height,
+                                    const colors::RGB &background_color)
     {
         using namespace colors;
         const auto &camera = scene.camera();
         const auto width =
             static_cast<int>(std::round(camera.aspectRatio * height));
         auto output = std::make_shared<Image>(width, height);
+        output->fill(background_color);
+
         const auto imagePlaneWidthHalf =
             std::tan(camera.fov / 2.) * camera.zMin;
         const auto imagePlaneWidth = imagePlaneWidthHalf * 2;

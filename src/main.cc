@@ -10,6 +10,7 @@
 #include "points/point3.hh"
 #include "scene/scene.hh"
 #include "vectors/vector3.hh"
+#include "colors/rgb.hh"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     using raytracer::objects::Sphere;
     using raytracer::Scene;
     using raytracer::Camera;
+    using colors::RGB;
 
     constexpr int height = 480;
     constexpr double aspectRatio = 16. / 9.;
@@ -56,13 +58,14 @@ int main(int argc, char *argv[])
         },
         Scene::LightCollection{
             std::make_shared<PointLight>(Point3::origin() + Vector3::up() * 3,
-                                         Vector3::all(10.)),
+                                         Vector3::all(1.5)),
         },
     };
 
     std::cout << "Scene built:" << std::endl;
     std::cout << scene << std::endl;
-    const auto output = raytracer::raytrace(scene, height);
+    const auto output =
+        raytracer::raytrace(scene, height, RGB::from_hex(0x222233));
     output->save_ppm("result.ppm");
     return 0;
 }
