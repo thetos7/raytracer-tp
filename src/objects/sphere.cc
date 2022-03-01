@@ -17,7 +17,7 @@ namespace raytracer::objects
         , radius_{ radius }
     {}
 
-    std::optional<Intersection> Sphere::intersects_ray(const Ray &ray)
+    std::optional<Intersection> Sphere::intersects_ray(const Ray &ray) const
     {
         auto originToCenter = center_ - ray.origin;
 
@@ -47,11 +47,9 @@ namespace raytracer::objects
         return {};
     }
 
-    vectors::Vector3 Sphere::get_normal(Intersection intersection)
+    vectors::Vector3 Sphere::get_normal(const Intersection &intersection) const
     {
-        auto intersectionPoint = intersection.ray.origin_get()
-            + intersection.t * intersection.ray.direction_get();
-        return (intersectionPoint - center_).normalized();
+        return (intersection.intersection_point() - center_).normalized();
     }
 
     std::ostream &Sphere::print(std::ostream &out) const

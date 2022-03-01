@@ -27,10 +27,11 @@ namespace raytracer
             Object(MaterialPtr material);
 
             virtual std::optional<Intersection>
-            intersects_ray(const Ray &ray) = 0;
-            virtual vectors::Vector3 get_normal(Intersection intersection) = 0;
+            intersects_ray(const Ray &ray) const = 0;
+            virtual vectors::Vector3
+            get_normal(const Intersection &intersection) const = 0;
             virtual const materials::MaterialProperties &
-            get_texture(Intersection intersection) const;
+            get_texture(const Intersection &intersection) const;
 
             MaterialPtr material;
 
