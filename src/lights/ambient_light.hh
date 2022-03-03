@@ -12,7 +12,7 @@ namespace raytracer::lights
 
         AmbientLight(const vectors::Vector3 &color);
 
-        virtual vectors::Vector3
+        virtual IlluminationResult
         get_illumination(const Intersection &intersection) const override;
 
     private:

@@ -2,6 +2,7 @@
 
 #include <ostream>
 
+#include "illumination.hh"
 #include "intersection/intersection.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"
@@ -21,7 +22,7 @@ namespace raytracer::lights
                    << ", intensity: " << intensity << " }";
     }
 
-    vectors::Vector3
+    Light::IlluminationResult
     PointLight::get_illumination(const Intersection &intersection) const
     {
         static constexpr auto EPSILON = 0.000000001;
@@ -35,8 +36,11 @@ namespace raytracer::lights
         if (illuminated)
         {
             const auto normal = intersection.normal();
-            return -ray.direction.dot(normal) * intensity;
+            return IlluminationResult{
+                -ray.direction,
+                -ray.direction.dot(normal) * intensity,
+            };
         }
-        return vectors::Vector3::zero();
+        return IlluminationResult{ {}, vectors::Vector3::zero() };
     }
 } // namespace raytracer::lights

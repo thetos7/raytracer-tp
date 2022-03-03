@@ -6,6 +6,7 @@
 #include "colors/rgb.hh"
 #include "image/image.hh"
 #include "intersection/intersection.hh"
+#include "lights/illumination.hh"
 #include "lights/light.hh"
 #include "materials/material_properties.hh"
 #include "objects/object.hh"
@@ -64,9 +65,9 @@ namespace raytracer
                     auto color = vectors::Vector3::zero();
                     for (const auto &light : scene.lights())
                     {
-                        const auto illuination =
+                        const auto illumination =
                             light->get_illumination(*intersection);
-                        color += props.diffuse * illuination;
+                        color += props.diffuse * illumination.light_intensity;
                     }
 
                     // painting

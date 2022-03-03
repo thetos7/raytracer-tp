@@ -2,6 +2,7 @@
 
 #include <ostream>
 
+#include "illumination.hh"
 #include "intersection/intersection.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"
@@ -16,20 +17,20 @@ namespace raytracer::lights
         , color{ color }
     {}
 
-    vectors::Vector3
+    Light::IlluminationResult
     SunLight::get_illumination(const Intersection &intersection) const
     {
         const auto normal = intersection.normal();
         const auto point = intersection.intersection_point();
         const Ray ray(point + -direction * 0.000001, -direction);
-        const auto illumination = intersection.scene->cast_ray(ray);
+        const auto obstruction = intersection.scene->cast_ray(ray);
 
-        if (illumination)
+        if (obstruction)
         {
-            return vectors::Vector3::zero();
+            return IlluminationResult{ {}, vectors::Vector3::zero() };
         }
 
-        return -normal.dot(direction) * color;
+        return IlluminationResult{ -direction, -normal.dot(direction) * color };
     }
 
     std::ostream &SunLight::print(std::ostream &out) const

@@ -2,6 +2,7 @@
 
 #include <iosfwd>
 
+#include "fwd.hh"
 #include "vectors/fwd.hh"
 
 namespace raytracer
@@ -13,7 +14,8 @@ namespace raytracer
         class Light
         {
         public:
-            virtual vectors::Vector3
+            using IlluminationResult = Illumination;
+            virtual IlluminationResult
             get_illumination(const Intersection &intersection) const = 0;
 
         private:

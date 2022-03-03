@@ -6,4 +6,6 @@ namespace raytracer::lights
     class PointLight;
     class SunLight;
     class AmbientLight;
+
+    class Illumination;
 } // namespace raytracer::lights

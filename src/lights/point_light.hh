@@ -11,7 +11,7 @@ namespace raytracer::lights
     public:
         PointLight(points::Point3 position, vectors::Vector3 intensity);
 
-        virtual vectors::Vector3
+        virtual IlluminationResult
         get_illumination(const Intersection &intersection) const override;
 
         const points::Point3 position;

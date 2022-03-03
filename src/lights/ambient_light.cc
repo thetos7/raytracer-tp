@@ -2,16 +2,18 @@
 
 #include <ostream>
 
+#include "illumination.hh"
+
 namespace raytracer::lights
 {
     AmbientLight::AmbientLight(const vectors::Vector3 &color)
         : color{ color }
     {}
 
-    vectors::Vector3
+    Light::IlluminationResult
     AmbientLight::get_illumination(const Intersection &intersection) const
     {
-        return color;
+        return IlluminationResult{ {}, color };
     }
 
     std::ostream &AmbientLight::print(std::ostream &out) const
