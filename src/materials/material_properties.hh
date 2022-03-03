@@ -8,9 +8,11 @@ namespace raytracer::materials
     {
     public:
         MaterialProperties(const vectors::Vector3 &diffuse,
-                           const vectors::Vector3 &specular);
-        const vectors::Vector3 diffuse;
-        const vectors::Vector3 specular;
+                           const vectors::Vector3 &specular,
+                           double specular_spread);
+        vectors::Vector3 diffuse;
+        vectors::Vector3 specular;
+        double specular_spread;
 
     private:
     };
