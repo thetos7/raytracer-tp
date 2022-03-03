@@ -1,7 +1,7 @@
 #include "object.hh"
 
+#include "materials/material.hh"
 #include "materials/material_properties.hh"
-#include "materials/texture_material.hh"
 
 namespace raytracer::objects
 {

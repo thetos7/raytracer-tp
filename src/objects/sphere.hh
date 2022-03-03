@@ -2,7 +2,6 @@
 
 #include <optional>
 
-#include "materials/texture_material.hh"
 #include "object.hh"
 #include "points/point3.hh"
 

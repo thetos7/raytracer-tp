@@ -1,12 +1,12 @@
 #pragma once
 
+#include "material.hh"
 #include "material_properties.hh"
-#include "texture_material.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer::materials
 {
-    class UniformTexture : public TextureMaterial
+    class UniformTexture : public Material
     {
     public:
         UniformTexture(const vectors::Vector3 &diffuse,

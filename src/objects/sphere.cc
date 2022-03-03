@@ -4,6 +4,7 @@
 #include <iostream>
 #include <optional>
 
+#include "materials/material.hh"
 #include "object.hh"
 #include "points/point3.hh"
 #include "vectors/vector3.hh"

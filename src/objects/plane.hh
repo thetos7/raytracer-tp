@@ -2,7 +2,6 @@
 
 #include <optional>
 
-#include "materials/texture_material.hh"
 #include "object.hh"
 #include "points/point3.hh"
 
@@ -22,7 +21,7 @@ namespace raytracer::objects
 
     private:
         virtual std::ostream &print(std::ostream &out) const override;
-        
+
         points::Point3 origin_;
         vectors::Vector3 normal_;
     };

@@ -9,7 +9,7 @@ namespace raytracer
 
     namespace materials
     {
-        class TextureMaterial
+        class Material
         {
         public:
             virtual const MaterialProperties &

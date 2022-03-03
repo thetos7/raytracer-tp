@@ -5,7 +5,6 @@
 
 #include "intersection/intersection.hh"
 #include "materials/material_properties.hh"
-#include "materials/texture_material.hh"
 #include "ray/ray.hh"
 #include "vectors/vector3.hh"
 
@@ -14,7 +13,7 @@ namespace raytracer
     class Intersection;
     namespace materials
     {
-        class TextureMaterial;
+        class Material;
     } // namespace materials
 
     namespace objects
@@ -23,7 +22,7 @@ namespace raytracer
         class Object
         {
         public:
-            using MaterialPtr = std::shared_ptr<materials::TextureMaterial>;
+            using MaterialPtr = std::shared_ptr<materials::Material>;
             Object(MaterialPtr material);
 
             virtual std::optional<Intersection>

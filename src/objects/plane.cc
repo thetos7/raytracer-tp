@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "materials/material.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer::objects
