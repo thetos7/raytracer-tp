@@ -1,7 +1,7 @@
 #include "image.hh"
 
 #include <fstream>
-#include <iostream>
+#include <ostream>
 #include <vector>
 
 #include "colors/rgb.hh"

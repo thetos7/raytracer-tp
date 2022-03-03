@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <optional>
-#include <ostream>
+#include <iosfwd>
 #include <vector>
 
 #include "camera/camera.hh"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <ostream>
+#include <iosfwd>
 
 #include "points/fwd.hh"
 #include "ray/ray.hh"

@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
-#include <iostream>
+#include <ostream>
 #include <string>
 
 #include "vectors/vector3.hh"

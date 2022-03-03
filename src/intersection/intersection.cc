@@ -1,5 +1,7 @@
 #include "intersection.hh"
 
+#include <ostream>
+
 #include "objects/object.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"

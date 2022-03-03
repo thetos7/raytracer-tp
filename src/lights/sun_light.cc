@@ -1,5 +1,7 @@
 #include "sun_light.hh"
 
+#include <ostream>
+
 #include "intersection/intersection.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"

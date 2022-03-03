@@ -1,6 +1,6 @@
 #include "point_light.hh"
 
-#include <iostream>
+#include <ostream>
 
 #include "intersection/intersection.hh"
 #include "points/point3.hh"

@@ -12,8 +12,10 @@ namespace raytracer::objects
     public:
         Sphere(const points::Point3 &center, double radius,
                MaterialPtr material);
+
         virtual std::optional<Intersection>
         intersects_ray(const Ray &ray) const override;
+
         virtual vectors::Vector3
         get_normal(const Intersection &intersection) const override;
 
