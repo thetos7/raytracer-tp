@@ -13,7 +13,7 @@ namespace raytracer::lights
 {
     SunLight::SunLight(const vectors::Vector3 &direction,
                        const vectors::Vector3 &color)
-        : direction{ direction }
+        : direction{ direction.normalized() }
         , color{ color }
     {}
 
