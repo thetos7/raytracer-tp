@@ -41,18 +41,18 @@ int main(int argc, char *argv[])
     });
     auto redUniform = std::make_shared<UniformTexture>(UniformTexture{
         Vector3(0.9, 0.2, 0.2),
-        Vector3::all(0.),
-        1.,
+        Vector3::all(0.1),
+        .8,
     });
     auto orangeUniform = std::make_shared<UniformTexture>(UniformTexture{
-        Vector3(0.9, 0.7, 0.2),
+        Vector3(1.0, 0.5, 0.1),
         Vector3::all(0.),
         1.,
     });
     auto greenUniform = std::make_shared<UniformTexture>(UniformTexture{
-        Vector3(0.1, 0.7, 0.1),
-        Vector3::all(0.),
-        1.,
+        Vector3(0.1, 0.6, 0.1),
+        Vector3::all(0.5),
+        16.,
     });
 
     const auto camPos = Point3::origin();
