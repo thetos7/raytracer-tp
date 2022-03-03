@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 {
     using namespace points;
     using namespace vectors;
-    using raytracer::materials::UniformTexture;
+    using raytracer::materials::UniformMaterial;
     using raytracer::lights::PointLight;
     using raytracer::lights::SunLight;
     using raytracer::lights::AmbientLight;
@@ -34,31 +34,31 @@ int main(int argc, char *argv[])
     constexpr int width = height * aspectRatio;
     constexpr double fieldOfView = (90. / 180.) * M_PI;
 
-    auto lightGreyUniform = std::make_shared<UniformTexture>(UniformTexture{
+    auto lightGreyUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3::all(0.8),
         Vector3::all(0.),
         1.,
         Vector3::all(1.),
     });
-    auto redUniform = std::make_shared<UniformTexture>(UniformTexture{
+    auto redUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(0.9, 0.2, 0.2),
         Vector3::all(0.1),
         .8,
         Vector3::all(0.05),
     });
-    auto orangeUniform = std::make_shared<UniformTexture>(UniformTexture{
+    auto orangeUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(1.0, 0.5, 0.1),
         Vector3::all(0.),
         1.,
         Vector3::zero(),
     });
-    auto greenUniform = std::make_shared<UniformTexture>(UniformTexture{
+    auto greenUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(0.1, 0.6, 0.1),
         Vector3::all(0.5),
         16.,
         Vector3::all(0.5),
     });
-    auto lightBlueUniform = std::make_shared<UniformTexture>(UniformTexture{
+    auto lightBlueUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(0.5, 0.5, 0.7),
         Vector3::zero(),
         1.,

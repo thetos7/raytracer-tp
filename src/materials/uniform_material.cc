@@ -5,7 +5,7 @@
 
 namespace raytracer::materials
 {
-    UniformTexture::UniformTexture(const vectors::Vector3 &diffuse,
+    UniformMaterial::UniformMaterial(const vectors::Vector3 &diffuse,
                                    const vectors::Vector3 &specular,
                                    double specular_spread,
                                    const vectors::Vector3 &reflectivity)
@@ -13,7 +13,7 @@ namespace raytracer::materials
     {}
 
     const MaterialProperties &
-    UniformTexture::get_point_properties(Intersection intersection) const
+    UniformMaterial::get_point_properties(Intersection intersection) const
     {
         return properties_;
     }
