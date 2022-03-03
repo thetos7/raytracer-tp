@@ -5,6 +5,7 @@
 #include "colors/rgb.hh"
 #include "engine/engine.hh"
 #include "image/image.hh"
+#include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
 #include "materials/uniform_material.hh"
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     using raytracer::materials::UniformTexture;
     using raytracer::lights::PointLight;
     using raytracer::lights::SunLight;
+    using raytracer::lights::AmbientLight;
     using raytracer::objects::Sphere;
     using raytracer::objects::Plane;
     using raytracer::Scene;
@@ -76,6 +78,7 @@ int main(int argc, char *argv[])
             lightGreyPlane,
         },
         Scene::LightCollection{
+            std::make_shared<AmbientLight>(Vector3::all(.15)),
             std::make_shared<PointLight>(Point3::origin() + Vector3::up() * 3,
                                          Vector3::all(1.5)),
             std::make_shared<SunLight>(Vector3(0.5, -1, -1),
