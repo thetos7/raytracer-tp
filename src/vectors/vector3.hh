@@ -20,6 +20,7 @@ namespace vectors
 
         double dot(const Vector3 &other) const;
         Vector3 cross(const Vector3 &other) const;
+        Vector3 reflect(const Vector3 &normal) const;
         double norm() const;
         double square_norm() const;
         Vector3 normalized() const;

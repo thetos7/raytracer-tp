@@ -66,6 +66,11 @@ namespace vectors
                         x * other.y - y * other.x };
     }
 
+    Vector3 Vector3::reflect(const Vector3 &normal) const
+    {
+        return *this - 2 * normal * dot(normal);
+    }
+
     Vector3 &Vector3::operator+=(const Vector3 &other)
     {
         x += other.x;

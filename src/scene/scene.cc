@@ -1,6 +1,7 @@
 #include "scene.hh"
 
 #include <cmath>
+#include <iostream>
 #include <sstream>
 
 #include "camera/camera.hh"
@@ -83,10 +84,13 @@ namespace raytracer
         using utils::EPSILON;
 
         auto intersection = this->cast_ray(ray);
+        if (!intersection)
+        {
+            return {};
+        }
         // TODO: extract to shader function/object
         const auto normal = intersection->normal();
-        const auto reflect_direction =
-            ray.direction - 2 * normal * ray.direction.dot(normal);
+        const auto reflect_direction = ray.direction.reflect(normal);
         const auto intersection_point = intersection->intersection_point();
         const Ray reflected_ray(intersection_point
                                     + reflect_direction * EPSILON,
@@ -99,14 +103,20 @@ namespace raytracer
             // diffuse
             color += props.diffuse * illumination.light_intensity;
             // specular
-            if (illumination.light_direction
-                && reflect_direction.dot(*illumination.light_direction) >= 0.)
+            if (illumination.light_direction)
             {
                 color += props.specular * illumination.light_intensity
-                    * std::pow(reflect_direction.dot(
-                                   *illumination.light_direction),
+                    * std::pow(std::max(0.,
+                                        reflect_direction.dot(
+                                            *illumination.light_direction)),
                                props.specular_spread);
             }
+        }
+        // reflection
+        const auto reflected = sample_color(reflected_ray, depth - 1);
+        if (reflected)
+        {
+            color += props.reflectivity * (*reflected);
         }
 
         return color;

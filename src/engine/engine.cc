@@ -57,7 +57,7 @@ namespace raytracer
                 const auto rayDirection = rayOrigin - camera.position;
 
                 const Ray ray{ rayOrigin, rayDirection };
-                const auto color = scene.sample_color(ray, 1);
+                const auto color = scene.sample_color(ray, max_depth);
 
                 // painting
                 if (color)

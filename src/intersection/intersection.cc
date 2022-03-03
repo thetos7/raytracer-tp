@@ -5,6 +5,7 @@
 #include "objects/object.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"
+#include "utils/utils.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer
