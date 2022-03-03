@@ -6,6 +6,7 @@
 #include "engine/engine.hh"
 #include "image/image.hh"
 #include "lights/point_light.hh"
+#include "lights/sun_light.hh"
 #include "materials/uniform_material.hh"
 #include "objects/plane.hh"
 #include "objects/sphere.hh"
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
     using namespace vectors;
     using raytracer::materials::UniformTexture;
     using raytracer::lights::PointLight;
+    using raytracer::lights::SunLight;
     using raytracer::objects::Sphere;
     using raytracer::objects::Plane;
     using raytracer::Scene;
@@ -76,6 +78,8 @@ int main(int argc, char *argv[])
         Scene::LightCollection{
             std::make_shared<PointLight>(Point3::origin() + Vector3::up() * 3,
                                          Vector3::all(1.5)),
+            std::make_shared<SunLight>(Vector3(0.5, -1, -1),
+                                       Vector3(1., 1., 0.8)),
         },
     };
 
