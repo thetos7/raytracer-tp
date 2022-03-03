@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     std::cout << "Scene built:" << std::endl;
     std::cout << scene << std::endl;
     const auto output =
-        raytracer::raytrace(scene, height, RGB::from_hex(0x222233));
+        raytracer::raytrace(scene, height, 3, RGB::from_hex(0x222233));
     output->save_ppm("result.ppm");
     return 0;
 }

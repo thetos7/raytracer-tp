@@ -1,10 +1,13 @@
 #include "scene.hh"
 
+#include <cmath>
 #include <sstream>
 
 #include "camera/camera.hh"
 #include "intersection/intersection.hh"
+#include "lights/illumination.hh"
 #include "lights/light.hh"
+#include "materials/material_properties.hh"
 #include "objects/object.hh"
 #include "ray/ray.hh"
 #include "utils/utils.hh"
@@ -67,6 +70,46 @@ namespace raytracer
         }
         minIntersection->scene = this;
         return minIntersection;
+    }
+
+    Scene::SampleResult Scene::sample_color(const Ray &ray,
+                                            const int depth) const
+    {
+        if (depth <= 0)
+        {
+            return {};
+        }
+
+        using utils::EPSILON;
+
+        auto intersection = this->cast_ray(ray);
+        // TODO: extract to shader function/object
+        const auto normal = intersection->normal();
+        const auto reflect_direction =
+            ray.direction - 2 * normal * ray.direction.dot(normal);
+        const auto intersection_point = intersection->intersection_point();
+        const Ray reflected_ray(intersection_point
+                                    + reflect_direction * EPSILON,
+                                reflect_direction);
+        const auto &props = intersection->object->get_texture(*intersection);
+        auto color = vectors::Vector3::zero();
+        for (const auto &light : lights_)
+        {
+            const auto illumination = light->get_illumination(*intersection);
+            // diffuse
+            color += props.diffuse * illumination.light_intensity;
+            // specular
+            if (illumination.light_direction
+                && reflect_direction.dot(*illumination.light_direction) >= 0.)
+            {
+                color += props.specular * illumination.light_intensity
+                    * std::pow(reflect_direction.dot(
+                                   *illumination.light_direction),
+                               props.specular_spread);
+            }
+        }
+
+        return color;
     }
 
     std::ostream &operator<<(std::ostream &out, const Scene &scene)

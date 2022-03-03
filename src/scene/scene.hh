@@ -1,8 +1,8 @@
 #pragma once
 
+#include <iosfwd>
 #include <memory>
 #include <optional>
-#include <iosfwd>
 #include <vector>
 
 #include "camera/camera.hh"
@@ -20,6 +20,7 @@ namespace raytracer
     public:
         using LightCollection = std::vector<std::shared_ptr<lights::Light>>;
         using ObjectCollection = std::vector<std::shared_ptr<objects::Object>>;
+        using SampleResult = std::optional<const vectors::Vector3>;
         Scene(const Camera &camera);
         Scene(const Camera &camera, ObjectCollection objects,
               const LightCollection lights);
@@ -34,6 +35,8 @@ namespace raytracer
         const ObjectCollection &objects() const;
 
         std::optional<Intersection> cast_ray(const Ray &ray) const;
+
+        SampleResult sample_color(const Ray &ray, const int depth) const;
 
     private:
         LightCollection lights_;
