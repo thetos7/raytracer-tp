@@ -3,9 +3,9 @@
 #include <memory>
 #include <ostream>
 
-#include "points/point3.hh"
+#include "points/fwd.hh"
 #include "ray/ray.hh"
-#include "vectors/vector3.hh"
+#include "vectors/fwd.hh"
 
 namespace raytracer
 {

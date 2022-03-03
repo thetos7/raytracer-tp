@@ -1,6 +1,6 @@
 #pragma once
 
-#include "intersection/intersection.hh"
+#include "intersection/fwd.hh"
 #include "material_properties.hh"
 
 namespace raytracer

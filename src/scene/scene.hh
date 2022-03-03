@@ -6,10 +6,10 @@
 #include <vector>
 
 #include "camera/camera.hh"
-#include "intersection/intersection.hh"
-#include "lights/light.hh"
-#include "objects/object.hh"
-#include "ray/ray.hh"
+#include "intersection/fwd.hh"
+#include "lights/fwd.hh"
+#include "objects/fwd.hh"
+#include "ray/fwd.hh"
 
 namespace raytracer
 {

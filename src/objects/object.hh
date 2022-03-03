@@ -3,44 +3,33 @@
 #include <memory>
 #include <optional>
 
-#include "intersection/intersection.hh"
-#include "materials/material_properties.hh"
-#include "ray/ray.hh"
-#include "vectors/vector3.hh"
+#include "intersection/fwd.hh"
+#include "materials/fwd.hh"
+#include "ray/fwd.hh"
+#include "vectors/fwd.hh"
 
-namespace raytracer
+namespace raytracer::objects
 {
-    class Intersection;
-    namespace materials
+    class Object
     {
-        class Material;
-    } // namespace materials
+    public:
+        using MaterialPtr = std::shared_ptr<materials::Material>;
+        Object(MaterialPtr material);
 
-    namespace objects
-    {
+        virtual std::optional<Intersection>
+        intersects_ray(const Ray &ray) const = 0;
+        virtual vectors::Vector3
+        get_normal(const Intersection &intersection) const = 0;
+        virtual const materials::MaterialProperties &
+        get_texture(const Intersection &intersection) const;
 
-        class Object
-        {
-        public:
-            using MaterialPtr = std::shared_ptr<materials::Material>;
-            Object(MaterialPtr material);
+        MaterialPtr material;
 
-            virtual std::optional<Intersection>
-            intersects_ray(const Ray &ray) const = 0;
-            virtual vectors::Vector3
-            get_normal(const Intersection &intersection) const = 0;
-            virtual const materials::MaterialProperties &
-            get_texture(const Intersection &intersection) const;
+    private:
+        virtual std::ostream &print(std::ostream &out) const = 0;
 
-            MaterialPtr material;
+        friend std::ostream &operator<<(std::ostream &out, const Object &obj);
+    };
 
-        private:
-            virtual std::ostream &print(std::ostream &out) const = 0;
-
-            friend std::ostream &operator<<(std::ostream &out,
-                                            const Object &obj);
-        };
-
-        std::ostream &operator<<(std::ostream &out, const Object &obj);
-    } // namespace objects
-} // namespace raytracer
+    std::ostream &operator<<(std::ostream &out, const Object &obj);
+} // namespace raytracer::objects

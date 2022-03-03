@@ -1,5 +1,8 @@
 #include "camera.hh"
 
+#include "points/point3.hh"
+#include "vectors/vector3.hh"
+
 namespace raytracer
 {
     Camera::Camera(const points::Point3 &position, const points::Point3 &focus,

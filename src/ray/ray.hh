@@ -19,7 +19,6 @@ namespace raytracer
         vectors::Vector3 direction;
 
     private:
-
         friend std::ostream &operator<<(std::ostream &out, const Ray &ray);
     };
 

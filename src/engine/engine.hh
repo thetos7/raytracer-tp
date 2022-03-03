@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "image/image.hh"
-#include "scene/scene.hh"
 #include "colors/rgb.hh"
+#include "image/fwd.hh"
+#include "scene/fwd.hh"
 
 namespace raytracer
 {

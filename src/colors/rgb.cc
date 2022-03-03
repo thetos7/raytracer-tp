@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+#include "vectors/vector3.hh"
+
 namespace colors
 {
     RGB::RGB()

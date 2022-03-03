@@ -1,6 +1,9 @@
 #include "intersection.hh"
 
 #include "objects/object.hh"
+#include "points/point3.hh"
+#include "ray/ray.hh"
+#include "vectors/vector3.hh"
 
 namespace raytracer
 {

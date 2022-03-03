@@ -5,7 +5,13 @@
 
 #include "colors/rgb.hh"
 #include "image/image.hh"
+#include "intersection/intersection.hh"
+#include "lights/light.hh"
+#include "materials/material_properties.hh"
+#include "objects/object.hh"
+#include "ray/ray.hh"
 #include "scene/scene.hh"
+#include "vectors/vector3.hh"
 
 namespace raytracer
 {

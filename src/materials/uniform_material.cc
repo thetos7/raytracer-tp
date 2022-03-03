@@ -1,6 +1,7 @@
 #include "uniform_material.hh"
 
 #include "intersection/intersection.hh"
+#include "vectors/vector3.hh"
 
 namespace raytracer::materials
 {

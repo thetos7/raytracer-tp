@@ -1,5 +1,6 @@
 #include "object.hh"
 
+#include "intersection/intersection.hh"
 #include "materials/material.hh"
 #include "materials/material_properties.hh"
 

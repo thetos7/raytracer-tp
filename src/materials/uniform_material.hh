@@ -2,7 +2,7 @@
 
 #include "material.hh"
 #include "material_properties.hh"
-#include "vectors/vector3.hh"
+#include "vectors/fwd.hh"
 
 namespace raytracer::materials
 {

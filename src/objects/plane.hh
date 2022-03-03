@@ -4,6 +4,7 @@
 
 #include "object.hh"
 #include "points/point3.hh"
+#include "vectors/vector3.hh"
 
 namespace raytracer::objects
 {

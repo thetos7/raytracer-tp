@@ -2,7 +2,7 @@
 
 #include <ostream>
 
-#include "vectors/vector3.hh"
+#include "vectors/fwd.hh"
 
 namespace colors
 {

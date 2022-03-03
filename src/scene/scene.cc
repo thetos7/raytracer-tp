@@ -2,6 +2,11 @@
 
 #include <sstream>
 
+#include "camera/camera.hh"
+#include "intersection/intersection.hh"
+#include "lights/light.hh"
+#include "objects/object.hh"
+#include "ray/ray.hh"
 #include "utils/utils.hh"
 
 namespace raytracer

@@ -2,7 +2,7 @@
 
 #include <ostream>
 
-#include "vectors/vector4.hh"
+#include "vectors/fwd.hh"
 
 namespace points
 {

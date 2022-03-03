@@ -4,9 +4,11 @@
 #include <iostream>
 #include <optional>
 
+#include "intersection/intersection.hh"
 #include "materials/material.hh"
 #include "object.hh"
 #include "points/point3.hh"
+#include "ray/ray.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer::objects

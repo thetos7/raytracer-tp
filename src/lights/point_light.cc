@@ -3,7 +3,10 @@
 #include <iostream>
 
 #include "intersection/intersection.hh"
+#include "points/point3.hh"
+#include "ray/ray.hh"
 #include "scene/scene.hh"
+#include "vectors/vector3.hh"
 
 namespace raytracer::lights
 {
