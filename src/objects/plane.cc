@@ -1,6 +1,7 @@
 #include "plane.hh"
 
 #include <cmath>
+#include <ostream>
 
 #include "intersection/intersection.hh"
 #include "materials/material.hh"
