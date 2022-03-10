@@ -1,8 +1,10 @@
 #pragma once
 
+#include <ostream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace utils
 {
@@ -14,6 +16,10 @@ namespace utils
 
     template <typename T>
     inline int signum(const T &v);
+
+    std::ostream &compact_on(std::ostream &out);
+    std::ostream &compact_off(std::ostream &out);
+    bool compact_enabled(std::ostream&out);
 } // namespace utils
 
 #include "utils.hxx"

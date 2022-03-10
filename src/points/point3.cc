@@ -3,6 +3,7 @@
 #include <ostream>
 #include <string>
 
+#include "utils/utils.hh"
 #include "vectors/vector3.hh"
 
 namespace points
@@ -56,6 +57,11 @@ namespace points
 
     std::ostream &operator<<(std::ostream &out, const Point3 &point)
     {
+        if (utils::compact_enabled(out))
+        {
+            return out << "(" << point.x << ", " << point.y << ", " << point.z
+                       << ")";
+        }
         return out << "Point3(" << point.x << ", " << point.y << ", " << point.z
                    << ")";
     }
