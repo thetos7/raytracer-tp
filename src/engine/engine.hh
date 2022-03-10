@@ -2,15 +2,15 @@
 
 #include <memory>
 
-#include "colors/rgb.hh"
 #include "image/fwd.hh"
 #include "scene/fwd.hh"
+#include "vectors/vector3.hh"
 
 namespace raytracer
 {
 
-    std::shared_ptr<image::RgbImage>
+    std::shared_ptr<image::LinearImage>
     raytrace(const Scene &scene, const int &height,
     const int max_depth,
-             const colors::RGB &background_color = colors::RGB::black());
+             const vectors::Vector3 &background_color = vectors::Vector3::zero());
 } // namespace raytracer

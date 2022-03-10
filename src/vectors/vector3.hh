@@ -16,6 +16,7 @@ namespace vectors
         static Vector3 up();
         static Vector3 all(double value);
 
+        Vector3();
         Vector3(double x, double y, double z);
 
         double dot(const Vector3 &other) const;
