@@ -10,11 +10,13 @@ namespace raytracer::objects
 {
     namespace
     {
-        vectors::Vector3 compute_face_normal(Triangle::PointsType points) {
-            return (points[2] - points[1]).cross(points[1] - points[0]).normalized();
+        vectors::Vector3 compute_face_normal(Triangle::PointsType points)
+        {
+            return (points[2] - points[1])
+                .cross(points[1] - points[0])
+                .normalized();
         }
     } // namespace
-    
 
     Triangle::Triangle(const PointsType &points,
                        const Object::MaterialPtr &material)
@@ -39,8 +41,8 @@ namespace raytracer::objects
 
     std::optional<Intersection> Triangle::intersects_ray(const Ray &ray) const
     {
-        // TODO: optimize? (maybe suggested solution in subject is faster, but I'm too dumb to understand it)
-        // ray-plane intersection
+        // TODO: optimize? (maybe suggested solution in subject is faster, but
+        // I'm too dumb to understand it) ray-plane intersection
         using utils::EPSILON;
         const auto denom = face_normal_.dot(ray.direction);
         if (std::abs(denom) < EPSILON)
@@ -88,8 +90,9 @@ namespace raytracer::objects
 
     std::ostream &Triangle::print(std::ostream &out) const
     {
-        return out << "Triangle{ points: [ " << points_[0] << ", " << points_[1]
-                   << ", " << points_[2] << " ], normals: [ " << normals_[0]
+        return out << "Triangle{ points: [ " << utils::compact_on << points_[0]
+                   << ", " << points_[1] << ", " << points_[2]
+                   << utils::compact_off << " ], normals: [ " << normals_[0]
                    << ", " << normals_[1] << ", " << normals_[2]
                    << " ], face_normal: " << face_normal_ << " }";
     }
