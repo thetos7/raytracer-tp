@@ -8,23 +8,30 @@
 
 namespace image
 {
+    using PixelColorType = RgbImage::PixelColorType;
+
     RgbImage::RgbImage(int width, int height)
         : width_{ width }
         , height_{ height }
-        , pixels_{ std::vector<colors::RGB>(width * height) }
+        , pixels_{ std::vector<PixelColorType>(width * height) }
     {}
 
-    size_t RgbImage::pixel_index(int x, int y)
+    size_t RgbImage::pixel_index(int x, int y) const
     {
         return x + y * width_;
     }
 
-    colors::RGB &RgbImage::pixel_get(int x, int y)
+    const PixelColorType &RgbImage::pixel_get(int x, int y) const
     {
         return pixels_[pixel_index(x, y)];
     }
 
-    void RgbImage::pixel_set(int x, int y, const colors::RGB &color)
+    PixelColorType &RgbImage::pixel_get(int x, int y)
+    {
+        return pixels_[pixel_index(x, y)];
+    }
+
+    void RgbImage::pixel_set(int x, int y, const PixelColorType &color)
     {
         pixels_[pixel_index(x, y)] = color;
     }
@@ -39,7 +46,7 @@ namespace image
             outfile << "P6\n" << width_ << " " << height_ << "\n255\n";
             for (auto it = pixels_.begin(); it != pixels_.end(); it++)
             {
-                colors::RGB pixel = *it;
+                PixelColorType pixel = *it;
                 outfile << static_cast<char>(pixel.r)
                         << static_cast<char>(pixel.g)
                         << static_cast<char>(pixel.b);
@@ -48,7 +55,7 @@ namespace image
         }
     }
 
-    void RgbImage::fill(colors::RGB color)
+    void RgbImage::fill(PixelColorType color)
     {
         for (auto &pixel : pixels_)
         {
