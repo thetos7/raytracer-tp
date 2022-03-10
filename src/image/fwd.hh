@@ -2,5 +2,5 @@
 
 namespace image
 {
-    class Image;
+    class RgbImage;
 } // namespace image

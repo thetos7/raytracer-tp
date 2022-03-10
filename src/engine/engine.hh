@@ -9,7 +9,7 @@
 namespace raytracer
 {
 
-    std::shared_ptr<image::Image>
+    std::shared_ptr<image::RgbImage>
     raytrace(const Scene &scene, const int &height,
     const int max_depth,
              const colors::RGB &background_color = colors::RGB::black());

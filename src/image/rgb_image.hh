@@ -6,10 +6,10 @@
 
 namespace image
 {
-    class Image
+    class RgbImage
     {
     public:
-        Image(int width, int height);
+        RgbImage(int width, int height);
         colors::RGB &pixel_get(int x, int y);
         void pixel_set(int x, int y, const colors::RGB &color);
 

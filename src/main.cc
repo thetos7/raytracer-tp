@@ -4,7 +4,7 @@
 
 #include "colors/rgb.hh"
 #include "engine/engine.hh"
-#include "image/image.hh"
+#include "image/rgb_image.hh"
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"

@@ -1,4 +1,4 @@
-#include "image.hh"
+#include "rgb_image.hh"
 
 #include <fstream>
 #include <ostream>
@@ -8,28 +8,28 @@
 
 namespace image
 {
-    Image::Image(int width, int height)
+    RgbImage::RgbImage(int width, int height)
         : width_{ width }
         , height_{ height }
         , pixels_{ std::vector<colors::RGB>(width * height) }
     {}
 
-    size_t Image::pixel_index(int x, int y)
+    size_t RgbImage::pixel_index(int x, int y)
     {
         return x + y * width_;
     }
 
-    colors::RGB &Image::pixel_get(int x, int y)
+    colors::RGB &RgbImage::pixel_get(int x, int y)
     {
         return pixels_[pixel_index(x, y)];
     }
 
-    void Image::pixel_set(int x, int y, const colors::RGB &color)
+    void RgbImage::pixel_set(int x, int y, const colors::RGB &color)
     {
         pixels_[pixel_index(x, y)] = color;
     }
 
-    void Image::save_ppm(const char *filename) const
+    void RgbImage::save_ppm(const char *filename) const
     {
         using std::ios;
         std::ofstream outfile;
@@ -48,7 +48,7 @@ namespace image
         }
     }
 
-    void Image::fill(colors::RGB color)
+    void RgbImage::fill(colors::RGB color)
     {
         for (auto &pixel : pixels_)
         {

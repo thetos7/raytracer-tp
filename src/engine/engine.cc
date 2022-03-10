@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "colors/rgb.hh"
-#include "image/image.hh"
+#include "image/rgb_image.hh"
 #include "intersection/intersection.hh"
 #include "lights/illumination.hh"
 #include "lights/light.hh"
@@ -16,10 +16,10 @@
 
 namespace raytracer
 {
-    using image::Image;
+    using image::RgbImage;
 
     // TODO: change to linear image and apply correction later
-    std::shared_ptr<Image> raytrace(const Scene &scene, const int &height,
+    std::shared_ptr<RgbImage> raytrace(const Scene &scene, const int &height,
                                     const int max_depth,
                                     const colors::RGB &background_color)
     {
@@ -30,7 +30,7 @@ namespace raytracer
         const auto width =
             static_cast<int>(std::round(camera.aspectRatio * height));
 
-        auto output = std::make_shared<Image>(width, height);
+        auto output = std::make_shared<RgbImage>(width, height);
         output->fill(background_color);
 
         const auto imagePlaneWidthHalf =
