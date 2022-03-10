@@ -11,6 +11,7 @@
 #include "materials/uniform_material.hh"
 #include "objects/plane.hh"
 #include "objects/sphere.hh"
+#include "objects/triangle.hh"
 #include "points/point3.hh"
 #include "scene/scene.hh"
 #include "vectors/vector3.hh"
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
     using raytracer::lights::AmbientLight;
     using raytracer::objects::Sphere;
     using raytracer::objects::Plane;
+    using raytracer::objects::Triangle;
     using raytracer::Scene;
     using raytracer::Camera;
     using colors::RGB;
@@ -75,8 +77,16 @@ int main(int argc, char *argv[])
     const auto backgroundPlane = std::make_shared<Plane>(
         Point3(20, 0, 0), Vector3(-1, 0, 0), lightBlueUniform);
 
-    auto lightGreyPlane = std::make_shared<Plane>(
+    const auto lightGreyPlane = std::make_shared<Plane>(
         Point3(0, 0, -1), Vector3::up(), lightGreyUniform);
+
+    const auto redTriangle = std::make_shared<Triangle>(
+        Triangle::PointsType{
+            Point3{ 2, 1, 1 },
+            Point3{ 2, 0, 1 },
+            Point3{ 2, 1, 0 },
+        },
+        redUniform);
 
     Scene scene{
         Camera{
@@ -93,6 +103,7 @@ int main(int argc, char *argv[])
             greenSphere,
             lightGreyPlane,
             backgroundPlane,
+            redTriangle,
         },
         Scene::LightCollection{
             std::make_shared<AmbientLight>(Vector3::all(.15)),
@@ -106,8 +117,7 @@ int main(int argc, char *argv[])
     std::cout << "Scene built:" << std::endl;
     std::cout << scene << std::endl;
 
-    const auto output =
-        raytracer::raytrace(scene, height, 3);
+    const auto output = raytracer::raytrace(scene, height, 3);
     output->save_ppm("result.ppm");
     return 0;
 }
