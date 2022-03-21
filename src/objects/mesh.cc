@@ -35,9 +35,12 @@ namespace raytracer::objects
     {
         if (utils::compact_enabled(out))
         {
-            return out << "Mesh{ [ " << utils::join(triangles_, ", ") << " ] }";
+            out << "Mesh{ [ ";
+            utils::stream_join(out, triangles_, ", ") << " ] }";
+            return out;
         }
-        return out << "Mesh { triangles: [ " << utils::join(triangles_, ", ")
-                   << " ] }";
+        out << "Mesh { triangles: [ ";
+        utils::stream_join(out, triangles_, ", ") << " ] }";
+        return out;
     }
 } // namespace raytracer::objects
