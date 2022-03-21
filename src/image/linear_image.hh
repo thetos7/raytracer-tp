@@ -23,6 +23,15 @@ namespace image
 
         RgbImage to_rgb() const;
 
+        int get_width() const
+        {
+            return width_;
+        };
+        int get_heigth() const
+        {
+            return height_;
+        };
+
     private:
         size_t pixel_index(int x, int y) const;
 

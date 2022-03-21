@@ -38,13 +38,23 @@ namespace raytracer::objects
         auto tI1 = proj - f;
         if (tI1 > 0)
         {
-            return Intersection{ ray, tI1, 0, 0, this };
+            // https://en.wikipedia.org/wiki/UV_mapping
+            vectors::Vector3 d = this->center_ - ray.origin + ray.direction * tI1; // vector from point to center
+            double u = std::atan2(d.x, d.z) / (2 * M_PI);
+            double v = std::asin(d.y) / M_PI;
+
+            return Intersection{ ray, tI1, u, v, this };
         }
 
         auto tI2 = proj + f;
         if (tI2 > 0)
         {
-            return Intersection{ ray, tI2, 0, 0, this };
+            // https://en.wikipedia.org/wiki/UV_mapping
+            vectors::Vector3 d = this->center_ - ray.origin + ray.direction * tI2; // vector from point to center
+            double u = std::atan2(d.x, d.z) / (2 * M_PI);
+            double v = std::asin(d.y) / M_PI;
+
+            return Intersection{ ray, tI2, u, v, this };
         }
         // all intersection points are behind the origin of the ray
         return {};

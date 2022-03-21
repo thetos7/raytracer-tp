@@ -21,6 +21,15 @@ namespace image
 
         void fill(PixelColorType color);
 
+        int get_width() const
+        {
+            return width_;
+        };
+        int get_heigth() const
+        {
+            return height_;
+        };
+
     private:
         size_t pixel_index(int x, int y) const;
 
