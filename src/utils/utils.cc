@@ -1,5 +1,7 @@
 #include "utils.hh"
 
+#include <ostream>
+
 namespace utils
 {
     namespace
@@ -10,7 +12,6 @@ namespace utils
             return i;
         }
     } // namespace
-    
     std::ostream &compact_on(std::ostream &out)
     {
         out.iword(get_compact()) = 1;

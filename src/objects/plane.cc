@@ -7,8 +7,8 @@
 #include "materials/material.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"
+#include "utils/utils.hh"
 #include "vectors/vector3.hh"
-
 namespace raytracer::objects
 {
     Plane::Plane(const points::Point3 &origin, const vectors::Vector3 &normal,
@@ -41,6 +41,10 @@ namespace raytracer::objects
 
     std::ostream &Plane::print(std::ostream &out) const
     {
+        if (utils::compact_enabled(out))
+        {
+            return out << "Plane{ " << origin_ << ", " << normal_ << " }";
+        }
         return out << "Plane{ origin: " << origin_ << ", normal: " << normal_
                    << " }";
     }

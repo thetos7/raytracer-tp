@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -19,7 +20,7 @@ namespace utils
 
     std::ostream &compact_on(std::ostream &out);
     std::ostream &compact_off(std::ostream &out);
-    bool compact_enabled(std::ostream&out);
+    bool compact_enabled(std::ostream &out);
 } // namespace utils
 
 #include "utils.hxx"

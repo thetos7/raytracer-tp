@@ -9,6 +9,7 @@
 #include "object.hh"
 #include "points/point3.hh"
 #include "ray/ray.hh"
+#include "utils/utils.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer::objects
@@ -67,6 +68,10 @@ namespace raytracer::objects
 
     std::ostream &Sphere::print(std::ostream &out) const
     {
+        if (utils::compact_enabled(out))
+        {
+            return out << "Sphere{ " << center_ << ", " << radius_ << " }";
+        }
         return out << "Sphere{ center: " << center_ << ", radius: " << radius_
                    << " }";
     }
