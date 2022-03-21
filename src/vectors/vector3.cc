@@ -4,6 +4,7 @@
 #include <ostream>
 #include <string>
 
+#include "utils/utils.hh"
 namespace vectors
 {
     Vector3 Vector3::unit()
@@ -182,6 +183,11 @@ namespace vectors
 
     std::ostream &operator<<(std::ostream &out, const Vector3 &vect)
     {
+        if (utils::compact_enabled(out))
+        {
+            return out << "(" << vect.x << ", " << vect.y << ", " << vect.z
+                       << ")";
+        }
         return out << "Vector3(" << vect.x << ", " << vect.y << ", " << vect.z
                    << ")";
     }

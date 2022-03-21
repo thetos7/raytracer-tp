@@ -7,6 +7,7 @@
 #include "points/point3.hh"
 #include "ray/ray.hh"
 #include "scene/scene.hh"
+#include "utils/utils.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer::lights
@@ -35,7 +36,11 @@ namespace raytracer::lights
 
     std::ostream &SunLight::print(std::ostream &out) const
     {
-        return out << "Sunlight{ direction: " << direction
+        if (utils::compact_enabled(out))
+        {
+            return out << "SunLight{ " << direction << ", " << color << " }";
+        }
+        return out << "SunLight{ direction: " << direction
                    << ", color: " << color << " }";
     }
 } // namespace raytracer::lights

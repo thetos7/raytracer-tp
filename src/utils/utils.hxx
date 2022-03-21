@@ -4,17 +4,44 @@
 
 namespace utils
 {
+
+    template <class T>
+    std::ostream &stream_join(std::ostream &out,
+                              const std::vector<std::shared_ptr<T>> &vec,
+                              const std::string &delimiter)
+    {
+        auto it = vec.begin();
+        while (true)
+        {
+            out << **it;
+            if (++it != vec.end())
+            {
+                out << delimiter;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return out;
+    }
+
     template <class T>
     std::string join(const std::vector<std::shared_ptr<T>> &vec,
                      const std::string &delimiter)
     {
         std::ostringstream oss;
-        for (auto it = vec.begin(); it != vec.end(); ++it)
+        auto it = vec.begin();
+        while (true)
         {
             oss << **it;
-            if (it != vec.end() - 1)
+            if (++it != vec.end())
             {
                 oss << delimiter;
+            }
+            else
+            {
+                break;
             }
         }
         return oss.str();

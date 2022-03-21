@@ -3,6 +3,7 @@
 #include <ostream>
 
 #include "illumination.hh"
+#include "utils/utils.hh"
 
 namespace raytracer::lights
 {
@@ -18,6 +19,10 @@ namespace raytracer::lights
 
     std::ostream &AmbientLight::print(std::ostream &out) const
     {
+        if (utils::compact_enabled(out))
+        {
+            return out << "AmbientLight{ " << color << " }";
+        }
         return out << "AmbientLight{ color: " << color << " }";
     }
 } // namespace raytracer::lights

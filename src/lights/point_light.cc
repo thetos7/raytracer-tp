@@ -7,6 +7,7 @@
 #include "points/point3.hh"
 #include "ray/ray.hh"
 #include "scene/scene.hh"
+#include "utils/utils.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer::lights
@@ -18,6 +19,11 @@ namespace raytracer::lights
 
     std::ostream &PointLight::print(std::ostream &out) const
     {
+        if (utils::compact_enabled(out))
+        {
+            return out << "PointLight{ " << position << ", " << intensity
+                       << " }";
+        }
         return out << "PointLight{ position: " << position
                    << ", intensity: " << intensity << " }";
     }
