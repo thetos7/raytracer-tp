@@ -16,6 +16,9 @@
 namespace raytracer
 {
     using utils::join;
+    Scene::Scene()
+    {}
+
     Scene::Scene(const Camera &camera)
         : Scene{ camera, {}, {} }
     {}

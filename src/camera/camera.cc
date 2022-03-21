@@ -7,6 +7,11 @@
 
 namespace raytracer
 {
+    Camera::Camera()
+        : fov{ 0 }
+        , aspectRatio{ 0 }
+        , zMin{ 0 }
+    {}
     Camera::Camera(const points::Point3 &position, const points::Point3 &focus,
                    const vectors::Vector3 &up, double fov, double aspectRatio,
                    double zMin)

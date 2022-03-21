@@ -2,3 +2,14 @@
 .vscode/*
 !.vscode/c_cpp_properties.json
 !.vscode/settings.json
+CMakeFiles
+.gitignore
+cmake_install.cmake
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+CTestTestfile.cmake
+DartConfiguration.tcl
+Makefile
+raytracer-tp
+result.ppm

@@ -55,7 +55,15 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "cinttypes": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "ctime": "cpp",
+    "chrono": "cpp",
+    "codecvt": "cpp",
+    "forward_list": "cpp",
+    "map": "cpp",
+    "ratio": "cpp",
+    "iomanip": "cpp",
+    "valarray": "cpp"
   },
   "cmake.configureEnvironment": {
     "CC": "/usr/bin/clang",

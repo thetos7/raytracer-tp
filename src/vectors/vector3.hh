@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iosfwd>
+#include <vector>
 
 namespace vectors
 {
@@ -15,6 +16,7 @@ namespace vectors
         static Vector3 zero();
         static Vector3 up();
         static Vector3 all(double value);
+        static Vector3 from_vector(const std::vector<double> &);
 
         Vector3();
         Vector3(double x, double y, double z);

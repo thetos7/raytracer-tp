@@ -26,6 +26,11 @@ namespace vectors
         return Vector3{ value, value, value };
     }
 
+    Vector3 Vector3::from_vector(const std::vector<double> &v)
+    {
+        return Vector3{ v[0], v[1], v[2] };
+    }
+
     Vector3::Vector3()
         : Vector3{ 0, 0, 0 }
     {}
