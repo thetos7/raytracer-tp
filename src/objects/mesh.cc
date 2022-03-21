@@ -28,7 +28,7 @@ namespace raytracer::objects
 
     vectors::Vector3 Mesh::get_normal(const Intersection &intersection) const
     {
-        intersection.object->get_normal(intersection);
+        return intersection.object->get_normal(intersection);
     }
 
     std::ostream &Mesh::print(std::ostream &out) const
