@@ -20,7 +20,7 @@ namespace raytracer::objects
             if (intersection
                 && (!minIntersection || minIntersection->t > intersection->t))
             {
-                minIntersection = std::move(intersection);
+                minIntersection = intersection;
             }
         }
         return minIntersection;
