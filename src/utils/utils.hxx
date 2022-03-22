@@ -10,6 +10,11 @@ namespace utils
                               const std::vector<std::shared_ptr<T>> &vec,
                               const std::string &delimiter)
     {
+        if (vec.size() == 0)
+        {
+            return out;
+        }
+
         auto it = vec.begin();
         while (true)
         {
@@ -30,6 +35,10 @@ namespace utils
     std::string join(const std::vector<std::shared_ptr<T>> &vec,
                      const std::string &delimiter)
     {
+        if (vec.size() == 0)
+        {
+            return "";
+        }
         std::ostringstream oss;
         auto it = vec.begin();
         while (true)
