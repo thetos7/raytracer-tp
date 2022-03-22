@@ -10,6 +10,11 @@ add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# TODO: find a better way to handle release/debug builds
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+# set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fno-omit-frame-pointer -fsanitize=address")
+# set (CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -g -fno-omit-frame-pointer -fsanitize=address")
+
 include_directories("${PROJECT_SOURCE_DIR}/src")
 file(GLOB_RECURSE all_SRCS CONFIGURE_DEPENDS
         "${PROJECT_SOURCE_DIR}/src/*.hxx"
