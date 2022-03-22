@@ -5,8 +5,8 @@
 
 namespace raytracer::objects
 {
-    Mesh::Mesh(Mesh::TriangleCollection &&triangles, MaterialPtr material)
-        : Object(material)
+    Mesh::Mesh(const Mesh::TriangleCollection &triangles)
+        : Object(nullptr)
         , triangles_(triangles)
 
     {}
