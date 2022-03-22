@@ -52,4 +52,10 @@ namespace utils
     {
         return (T(0) < value) - (value < T(0));
     }
+
+    template <typename T>
+    inline auto lerp(const T &a, const T &b, double factor)
+    {
+        return a * factor + b * (1 - factor);
+    }
 } // namespace utils
