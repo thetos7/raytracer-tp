@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
     const auto camPoint = Point3(2, 0, 0);
     const auto camUp = Vector3::up();
     const auto redSphere =
-        std::make_shared<Sphere>(Point3(4, 0, 0), 2, redUniform);
+        std::make_shared<Sphere>(Point3(4, 0, 0), 1., redUniform);
     const auto orangeSphere =
         std::make_shared<Sphere>(Point3(4, -1, 1), 1., orangeUniform);
     const auto greenSphere =
