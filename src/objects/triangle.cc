@@ -18,6 +18,10 @@ namespace raytracer::objects
         }
     } // namespace
 
+    Triangle::Triangle()
+        : Triangle{ {}, nullptr }
+    {}
+
     Triangle::Triangle(const PointsType &points,
                        const Object::MaterialPtr &material)
         : Object{ material }
