@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
         constexpr int height = 480;
         const auto output = raytracer::raytrace(scene, height, 3);
         output->save_ppm("result.ppm");
+        return 0;
     }
-    return 0;
 
     using namespace points;
     using namespace vectors;
