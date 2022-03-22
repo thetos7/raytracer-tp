@@ -92,16 +92,16 @@ namespace raytracer::objects
     {
         if (utils::compact_enabled(out))
         {
-            return out << "Triangle{ [ " << points_[0] << ", " << points_[1] << ", "
-                       << points_[2] << " ], [ " << normals_[0] << ", "
+            return out << "Triangle{ [ " << points_[0] << ", " << points_[1]
+                       << ", " << points_[2] << " ], [ " << normals_[0] << ", "
                        << normals_[1] << ", " << normals_[2] << " ], "
                        << face_normal_ << " }";
         }
 
         return out << "Triangle{ points: [ " << utils::compact_on << points_[0]
                    << ", " << points_[1] << ", " << points_[2]
-                   << utils::compact_off << " ], normals: [ " << normals_[0]
-                   << ", " << normals_[1] << ", " << normals_[2]
+                   << " ], normals: [ " << normals_[0] << ", " << normals_[1]
+                   << ", " << normals_[2] << utils::compact_off
                    << " ], face_normal: " << face_normal_ << " }";
     }
 } // namespace raytracer::objects
