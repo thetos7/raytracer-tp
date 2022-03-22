@@ -1,6 +1,7 @@
 #include "engine.hh"
 
 #include <cmath>
+#include <iostream>
 #include <memory>
 
 #include "colors/rgb.hh"
@@ -20,9 +21,12 @@ namespace raytracer
 
     // TODO: change to linear image and apply correction later
     std::shared_ptr<Image> raytrace(const Scene &scene, const int &height,
-                                    const int max_depth,
+                                    const int max_depth, bool progress_print,
+                                    int progress_print_step,
                                     const vectors::Vector3 &background_color)
     {
+        if (progress_print)
+            std::cout << "Starting render.\n";
         using namespace colors;
 
         const auto &camera = scene.camera();
@@ -47,6 +51,11 @@ namespace raytracer
 
         for (auto y = 0; y < height; ++y)
         {
+            if (progress_print && y % progress_print_step == 0)
+            {
+                std::cout << "\33[2K\rRendering line " << y << " out of " << height
+                          << "..." << std::flush;
+            }
             for (auto x = 0; x < width; ++x)
             {
                 const auto rayOrigin = imagePlaneCenter
@@ -66,7 +75,10 @@ namespace raytracer
                 }
             }
         }
-
+        if (progress_print)
+        {
+            std::cout << "\nRender finished.\n";
+        }
         return output;
     }
 } // namespace raytracer
