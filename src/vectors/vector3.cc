@@ -40,6 +40,8 @@ namespace vectors
     double Vector3::norm() const
     {
         return sqrt(square_norm());
+    }
+
     Vector3 Vector3::normalized() const
     {
         auto norm_ = norm();
