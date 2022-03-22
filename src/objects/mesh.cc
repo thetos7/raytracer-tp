@@ -31,6 +31,12 @@ namespace raytracer::objects
         return intersection.object->get_normal(intersection);
     }
 
+    const materials::MaterialProperties &
+    Mesh::get_texture(const Intersection &intersection) const
+    {
+        return intersection.object->get_texture(intersection);
+    }
+
     std::ostream &Mesh::print(std::ostream &out) const
     {
         if (utils::compact_enabled(out))
