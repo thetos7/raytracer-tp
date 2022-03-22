@@ -27,6 +27,8 @@ namespace points
             , z{ z }
         {}
 
+        Point3 lerp_to(Point3 other, double factor);
+
         Point3 &operator+=(const vectors::Vector3 &vect);
         Point3 &operator-=(const vectors::Vector3 &vect);
 
