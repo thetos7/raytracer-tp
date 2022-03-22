@@ -18,8 +18,15 @@ namespace vectors
         static Vector3 all(double value);
         static Vector3 from_vector(const std::vector<double> &);
 
-        Vector3();
-        Vector3(double x, double y, double z);
+        constexpr Vector3()
+            : Vector3{ 0, 0, 0 }
+        {}
+
+        constexpr Vector3(double x, double y, double z)
+            : x{ x }
+            , y{ y }
+            , z{ z }
+        {}
 
         double dot(const Vector3 &other) const;
         Vector3 cross(const Vector3 &other) const;

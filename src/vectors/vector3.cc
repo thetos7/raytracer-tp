@@ -32,16 +32,6 @@ namespace vectors
         return Vector3{ v[0], v[1], v[2] };
     }
 
-    Vector3::Vector3()
-        : Vector3{ 0, 0, 0 }
-    {}
-
-    Vector3::Vector3(double x, double y, double z)
-        : x{ x }
-        , y{ y }
-        , z{ z }
-    {}
-
     double Vector3::square_norm() const
     {
         return this->dot(*this);
@@ -50,8 +40,6 @@ namespace vectors
     double Vector3::norm() const
     {
         return sqrt(square_norm());
-    }
-
     Vector3 Vector3::normalized() const
     {
         auto norm_ = norm();
