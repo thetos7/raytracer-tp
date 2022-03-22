@@ -8,12 +8,21 @@
 
 namespace points
 {
-
     Point3 Point3::origin()
     {
         return Point3{ 0, 0, 0 };
     }
 
+    Point3 Point3::from_vector(const std::vector<double> &v)
+    {
+        return Point3{ v[0], v[1], v[2] };
+    }
+
+    Point3::Point3()
+        : x{ 0 }
+        , y{ 0 }
+        , z{ 0 }
+    {}
     Point3::Point3(double x, double y, double z)
         : x{ x }
         , y{ y }

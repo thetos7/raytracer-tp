@@ -5,6 +5,7 @@
 #include "colors/rgb.hh"
 #include "engine/engine.hh"
 #include "image/linear_image.hh"
+#include "json/json-import.hh"
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
@@ -18,6 +19,19 @@
 
 int main(int argc, char *argv[])
 {
+    if (argc == 2)
+    {
+        raytracer::JsonImport jsonImport = raytracer::JsonImport(argv[1]);
+        auto scene = jsonImport.importScene();
+        std::cout << "Scene built:" << std::endl;
+        std::cout << scene << std::endl;
+
+        constexpr int height = 480;
+        const auto output = raytracer::raytrace(scene, height, 3);
+        output->save_ppm("result.ppm");
+        return 0;
+    }
+
     using namespace points;
     using namespace vectors;
     using raytracer::materials::UniformMaterial;

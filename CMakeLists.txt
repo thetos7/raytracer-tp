@@ -4,6 +4,8 @@ project(raytracer-tp VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
+add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
+
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

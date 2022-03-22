@@ -7,6 +7,7 @@
 
 #include "camera/camera.hh"
 #include "intersection/fwd.hh"
+#include "json/fwd.hh"
 #include "lights/fwd.hh"
 #include "objects/fwd.hh"
 #include "ray/fwd.hh"
@@ -17,10 +18,13 @@ namespace raytracer
 
     class Scene
     {
+        friend JsonImport;
+
     public:
         using LightCollection = std::vector<std::shared_ptr<lights::Light>>;
         using ObjectCollection = std::vector<std::shared_ptr<objects::Object>>;
         using SampleResult = std::optional<const vectors::Vector3>;
+        Scene();
         Scene(const Camera &camera);
         Scene(const Camera &camera, ObjectCollection objects,
               const LightCollection lights);
