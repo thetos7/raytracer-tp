@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
         Vector3::zero(),
     });
 
-    const auto camPos = Point3(0.5, -0.5, 0);
+    const auto camPos = Point3(0, -1, 0);
     const auto camPoint = Point3(2, 0, 0);
     const auto camUp = Vector3::up();
     const auto redSphere =
@@ -120,7 +120,8 @@ int main(int argc, char *argv[])
     const auto purpleBlob = std::make_shared<Blob>(
         Point3(2, 0, 0), 2.2, 33, 0.4,
         Blob::SourceCollection{
-            std::make_shared<BlobPoint>(1., Point3(2, 0, 0)),
+            std::make_shared<BlobPoint>(0.75, Point3(2, -0.35, 0)),
+            std::make_shared<BlobPoint>(0.75, Point3(2, 0.35, 0)),
         },
         purpleUniform);
 
