@@ -420,8 +420,12 @@ namespace raytracer::objects
             for (int j = 0; j < PER_VERTEX_VALUE_COUNT; ++j)
             {
                 const auto [A, B] = get_edge(x, y, z, edges[i + j]);
+                const auto idx_a = cube_index(A);
+                const auto idx_b = cube_index(B);
+                const auto val_a = point_samples[idx_a] - threshold;
+                const auto val_b = point_samples[idx_b] - threshold;
 
-                const auto factor = 0.5;
+                const auto factor = -val_b / (val_a - val_b);
                 triangle_vertices[j] =
                     sample_point_pos(A).lerp_to(sample_point_pos(B), factor);
 
