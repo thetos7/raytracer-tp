@@ -70,6 +70,7 @@
     "CXX": "/usr/bin/clang++"
   },
   "cmake.configureOnOpen": false,
+  "cmake.configureOnEdit": false,
   "cmake.generator": "Unix Makefiles",
-  "cmake.parallelJobs": 8,
+  "cmake.parallelJobs": 8
 }

@@ -4,6 +4,7 @@
 #include <ostream>
 #include <string>
 
+#include "utils/utils.hh"
 namespace vectors
 {
     Vector3 Vector3::unit()
@@ -30,16 +31,6 @@ namespace vectors
     {
         return Vector3{ v[0], v[1], v[2] };
     }
-
-    Vector3::Vector3()
-        : Vector3{ 0, 0, 0 }
-    {}
-
-    Vector3::Vector3(double x, double y, double z)
-        : x{ x }
-        , y{ y }
-        , z{ z }
-    {}
 
     double Vector3::square_norm() const
     {
@@ -71,7 +62,7 @@ namespace vectors
 
     Vector3 Vector3::cross(const Vector3 &other) const
     {
-        return Vector3{ y * other.z - z * other.y, z * other.x - x * other.y,
+        return Vector3{ y * other.z - z * other.y, z * other.x - x * other.z,
                         x * other.y - y * other.x };
     }
 
@@ -182,6 +173,11 @@ namespace vectors
 
     std::ostream &operator<<(std::ostream &out, const Vector3 &vect)
     {
+        if (utils::compact_enabled(out))
+        {
+            return out << "(" << vect.x << ", " << vect.y << ", " << vect.z
+                       << ")";
+        }
         return out << "Vector3(" << vect.x << ", " << vect.y << ", " << vect.z
                    << ")";
     }

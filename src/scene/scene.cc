@@ -127,10 +127,18 @@ namespace raytracer
 
     std::ostream &operator<<(std::ostream &out, const Scene &scene)
     {
+        if (utils::compact_enabled(out))
+        {
+            out << "Scene { " << scene.camera() << ", [ ";
+            utils::stream_join(out, scene.objects(), ", ") << " ], [ ";
+            utils::stream_join(out, scene.lights(), ", ") << " ] }";
+            return out;
+        }
+
         out << "Scene { camera: " << scene.camera() << ", objects: [ ";
-        out << join(scene.objects(), ", ");
+        utils::stream_join(out, scene.objects(), ", ");
         out << " ], lights: [ ";
-        out << join(scene.lights(), ", ");
+        utils::stream_join(out, scene.lights(), ", ");
         out << " ] }";
         return out;
     }

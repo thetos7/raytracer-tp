@@ -18,16 +18,14 @@ namespace points
         return Point3{ v[0], v[1], v[2] };
     }
 
-    Point3::Point3()
-        : x{ 0 }
-        , y{ 0 }
-        , z{ 0 }
-    {}
-    Point3::Point3(double x, double y, double z)
-        : x{ x }
-        , y{ y }
-        , z{ z }
-    {}
+    Point3 Point3::lerp_to(Point3 other, double factor) const
+    {
+        return Point3{
+            utils::lerp(x, other.x, factor),
+            utils::lerp(y, other.y, factor),
+            utils::lerp(z, other.z, factor),
+        };
+    }
 
     Point3 &Point3::operator+=(const vectors::Vector3 &vect)
     {

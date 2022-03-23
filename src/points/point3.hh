@@ -17,8 +17,18 @@ namespace points
         static Point3 origin();
         static Point3 from_vector(const std::vector<double> &);
 
-        Point3();
-        Point3(double x, double y, double z);
+        constexpr Point3()
+            : Point3{ 0, 0, 0 }
+        {}
+
+        constexpr Point3(double x, double y, double z)
+            : x{ x }
+            , y{ y }
+            , z{ z }
+        {}
+
+        Point3 lerp_to(Point3 other, double factor) const;
+
         Point3 &operator+=(const vectors::Vector3 &vect);
         Point3 &operator-=(const vectors::Vector3 &vect);
 

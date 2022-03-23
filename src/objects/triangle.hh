@@ -13,6 +13,7 @@ namespace raytracer::objects
         using PointsType = std::array<points::Point3, 3>;
         using NormalsType = std::array<vectors::Vector3, 3>;
 
+        Triangle();
         Triangle(const PointsType &points, const Object::MaterialPtr &material);
         Triangle(const PointsType &points, const NormalsType &normals,
                  const Object::MaterialPtr &material);

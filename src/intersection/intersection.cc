@@ -21,6 +21,12 @@ namespace raytracer
         , t{ t }
     {}
 
+    Intersection::Intersection(const Intersection &other)
+        : Intersection{ other.ray, other.t, other.u, other.v, other.object }
+    {
+        scene = other.scene;
+    }
+
     points::Point3 Intersection::intersection_point() const
     {
         return ray.origin + ray.direction * t;

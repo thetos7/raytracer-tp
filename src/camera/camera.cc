@@ -3,8 +3,8 @@
 #include <ostream>
 
 #include "points/point3.hh"
+#include "utils/utils.hh"
 #include "vectors/vector3.hh"
-
 namespace raytracer
 {
     Camera::Camera()
@@ -27,6 +27,12 @@ namespace raytracer
 
     std::ostream &operator<<(std::ostream &out, const Camera &camera)
     {
+        if (utils::compact_enabled(out))
+            return out << "Camera{ " << camera.position << ", " << camera.focus
+                       << ", " << camera.up << ", " << camera.forward << ", "
+                       << camera.right << ", " << camera.fov << ", "
+                       << camera.aspectRatio << ", " << camera.zMin << " }";
+
         return out << "Camera{ position: " << camera.position
                    << ", focus: " << camera.focus << ", up: " << camera.up
                    << ", forward: " << camera.forward

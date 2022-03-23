@@ -1,26 +1,23 @@
 #pragma once
 
-#include <memory>
 #include <iosfwd>
+#include <memory>
 
+#include "objects/fwd.hh"
 #include "points/fwd.hh"
 #include "ray/ray.hh"
+#include "scene/fwd.hh"
 #include "vectors/fwd.hh"
 
 namespace raytracer
 {
-    class Scene;
-
-    namespace objects
-    {
-        class Object;
-    } // namespace objects
 
     class Intersection
     {
     public:
         using ObjectPtr = const objects::Object *;
 
+        Intersection(const Intersection &other);
         Intersection(const Ray ray, const double t, const double u,
                      const double v, ObjectPtr object);
 
