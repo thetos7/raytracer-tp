@@ -29,7 +29,9 @@ namespace raytracer::objects
 
         std::array<points::Point3, 3> points_;
         std::array<vectors::Vector3, 3> normals_;
+        vectors::Vector3 raw_face_normal_;
         vectors::Vector3 face_normal_;
+        bool flat_;
     };
 
 } // namespace raytracer::objects
