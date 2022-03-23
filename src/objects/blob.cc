@@ -332,6 +332,7 @@ namespace raytracer::objects
         , plane_points{ sample_line_count * sample_line_count }
         , point_count{ plane_points * sample_line_count }
         , point_samples(point_count)
+        , sample_normals(point_count)
     {
         build_mesh();
     }
@@ -394,13 +395,14 @@ namespace raytracer::objects
     void Blob::compute_point_samples()
     {
         for_cube_coordinates(sample_line_count, [&](auto x, auto y, auto z) {
-            const auto value = blob_value(sample_point_pos(Point3i{
+            const auto [value, normal] = blob_value(sample_point_pos(Point3i{
                 static_cast<int>(x),
                 static_cast<int>(y),
                 static_cast<int>(z),
             }));
             const auto index = cube_index(x, y, z);
             point_samples[index] = value;
+            sample_normals[index] = normal;
         });
     }
 
@@ -411,6 +413,7 @@ namespace raytracer::objects
         constexpr auto PER_VERTEX_VALUE_COUNT = 3;
         constexpr auto NO_VALUE = -1;
         std::array<Point3, 3> triangle_vertices;
+        std::array<Vector3, 3> triangle_normals;
         std::vector<std::shared_ptr<Triangle>> triangles;
         const auto edges =
             get_intersecting_edges(intersection_index(threshold, x, y, z));
@@ -429,12 +432,19 @@ namespace raytracer::objects
                 triangle_vertices[j] =
                     sample_point_pos(A).lerp_to(sample_point_pos(B), factor);
 
+                triangle_normals[j] = sample_normals[idx_a].lerp_to(
+                    sample_normals[idx_b], factor);
             }
             triangles.push_back(std::make_shared<Triangle>(
                 Triangle::PointsType{
                     triangle_vertices[0],
                     triangle_vertices[1],
                     triangle_vertices[2],
+                },
+                Triangle::NormalsType{
+                    triangle_normals[0],
+                    triangle_normals[1],
+                    triangle_normals[2],
                 },
                 material));
         }
@@ -488,18 +498,22 @@ namespace raytracer::objects
         return out;
     }
 
-    double Blob::blob_value(Point3 position) const
+    std::pair<double, Vector3> Blob::blob_value(Point3 position) const
     {
         double value = 0;
+        auto normal = Vector3::zero();
         for (const auto &source : sources)
         {
             const auto nearest = source->get_nearest(position);
-            const auto distance = (position - nearest).norm();
+            const auto position_to_nearest = position - nearest;
+            const auto distance = position_to_nearest.norm();
+            const auto source_normal = position_to_nearest / distance;
             const auto contribution =
                 source_contribution(source->get_radius(), distance);
             value += contribution;
+            normal += normal * contribution;
         }
-        return value;
+        return { value, normal.normalized() };
     }
 
     double Blob::source_contribution(double radius, double distance) const

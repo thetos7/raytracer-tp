@@ -47,10 +47,12 @@ namespace raytracer::objects
         SourceCollection sources;
         std::optional<Mesh> mesh;
         std::vector<double> point_samples;
+        std::vector<vectors::Vector3> sample_normals;
 
     private:
         virtual std::ostream &print(std::ostream &out) const override;
-        double blob_value(points::Point3 position) const;
+        std::pair<double, vectors::Vector3>
+        blob_value(points::Point3 position) const;
         double source_contribution(double radius, double distance) const;
         size_t cube_index(size_t x, size_t y, size_t z) const;
         size_t cube_index(points::Point3i pos) const;
