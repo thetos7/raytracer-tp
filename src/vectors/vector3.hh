@@ -34,6 +34,7 @@ namespace vectors
         double norm() const;
         double square_norm() const;
         Vector3 normalized() const;
+        Vector3 lerp_to(const Vector3 &other, double factor) const;
 
         Vector3 &operator+=(const Vector3 &other);
         Vector3 &operator-=(const Vector3 &other);
