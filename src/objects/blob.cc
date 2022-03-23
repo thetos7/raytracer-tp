@@ -7,6 +7,7 @@
 
 #include "blob_sources/blob_source.hh"
 #include "intersection/intersection.hh"
+#include "points/int_point3.hh"
 #include "points/point3.hh"
 #include "triangle.hh"
 #include "utils/utils.hh"
@@ -14,6 +15,10 @@
 
 namespace raytracer::objects
 {
+    using points::Point3i;
+    using points::Point3;
+    using vectors::Vector3;
+
     namespace
     {
         void
@@ -312,7 +317,7 @@ namespace raytracer::objects
         }
     } // namespace
 
-    Blob::Blob(const points::Point3 &center, double size, size_t divisions,
+    Blob::Blob(const Point3 &center, double size, size_t divisions,
                double threshold, const SourceCollection &sources,
                const MaterialPtr &material)
         : Object{ material }
@@ -322,7 +327,7 @@ namespace raytracer::objects
         , threshold{ threshold }
         , sources{ sources }
         , div_size{ size / divisions }
-        , bot_back_left_corner{ center + vectors::Vector3::all(-size / 2) }
+        , bot_back_left_corner{ center + Vector3::all(-size / 2) }
         , sample_line_count{ divisions + 1 }
         , plane_points{ sample_line_count * sample_line_count }
         , point_count{ plane_points * sample_line_count }
@@ -338,7 +343,7 @@ namespace raytracer::objects
         return mesh->intersects_ray(ray);
     }
 
-    vectors::Vector3 Blob::get_normal(const Intersection &intersection) const
+    Vector3 Blob::get_normal(const Intersection &intersection) const
     {
         if (!mesh)
             throw new std::logic_error("Can't get normal of blob: no mesh");
@@ -354,7 +359,7 @@ namespace raytracer::objects
         return mesh->get_texture(intersection);
     }
 
-    int Blob::intersection_index(double thresh, int x, int y, int z)
+    int Blob::intersection_index(double thresh, int x, int y, int z) const
     {
         int index = 0;
         if (point_samples[cube_index(x + 1, y, z + 1)] > thresh)
@@ -376,16 +381,26 @@ namespace raytracer::objects
         return index;
     }
 
-    size_t Blob::cube_index(size_t x, size_t y, size_t z)
+    size_t Blob::cube_index(size_t x, size_t y, size_t z) const
     {
         return x + y * sample_line_count + z * plane_points;
+    }
+
+    size_t Blob::cube_index(Point3i pos) const
+    {
+        return cube_index(pos.x, pos.y, pos.z);
     }
 
     void Blob::compute_point_samples()
     {
         for_cube_coordinates(sample_line_count, [&](auto x, auto y, auto z) {
-            point_samples[cube_index(x, y, z)] =
-                blob_value(get_sample_point_pos(x, y, z));
+            const auto value = blob_value(sample_point_pos(Point3i{
+                static_cast<int>(x),
+                static_cast<int>(y),
+                static_cast<int>(z),
+            }));
+            const auto index = cube_index(x, y, z);
+            point_samples[index] = value;
         });
     }
 
@@ -395,7 +410,7 @@ namespace raytracer::objects
         constexpr auto MAX_INTERSECTION_LENGTH = 15;
         constexpr auto PER_VERTEX_VALUE_COUNT = 3;
         constexpr auto NO_VALUE = -1;
-        std::array<points::Point3, 3> triangle_vertices;
+        std::array<Point3, 3> triangle_vertices;
         std::vector<std::shared_ptr<Triangle>> triangles;
         const auto edges =
             get_intersecting_edges(intersection_index(threshold, x, y, z));
@@ -406,14 +421,17 @@ namespace raytracer::objects
             {
                 const auto [A, B] = get_edge(x, y, z, edges[i + j]);
 
+                const auto factor = 0.5;
                 triangle_vertices[j] =
-                    A.lerp_to(B, 0.5); // TODO change factor depending on
-                // points value
+                    sample_point_pos(A).lerp_to(sample_point_pos(B), factor);
+
             }
             triangles.push_back(std::make_shared<Triangle>(
-                Triangle::PointsType{ triangle_vertices[0],
-                                      triangle_vertices[1],
-                                      triangle_vertices[2] },
+                Triangle::PointsType{
+                    triangle_vertices[0],
+                    triangle_vertices[1],
+                    triangle_vertices[2],
+                },
                 material));
         }
         return triangles;
@@ -421,7 +439,6 @@ namespace raytracer::objects
 
     void Blob::build_mesh()
     {
-        using vectors::Vector3;
         compute_point_samples();
 
         // Compute mesh triangles
@@ -441,15 +458,15 @@ namespace raytracer::objects
         const auto [oax, oay, oaz] = oa;
         const auto [obx, oby, obz] = ob;
         return {
-            get_sample_point_pos(x + oax, y + oay, z + oaz),
-            get_sample_point_pos(x + obx, y + oby, z + obz),
+            { x + oax, y + oay, z + oaz },
+            { x + obx, y + oby, z + obz },
         };
     }
 
-    points::Point3 Blob::get_sample_point_pos(int x, int y, int z) const
+    Point3 Blob::sample_point_pos(Point3i pos) const
     {
         return bot_back_left_corner
-            + vectors::Vector3(x * div_size, y * div_size, z * div_size);
+            + Vector3(pos.x * div_size, pos.y * div_size, pos.z * div_size);
     }
 
     std::ostream &Blob::print(std::ostream &out) const
@@ -467,7 +484,7 @@ namespace raytracer::objects
         return out;
     }
 
-    double Blob::blob_value(points::Point3 position) const
+    double Blob::blob_value(Point3 position) const
     {
         double value = 0;
         for (const auto &source : sources)
