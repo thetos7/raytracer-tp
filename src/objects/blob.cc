@@ -511,7 +511,7 @@ namespace raytracer::objects
             const auto contribution =
                 source_contribution(source->get_radius(), distance);
             value += contribution;
-            normal += normal * contribution;
+            normal += source_normal * contribution;
         }
         return { value, normal.normalized() };
     }
