@@ -10,11 +10,15 @@ namespace raytracer::objects
 {
     namespace
     {
+
+        vectors::Vector3 compute_raw_face_normal(Triangle::PointsType points)
+        {
+            return (points[2] - points[1]).cross(points[1] - points[0]);
+        }
+
         vectors::Vector3 compute_face_normal(Triangle::PointsType points)
         {
-            return (points[2] - points[1])
-                .cross(points[1] - points[0])
-                .normalized();
+            return compute_raw_face_normal(points).normalized();
         }
     } // namespace
 
@@ -26,8 +30,10 @@ namespace raytracer::objects
                        const Object::MaterialPtr &material)
         : Object{ material }
         , points_(points)
-        , face_normal_{ compute_face_normal(points) }
         , normals_()
+        , raw_face_normal_{ compute_raw_face_normal(points) }
+        , face_normal_{ raw_face_normal_.normalized() }
+        , flat_{ true }
     {
         for (auto &n : normals_)
         {
@@ -40,51 +46,78 @@ namespace raytracer::objects
         : Object{ material }
         , points_(points)
         , normals_(normals)
-        , face_normal_{ compute_face_normal(points) }
+        , raw_face_normal_{ compute_raw_face_normal(points) }
+        , face_normal_{ raw_face_normal_.normalized() }
+        , flat_{ false }
     {}
 
     std::optional<Intersection> Triangle::intersects_ray(const Ray &ray) const
     {
-        // TODO: optimize? (maybe suggested solution in subject is faster, but
-        // I'm too dumb to understand it) ray-plane intersection
+        double u, v;
+        // TODO: optimize? (maybe suggested solution in subject is faster,
+        // but I'm too dumb to understand it) ray-plane intersection
         using utils::EPSILON;
-        const auto denom = face_normal_.dot(ray.direction);
-        if (std::abs(denom) < EPSILON)
+        const auto denom_plane = raw_face_normal_.dot(ray.direction);
+        if (std::abs(denom_plane) < EPSILON)
         {
             return {}; // parallel
         }
-        const auto t = (face_normal_.dot(points_[0] - ray.origin)) / denom;
+        const auto t =
+            (raw_face_normal_.dot(points_[0] - ray.origin)) / denom_plane;
+
         // checking intersection point is in triangle
         const auto intersection_point = ray.origin + ray.direction * t;
+
+        const auto edge0 = points_[1] - points_[0];
         const auto sideA =
-            utils::signum((points_[1] - points_[0])
-                              .cross(intersection_point - points_[0])
-                              .dot(face_normal_));
-        const auto sideB =
-            utils::signum((points_[2] - points_[1])
-                              .cross(intersection_point - points_[1])
-                              .dot(face_normal_));
-        if (sideB != sideA)
+            edge0.cross(intersection_point - points_[0]).dot(raw_face_normal_)
+            > 0;
+        if (sideA)
+        {
+            return {};
+        }
+
+        const auto edge1 = points_[2] - points_[1];
+        const auto sideB = (u = edge1.cross(intersection_point - points_[1])
+                                    .dot(raw_face_normal_))
+            > 0;
+
+        if (sideB)
         {
             return {}; // not in triangle
         }
 
-        const auto sideC =
-            utils::signum((points_[0] - points_[2])
-                              .cross(intersection_point - points_[2])
-                              .dot(face_normal_));
-        if (sideC != sideA)
+        const auto edge2 = points_[0] - points_[2];
+        const auto sideC = (v = edge2.cross(intersection_point - points_[2])
+                                    .dot(raw_face_normal_))
+            > 0;
+        if (sideC)
         {
             return {}; // not in triangle
         }
-        return Intersection{ ray, t, 0, 0, this };
+
+        double denom_bary = raw_face_normal_.dot(raw_face_normal_);
+        u /= denom_bary;
+        v /= denom_bary;
+        // u and v are barycentric coordinates
+        return Intersection{ ray, t, -u, -v, this };
     }
 
     vectors::Vector3
     Triangle::get_normal(const Intersection &intersection) const
     {
-        // Improvement: Interpolate point normal using intersection position.
-        const auto normal = face_normal_;
+        vectors::Vector3 normal;
+        if (flat_)
+        {
+            normal = face_normal_;
+        }
+        else
+        {
+            const auto &u = intersection.u, v = intersection.v;
+            normal =
+                normals_[0] * u + normals_[1] * v + normals_[2] * (1. - u - v);
+        }
+
         if (intersection.ray.direction.dot(normal) > 0)
         {
             return -normal;
@@ -98,14 +131,12 @@ namespace raytracer::objects
         {
             return out << "Triangle{ [ " << points_[0] << ", " << points_[1]
                        << ", " << points_[2] << " ], [ " << normals_[0] << ", "
-                       << normals_[1] << ", " << normals_[2] << " ], "
-                       << face_normal_ << " }";
+                       << normals_[1] << ", " << normals_[2] << " ] }";
         }
 
         return out << "Triangle{ points: [ " << utils::compact_on << points_[0]
                    << ", " << points_[1] << ", " << points_[2]
                    << " ], normals: [ " << normals_[0] << ", " << normals_[1]
-                   << ", " << normals_[2] << utils::compact_off
-                   << " ], face_normal: " << face_normal_ << " }";
+                   << ", " << normals_[2] << utils::compact_off << " ] }";
     }
 } // namespace raytracer::objects

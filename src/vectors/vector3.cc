@@ -55,6 +55,15 @@ namespace vectors
         }
     }
 
+    Vector3 Vector3::lerp_to(const Vector3 &other, double factor) const
+    {
+        return Vector3{
+            utils::lerp(x, other.x, factor),
+            utils::lerp(y, other.y, factor),
+            utils::lerp(z, other.z, factor),
+        };
+    }
+
     double Vector3::dot(const Vector3 &other) const
     {
         return this->x * other.x + this->y * other.y + this->z * other.z;
