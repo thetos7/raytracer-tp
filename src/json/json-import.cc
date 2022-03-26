@@ -7,6 +7,8 @@
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
 #include "materials/uniform_material.hh"
+#include "objects/blob.hh"
+#include "objects/blob_sources/blob_point.hh"
 #include "objects/plane.hh"
 #include "objects/sphere.hh"
 #include "objects/triangle.hh"
@@ -167,10 +169,34 @@ namespace raytracer
                 {
                     ptsType[i] = Point3::from_vector(point);
                     i++;
+                    if (i > 2)
+                        break;
                 }
                 auto o = std::make_shared<Triangle>(ptsType, mat);
                 scene.objects_.push_back(o);
                 std::cout << "Loaded a triangle from json.\n";
+                std::cout << *o << '\n';
+            }
+            else if (type == "blob")
+            {
+                auto center = Point3::from_vector(
+                    objectJsonObject["center"].get<std::vector<double>>());
+                auto size = objectJsonObject["size"].get<double>();
+                auto divisions = objectJsonObject["divisions"].get<size_t>();
+                auto threshold = objectJsonObject["threshold"].get<double>();
+                auto sources = std::vector<std::shared_ptr<blob_sources::BlobSource>>();
+                for (json sourceJsonObject : objectJsonObject["sources"]) {
+                    std::string sourceType = sourceJsonObject["type"];
+                    if (sourceType == "point") {
+                        auto radius = sourceJsonObject["radius"].get<double>();
+                        auto center = Point3::from_vector(sourceJsonObject["center"].get<std::vector<double>>());
+                        auto blobPoint = std::make_shared<blob_sources::BlobPoint>(radius, center);
+                        sources.push_back(blobPoint);
+                    }
+                }
+                auto o = std::make_shared<Blob>(center, size, divisions, threshold, sources, mat);
+                scene.objects_.push_back(o);
+                std::cout << "Loaded a blob from json.\n";
                 std::cout << *o << '\n';
             }
         }

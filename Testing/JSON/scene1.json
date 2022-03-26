@@ -84,6 +84,26 @@
                 [2.0, 1.0, 0.0]
             ],
             "material": "red"
+        },
+        {
+            "type": "blob",
+            "center": [2, 0, 0],
+            "size": 2.2,
+            "divisions": 33,
+            "threshold": 0.4,
+            "sources": [
+                {
+                    "type": "point",
+                    "radius": 0.75,
+                    "center": [2, -0.35, 0]
+                },
+                {
+                    "type": "point",
+                    "radius": 0.75,
+                    "center": [2, 0.35, 0]
+                }
+            ],
+            "material":"lightBlue"
         }
     ]
 }

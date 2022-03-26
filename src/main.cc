@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         std::cout << scene << std::endl;
 
         constexpr int height = 480;
-        const auto output = raytracer::raytrace(scene, height, 3);
+        const auto output = raytracer::raytrace(scene, height, 3, true, 5);
         output->save_ppm("result.ppm");
         return 0;
     }
