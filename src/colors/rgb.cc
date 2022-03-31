@@ -34,9 +34,9 @@ namespace colors
     RGB RGB::from_linear(vectors::Vector3 linearColor)
     {
         auto clamped = vectors::Vector3{
-            std::clamp(linearColor.x, 0., 1.),
-            std::clamp(linearColor.y, 0., 1.),
-            std::clamp(linearColor.z, 0., 1.),
+            std::pow(std::clamp(linearColor.x, 0., 1.), 1 / 2.2),
+            std::pow(std::clamp(linearColor.y, 0., 1.), 1 / 2.2),
+            std::pow(std::clamp(linearColor.z, 0., 1.), 1 / 2.2),
         };
 
         auto mapped = clamped * 255;
