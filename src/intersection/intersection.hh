@@ -16,10 +16,11 @@ namespace raytracer
     {
     public:
         using ObjectPtr = const objects::Object *;
+        using StoragePtr = std::shared_ptr<void>;
 
         Intersection(const Intersection &other);
         Intersection(const Ray ray, const double t, const double u,
-                     const double v, ObjectPtr object);
+                     const double v, ObjectPtr object, StoragePtr storage = nullptr);
 
         /** Original ray */
         Ray ray;
@@ -30,6 +31,9 @@ namespace raytracer
         double t;
         /** Intersected object */
         ObjectPtr object;
+
+        /** Custom object-specific storage space owned and managed by the intersection */
+        StoragePtr storage;
 
         /** Scene in which the intersection occured */
         const Scene *scene;

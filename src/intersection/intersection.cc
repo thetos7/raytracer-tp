@@ -13,16 +13,19 @@ namespace raytracer
     using ObjectPtr = Intersection::ObjectPtr;
 
     Intersection::Intersection(const Ray ray, const double t, const double u,
-                               const double v, ObjectPtr object)
+                               const double v, ObjectPtr object,
+                               StoragePtr storage)
         : ray{ ray }
         , u{ u }
         , v{ v }
         , object{ object }
         , t{ t }
+        , storage{ storage }
     {}
 
     Intersection::Intersection(const Intersection &other)
-        : Intersection{ other.ray, other.t, other.u, other.v, other.object }
+        : Intersection{ other.ray, other.t,      other.u,
+                        other.v,   other.object, other.storage }
     {
         scene = other.scene;
     }
