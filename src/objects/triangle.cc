@@ -10,6 +10,24 @@ namespace raytracer::objects
 {
     namespace
     {
+        struct TriangleIntersectionData
+        {
+            /** barycentric u coordinate */
+            double bu;
+            /** barycentric v coordinate */
+            double bv;
+
+            TriangleIntersectionData(double bu, double bv)
+                : bu{ bu }
+                , bv{ bv }
+            {}
+
+            static auto from_storage(Intersection::StoragePtr storage)
+            {
+                return std::static_pointer_cast<TriangleIntersectionData>(
+                    storage);
+            }
+        };
 
         vectors::Vector3 compute_raw_face_normal(Triangle::PointsType points)
         {
@@ -100,7 +118,11 @@ namespace raytracer::objects
         u /= denom_bary;
         v /= denom_bary;
         // u and v are barycentric coordinates
-        return Intersection{ ray, t, -u, -v, this };
+        return Intersection{
+            ray,  t,
+            0,    0,
+            this, std::shared_ptr<void>(new TriangleIntersectionData{ -u, -v }),
+        };
     }
 
     vectors::Vector3
@@ -113,7 +135,9 @@ namespace raytracer::objects
         }
         else
         {
-            const auto &u = intersection.u, v = intersection.v;
+            const auto storage =
+                TriangleIntersectionData::from_storage(intersection.storage);
+            const auto &u = storage->bu, &v = storage->bv;
             normal =
                 normals_[0] * u + normals_[1] * v + normals_[2] * (1. - u - v);
         }
