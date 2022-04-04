@@ -53,8 +53,17 @@ namespace raytracer
         {
             if (progress_print && y % progress_print_step == 0)
             {
-                std::cout << "\33[2K\rRendering line " << y << " out of " << height
-                          << "..." << std::flush;
+                std::cout << "\e[2F\e[J";
+                std::cout << "[THREAD MAIN] Rendering line " << y << " out of "
+                          << height << "...\n";
+                auto percent = (y / (float)height);
+                constexpr auto PROGRESS_WIDTH = 50;
+                auto bar_count =
+                    static_cast<size_t>(std::round(percent * PROGRESS_WIDTH));
+                std::cout << "<\e[32m" << std::string(bar_count, '=')
+                          << "\e[39m"
+                          << std::string(PROGRESS_WIDTH - bar_count, ' ')
+                          << ">\n";
             }
             for (auto x = 0; x < width; ++x)
             {
