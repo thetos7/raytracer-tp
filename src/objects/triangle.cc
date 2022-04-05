@@ -62,22 +62,17 @@ namespace raytracer::objects
 
     Triangle::Triangle(const PointsType &points, const UvsType &uv_map,
                        const Object::MaterialPtr &material)
-        : Object{ material }
-        , points_(points)
-        , normals_()
-        , raw_face_normal_{ compute_raw_face_normal(points) }
-        , face_normal_{ raw_face_normal_.normalized() }
-        , uv_map_{ uv_map }
-        , flat_{ true }
-    {
-        for (auto &n : normals_)
-        {
-            n = face_normal_;
-        }
-    }
+        : Triangle{ points, {}, uv_map, true, material }
+    {}
 
     Triangle::Triangle(const PointsType &points, const NormalsType &normals,
                        const UvsType &uv_map,
+                       const Object::MaterialPtr &material)
+        : Triangle{ points, normals, uv_map, false, material }
+    {}
+
+    Triangle::Triangle(const PointsType &points, const NormalsType &normals,
+                       const UvsType &uv_map, bool flat,
                        const Object::MaterialPtr &material)
         : Object{ material }
         , points_(points)
@@ -85,8 +80,16 @@ namespace raytracer::objects
         , raw_face_normal_{ compute_raw_face_normal(points) }
         , face_normal_{ raw_face_normal_.normalized() }
         , uv_map_{ uv_map }
-        , flat_{ false }
-    {}
+        , flat_{ flat }
+    {
+        if (flat)
+        {
+            for (auto &n : normals_)
+            {
+                n = face_normal_;
+            }
+        }
+    }
 
     std::optional<Intersection> Triangle::intersects_ray(const Ray &ray) const
     {

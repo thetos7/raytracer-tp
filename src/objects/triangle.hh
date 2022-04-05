@@ -23,6 +23,8 @@ namespace raytracer::objects
                  const Object::MaterialPtr &material);
         Triangle(const PointsType &points, const NormalsType &normals,
                  const UvsType &uv_map, const Object::MaterialPtr &material);
+        Triangle(const PointsType &points, const NormalsType &normals,
+                 const UvsType &uv_map, bool flat, const Object::MaterialPtr &material);
 
         virtual std::optional<Intersection>
         intersects_ray(const Ray &ray) const override;
