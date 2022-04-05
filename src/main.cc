@@ -20,6 +20,8 @@
 #include "scene/scene.hh"
 #include "utils/utils.hh"
 #include "vectors/vector3.hh"
+#include "materials/textured_material.hh"
+#include "image/rgb_image.hh"
 
 int main(int argc, char *argv[])
 {
@@ -39,6 +41,7 @@ int main(int argc, char *argv[])
     using namespace points;
     using namespace vectors;
     using raytracer::materials::UniformMaterial;
+    using raytracer::materials::TexturedMaterial;
     using raytracer::lights::PointLight;
     using raytracer::lights::SunLight;
     using raytracer::lights::AmbientLight;
@@ -56,6 +59,13 @@ int main(int argc, char *argv[])
     constexpr double aspectRatio = 16. / 9.;
     constexpr int width = height * aspectRatio;
     constexpr double fieldOfView = (90. / 180.) * M_PI;
+
+    auto minecraftTexture = std::make_shared<TexturedMaterial>(TexturedMaterial{
+        image::RgbImage::load_from_png("../Testing/textures/grass/diffuse.png"),
+        image::RgbImage::load_from_png("../Testing/textures/grass/specular.png"),
+        image::RgbImage::load_from_png("../Testing/textures/grass/specular_spread.png"),
+        image::RgbImage::load_from_png("../Testing/textures/grass/reflectivity.png")
+    });
 
     auto lightGreyUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3::all(0.8),
@@ -98,7 +108,7 @@ int main(int argc, char *argv[])
     const auto camPoint = Point3(2, 0, 0);
     const auto camUp = Vector3::up();
     const auto redSphere =
-        std::make_shared<Sphere>(Point3(4, 0, 0), 1., redUniform);
+        std::make_shared<Sphere>(Point3(4, 0, 0), 1., minecraftTexture);
     const auto orangeSphere =
         std::make_shared<Sphere>(Point3(4, -1, 1), 1., orangeUniform);
     const auto greenSphere =
@@ -141,7 +151,6 @@ int main(int argc, char *argv[])
             lightGreyPlane,
             backgroundPlane,
             redTriangle,
-            purpleBlob,
         },
         Scene::LightCollection{
             std::make_shared<AmbientLight>(Vector3::all(.15)),

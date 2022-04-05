@@ -40,9 +40,9 @@ namespace raytracer::objects
         if (tI1 > 0)
         {
             // https://en.wikipedia.org/wiki/UV_mapping
-            vectors::Vector3 d = this->center_ - ray.origin + ray.direction * tI1; // vector from point to center
-            double u = 0.5 + std::atan2(d.x, d.z) / (2 * M_PI);
-            double v = 0.5 + std::asin(d.y) / M_PI;
+            vectors::Vector3 d = (ray.origin + ray.direction * tI1 - this->center_).normalized(); // vector from point to center
+            double u = 0.5 + std::atan2(d.x, d.y) / (2 * M_PI);
+            double v = 0.5 + std::asin(d.z) / M_PI;
 
             return Intersection{ ray, tI1, u, v, this };
         }
@@ -51,9 +51,9 @@ namespace raytracer::objects
         if (tI2 > 0)
         {
             // https://en.wikipedia.org/wiki/UV_mapping
-            vectors::Vector3 d = this->center_ - ray.origin + ray.direction * tI2; // vector from point to center
-            double u = std::atan2(d.x, d.z) / (2 * M_PI);
-            double v = std::asin(d.y) / M_PI;
+            vectors::Vector3 d = (ray.origin + ray.direction * tI2 - this->center_).normalized(); // vector from point to center
+            double u = 0.5 + std::atan2(d.x, d.y) / (2 * M_PI);
+            double v = 0.5 + std::asin(d.z) / M_PI;
 
             return Intersection{ ray, tI2, u, v, this };
         }
