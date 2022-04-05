@@ -6,11 +6,13 @@
 #include "engine/engine.hh"
 #include "image/linear_image.hh"
 #include "image/rgb_image.hh"
+#include "intersection/intersection.hh"
 #include "json/json-import.hh"
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
 #include "materials/textured_material.hh"
+#include "materials/shader_material.hh"
 #include "materials/uniform_material.hh"
 #include "objects/blob.hh"
 #include "objects/blob_sources/blob_point.hh"
@@ -21,6 +23,7 @@
 #include "points/point3.hh"
 #include "scene/scene.hh"
 #include "utils/utils.hh"
+#include "vectors/vector2.hh"
 #include "vectors/vector3.hh"
 
 int main(int argc, char *argv[])
@@ -40,6 +43,8 @@ int main(int argc, char *argv[])
 
     using namespace points;
     using namespace vectors;
+    using raytracer::materials::MaterialProperties;
+    using raytracer::materials::ShaderMaterial;
     using raytracer::materials::UniformMaterial;
     using raytracer::materials::TexturedMaterial;
     using raytracer::lights::PointLight;
@@ -51,6 +56,7 @@ int main(int argc, char *argv[])
     using raytracer::objects::Mesh;
     using raytracer::objects::Blob;
     using raytracer::objects::blob_sources::BlobPoint;
+    using raytracer::Intersection;
     using raytracer::Scene;
     using raytracer::Camera;
     using colors::RGB;
@@ -102,12 +108,19 @@ int main(int argc, char *argv[])
         1.,
         0.,
     });
+    auto uvDebugMaterial = std::make_shared<ShaderMaterial>(
+        [](const Intersection &intersection, MaterialProperties &props) {
+            props.diffuse.x = intersection.u;
+            props.diffuse.y = intersection.v;
+        });
 
     const auto camPos = Point3(0, -1, 0);
     const auto camPoint = Point3(2, 0, 0);
     const auto camUp = Vector3::up();
     const auto redSphere =
         std::make_shared<Sphere>(Point3(4, 0, 0), 1., minecraftTexture);
+    const auto debugSphere =
+        std::make_shared<Sphere>(Point3(4, 0, 0), 1., uvDebugMaterial);
     const auto orangeSphere =
         std::make_shared<Sphere>(Point3(4, -1, 1), 1., orangeUniform);
     const auto greenSphere =
@@ -124,15 +137,15 @@ int main(int argc, char *argv[])
             Point3{ 2, 0, 1 },
             Point3{ 2, 1, 0 },
         },
-        redUniform);
+        uvDebugMaterial);
 
-    const auto purpleBlob = std::make_shared<Blob>(
-        Point3(2, 0, 0), 2.2, 33, 0.4,
-        Blob::SourceCollection{
-            std::make_shared<BlobPoint>(0.75, Point3(2, -0.35, 0)),
-            std::make_shared<BlobPoint>(0.75, Point3(2, 0.35, 0)),
-        },
-        purpleUniform);
+    // const auto purpleBlob = std::make_shared<Blob>(
+    //     Point3(2, 0, 0), 2.2, 33, 0.4,
+    //     Blob::SourceCollection{
+    //         std::make_shared<BlobPoint>(0.75, Point3(2, -0.35, 0)),
+    //         std::make_shared<BlobPoint>(0.75, Point3(2, 0.35, 0)),
+    //     },
+    //     purpleUniform);
 
     Scene scene{
         Camera{
@@ -144,6 +157,7 @@ int main(int argc, char *argv[])
             0.5,
         },
         Scene::ObjectCollection{
+            // purpleBlob,
             redSphere,
             orangeSphere,
             greenSphere,

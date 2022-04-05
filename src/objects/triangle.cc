@@ -8,6 +8,7 @@
 
 namespace raytracer::objects
 {
+    using vectors::Vector2;
     namespace
     {
         struct TriangleIntersectionData
@@ -46,32 +47,48 @@ namespace raytracer::objects
 
     Triangle::Triangle(const PointsType &points,
                        const Object::MaterialPtr &material)
-        : Object{ material }
-        , points_(points)
-        , normals_()
-        , raw_face_normal_{ compute_raw_face_normal(points) }
-        , face_normal_{ raw_face_normal_.normalized() }
-        , flat_{ true }
-    {
-        for (auto &n : normals_)
-        {
-            n = face_normal_;
-        }
-    }
+        : Triangle{ points, Triangle::DEFAULT_UVS, material }
+    {}
 
     Triangle::Triangle(const PointsType &points, const NormalsType &normals,
+                       const Object::MaterialPtr &material)
+        : Triangle{ points, normals, Triangle::DEFAULT_UVS, material }
+    {}
+
+    Triangle::Triangle(const PointsType &points, const UvsType &uv_map,
+                       const Object::MaterialPtr &material)
+        : Triangle{ points, {}, uv_map, true, material }
+    {}
+
+    Triangle::Triangle(const PointsType &points, const NormalsType &normals,
+                       const UvsType &uv_map,
+                       const Object::MaterialPtr &material)
+        : Triangle{ points, normals, uv_map, false, material }
+    {}
+
+    Triangle::Triangle(const PointsType &points, const NormalsType &normals,
+                       const UvsType &uv_map, bool flat,
                        const Object::MaterialPtr &material)
         : Object{ material }
         , points_(points)
         , normals_(normals)
         , raw_face_normal_{ compute_raw_face_normal(points) }
         , face_normal_{ raw_face_normal_.normalized() }
-        , flat_{ false }
-    {}
+        , uv_map_{ uv_map }
+        , flat_{ flat }
+    {
+        if (flat)
+        {
+            for (auto &n : normals_)
+            {
+                n = face_normal_;
+            }
+        }
+    }
 
     std::optional<Intersection> Triangle::intersects_ray(const Ray &ray) const
     {
-        double u, v;
+        double bary_a, bary_b;
         // TODO: optimize? (maybe suggested solution in subject is faster,
         // but I'm too dumb to understand it) ray-plane intersection
         using utils::EPSILON;
@@ -96,8 +113,9 @@ namespace raytracer::objects
         }
 
         const auto edge1 = points_[2] - points_[1];
-        const auto sideB = (u = edge1.cross(intersection_point - points_[1])
-                                    .dot(raw_face_normal_))
+        const auto sideB =
+            (bary_a = edge1.cross(intersection_point - points_[1])
+                          .dot(raw_face_normal_))
             > 0;
 
         if (sideB)
@@ -106,8 +124,9 @@ namespace raytracer::objects
         }
 
         const auto edge2 = points_[0] - points_[2];
-        const auto sideC = (v = edge2.cross(intersection_point - points_[2])
-                                    .dot(raw_face_normal_))
+        const auto sideC =
+            (bary_b = edge2.cross(intersection_point - points_[2])
+                          .dot(raw_face_normal_))
             > 0;
         if (sideC)
         {
@@ -115,13 +134,20 @@ namespace raytracer::objects
         }
 
         double denom_bary = raw_face_normal_.dot(raw_face_normal_);
-        u /= denom_bary;
-        v /= denom_bary;
-        // u and v are barycentric coordinates
+        bary_a /= denom_bary;
+        bary_b /= denom_bary;
+        bary_a = -bary_a;
+        bary_b = -bary_b;
+
+        const auto uv = uv_map_[0] * bary_a + uv_map_[1] * bary_b
+            + uv_map_[2] * (1 - bary_a - bary_b);
         return Intersection{
-            ray,  t,
-            0,    0,
-            this, std::shared_ptr<void>(new TriangleIntersectionData{ -u, -v }),
+            ray,
+            t,
+            uv.x,
+            uv.y,
+            this,
+            std::shared_ptr<void>(new TriangleIntersectionData{ bary_a, bary_b }),
         };
     }
 

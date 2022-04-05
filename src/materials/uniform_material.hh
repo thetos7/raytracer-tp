@@ -11,6 +11,7 @@ namespace raytracer::materials
     public:
         UniformMaterial(const vectors::Vector3 &diffuse,
                        double specular, double specular_spread, double reflectivity);
+
         const MaterialProperties
         get_point_properties(Intersection intersection) const override;
 
