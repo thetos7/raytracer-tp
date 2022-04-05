@@ -12,7 +12,7 @@ namespace raytracer
         class Material
         {
         public:
-            virtual const MaterialProperties &
+            virtual const MaterialProperties
             get_point_properties(Intersection intersection) const = 0;
         };
     } // namespace materials

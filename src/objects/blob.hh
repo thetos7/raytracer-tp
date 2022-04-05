@@ -23,7 +23,7 @@ namespace raytracer::objects
         intersects_ray(const Ray &ray) const override;
         virtual vectors::Vector3
         get_normal(const Intersection &intersection) const override;
-        virtual const materials::MaterialProperties &
+        virtual const materials::MaterialProperties
         get_texture(const Intersection &intersection) const override;
 
         void build_mesh();

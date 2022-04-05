@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
 #include "colors/fwd.hh"
@@ -12,6 +13,7 @@ namespace image
         using PixelColorType = colors::RGB;
         RgbImage(int width, int height);
 
+        static RgbImage load_from_png(const std::string &);
         const PixelColorType &pixel_get(int x, int y) const;
         PixelColorType &pixel_get(int x, int y);
 

@@ -7,6 +7,7 @@
 
 #include "blob_sources/blob_source.hh"
 #include "intersection/intersection.hh"
+#include "materials/material_properties.hh"
 #include "points/int_point3.hh"
 #include "points/point3.hh"
 #include "triangle.hh"
@@ -351,7 +352,7 @@ namespace raytracer::objects
         return mesh->get_normal(intersection);
     }
 
-    const materials::MaterialProperties &
+    const materials::MaterialProperties
     Blob::get_texture(const Intersection &intersection) const
     {
         if (!mesh)
