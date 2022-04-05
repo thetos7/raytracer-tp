@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <memory>
 
@@ -27,6 +29,86 @@
 #include "vectors/vector3.hh"
 #include "vectors/rot_matrix3.hh"
 
+using namespace points;
+using namespace vectors;
+using raytracer::materials::MaterialProperties;
+using raytracer::materials::ShaderMaterial;
+using raytracer::materials::UniformMaterial;
+using raytracer::materials::TexturedMaterial;
+using raytracer::lights::PointLight;
+using raytracer::lights::SunLight;
+using raytracer::lights::AmbientLight;
+using raytracer::objects::Sphere;
+using raytracer::objects::Plane;
+using raytracer::objects::Triangle;
+using raytracer::objects::Mesh;
+using raytracer::objects::Blob;
+using raytracer::objects::blob_sources::BlobPoint;
+using raytracer::Intersection;
+using raytracer::Scene;
+using raytracer::Camera;
+using colors::RGB;
+
+constexpr auto VORO_SIZE = 5;
+constexpr auto VORO_CELL_SIZE = 1. / VORO_SIZE;
+size_t voro_idx(int x, int y)
+{
+    return (y + 1) * (VORO_SIZE + 2) + (x + 1);
+}
+
+double randfloat()
+{
+    return static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
+}
+
+double voronoi(const Intersection &intersection)
+{
+    static std::vector<Vector2> points((VORO_SIZE + 2) * (VORO_SIZE + 2));
+    static bool initialized = false;
+    if (!initialized)
+    {
+        for (int y = 0; y < VORO_SIZE; ++y)
+            for (int x = 0; x < VORO_SIZE; ++x)
+            {
+                auto px = randfloat() * VORO_CELL_SIZE;
+                auto py = randfloat() * VORO_CELL_SIZE;
+                points[voro_idx(y, x)] = { px, py };
+            }
+        for (int x = 0; x < VORO_SIZE; ++x)
+        {
+            points[voro_idx(x, -1)] = points[voro_idx(x, VORO_SIZE - 1)];
+            points[voro_idx(x, VORO_SIZE)] = points[voro_idx(x, 0)];
+        }
+        for (int y = -1; y < VORO_SIZE + 1; ++y)
+        {
+            points[voro_idx(-1, y)] = points[voro_idx(VORO_SIZE - 1, y)];
+            points[voro_idx(VORO_SIZE, y)] = points[voro_idx(0, y)];
+        }
+        for (int y = -1; y < VORO_SIZE + 1; ++y)
+            for (int x = -1; x < VORO_SIZE + 1; ++x)
+            {
+                auto &p = points[voro_idx(x, y)];
+                p.x += x * VORO_CELL_SIZE;
+                p.y += y * VORO_CELL_SIZE;
+            }
+        initialized = true;
+    }
+    double nearest_dist = 4;
+    const int cx =
+        static_cast<int>(std::floor(intersection.u / VORO_CELL_SIZE));
+    const int cy =
+        static_cast<int>(std::floor(intersection.v / VORO_CELL_SIZE));
+    const Vector2 uv = { intersection.u, intersection.v };
+    for (int ox = -1; ox <= 1; ++ox)
+        for (int oy = -1; oy <= 1; ++oy)
+        {
+            nearest_dist = std::min(
+                nearest_dist, (uv - points[voro_idx(cx + ox, cy + oy)]).norm());
+        }
+    const auto dist = nearest_dist / (VORO_CELL_SIZE);
+    return std::clamp(dist, 0., 1.);
+}
+
 int main(int argc, char *argv[])
 {
     if (argc == 2)
@@ -42,26 +124,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    using namespace points;
-    using namespace vectors;
-    using raytracer::materials::MaterialProperties;
-    using raytracer::materials::ShaderMaterial;
-    using raytracer::materials::UniformMaterial;
-    using raytracer::materials::TexturedMaterial;
-    using raytracer::lights::PointLight;
-    using raytracer::lights::SunLight;
-    using raytracer::lights::AmbientLight;
-    using raytracer::objects::Sphere;
-    using raytracer::objects::Plane;
-    using raytracer::objects::Triangle;
-    using raytracer::objects::Mesh;
-    using raytracer::objects::Blob;
-    using raytracer::objects::blob_sources::BlobPoint;
-    using raytracer::Intersection;
-    using raytracer::Scene;
-    using raytracer::Camera;
-    using colors::RGB;
-
+    std::srand(std::time(0));
     constexpr int height = 480;
     constexpr double aspectRatio = 16. / 9.;
     constexpr int width = height * aspectRatio;
@@ -109,6 +172,14 @@ int main(int argc, char *argv[])
         1.,
         0.,
     });
+
+    auto voronoiMaterial = std::make_shared<ShaderMaterial>(
+        [&](const Intersection &intersection, MaterialProperties &props) {
+            auto fact = voronoi(intersection);
+            props.diffuse =
+                Vector3(0.9, 0.9, 0.2).lerp_to(Vector3(0.9, 0.5, 0.1), fact);
+        });
+
     auto uvDebugMaterial = std::make_shared<ShaderMaterial>(
         [](const Intersection &intersection, MaterialProperties &props) {
             props.diffuse.x = intersection.u;
@@ -138,7 +209,7 @@ int main(int argc, char *argv[])
             Point3{ 2, 0, 1 },
             Point3{ 2, 1, 0 },
         },
-        uvDebugMaterial);
+        voronoiMaterial);
 
     const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/weird_tris.obj", orangeUniform, Vector3(3, 2, 0), 0.3, RotMatrix3(M_PI_2, 0, 0)));
 
