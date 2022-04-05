@@ -162,17 +162,56 @@ namespace raytracer
             }
             else if (type == "triangle")
             {
+                using VectorList = std::vector<std::vector<double>>;
+                constexpr auto POINTS_KEY = "points";
+                constexpr auto NORMALS_KEY = "normals";
+                constexpr auto UV_MAP_KEY = "uvMap";
                 PointsType ptsType;
+                Triangle::NormalsType normals;
+                Triangle::UvsType uv_map;
+                bool hasNormals = objectJsonObject.contains(NORMALS_KEY);
                 int i = 0;
-                for (auto point : objectJsonObject["points"]
-                                      .get<std::vector<std::vector<double>>>())
+                for (auto point :
+                     objectJsonObject[POINTS_KEY].get<VectorList>())
                 {
                     ptsType[i] = Point3::from_vector(point);
                     i++;
                     if (i > 2)
                         break;
                 }
-                auto o = std::make_shared<Triangle>(ptsType, mat);
+
+                if (hasNormals)
+                {
+                    int i = 0;
+                    for (auto normal :
+                         objectJsonObject[NORMALS_KEY].get<VectorList>())
+                    {
+                        normals[i] = Vector3::from_vector(normal);
+                        ++i;
+                        if (i > 2)
+                            break;
+                    }
+                }
+
+                if (objectJsonObject.contains(UV_MAP_KEY))
+                {
+                    int i = 0;
+                    for (auto uv :
+                         objectJsonObject[UV_MAP_KEY].get<VectorList>())
+                    {
+                        uv_map[i] = Vector2::from_vector(uv);
+                        ++i;
+                        if (i > 2)
+                            break;
+                    }
+                }
+                else
+                {
+                    uv_map = Triangle::DEFAULT_UVS;
+                }
+
+                auto o = std::make_shared<Triangle>(ptsType, normals, uv_map,
+                                                    !hasNormals, mat);
                 scene.objects_.push_back(o);
                 std::cout << "Loaded a triangle from json.\n";
                 std::cout << *o << '\n';
@@ -184,17 +223,25 @@ namespace raytracer
                 auto size = objectJsonObject["size"].get<double>();
                 auto divisions = objectJsonObject["divisions"].get<size_t>();
                 auto threshold = objectJsonObject["threshold"].get<double>();
-                auto sources = std::vector<std::shared_ptr<blob_sources::BlobSource>>();
-                for (json sourceJsonObject : objectJsonObject["sources"]) {
+                auto sources =
+                    std::vector<std::shared_ptr<blob_sources::BlobSource>>();
+                for (json sourceJsonObject : objectJsonObject["sources"])
+                {
                     std::string sourceType = sourceJsonObject["type"];
-                    if (sourceType == "point") {
+                    if (sourceType == "point")
+                    {
                         auto radius = sourceJsonObject["radius"].get<double>();
-                        auto center = Point3::from_vector(sourceJsonObject["center"].get<std::vector<double>>());
-                        auto blobPoint = std::make_shared<blob_sources::BlobPoint>(radius, center);
+                        auto center = Point3::from_vector(
+                            sourceJsonObject["center"]
+                                .get<std::vector<double>>());
+                        auto blobPoint =
+                            std::make_shared<blob_sources::BlobPoint>(radius,
+                                                                      center);
                         sources.push_back(blobPoint);
                     }
                 }
-                auto o = std::make_shared<Blob>(center, size, divisions, threshold, sources, mat);
+                auto o = std::make_shared<Blob>(center, size, divisions,
+                                                threshold, sources, mat);
                 scene.objects_.push_back(o);
                 std::cout << "Loaded a blob from json.\n";
                 std::cout << *o << '\n';
