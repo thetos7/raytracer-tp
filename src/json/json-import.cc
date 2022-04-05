@@ -6,6 +6,7 @@
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
+#include "materials/textured_material.hh"
 #include "materials/uniform_material.hh"
 #include "objects/blob.hh"
 #include "objects/blob_sources/blob_point.hh"
@@ -75,16 +76,24 @@ namespace raytracer
                 auto m = std::make_shared<UniformMaterial>(
                     Vector3::from_vector(materialJsonObject["diffuse"]
                                              .get<std::vector<double>>()),
-                    Vector3::from_vector(materialJsonObject["specular"]
-                                             .get<std::vector<double>>()),
+                    materialJsonObject["specular"].get<double>(),
                     materialJsonObject["specularSpread"].get<double>(),
-                    Vector3::from_vector(materialJsonObject["reflectivity"]
-                                             .get<std::vector<double>>()));
+                    materialJsonObject["reflectivity"].get<double>());
                 std::string name =
                     materialJsonObject["name"].get<std::string>();
                 materials[name] = m;
                 std::cout << "Loaded uniform material \"" << name
                           << "\" from json.\n";
+            }
+            if (type == "textured")
+            {
+                auto m = std::make_shared<TexturedMaterial>(
+                    image::RgbImage::load_from_png(
+                        materialJsonObject["diffuseMap"].get<std::string>()),
+                    image::RgbImage::load_from_png(
+                        materialJsonObject["specularMap"].get<std::string>()),
+                    materialJsonObject["specularSpread"].get<double>(),
+                    materialJsonObject["reflectivity"].get<double>());
             }
         }
     }
