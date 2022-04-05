@@ -10,7 +10,7 @@ namespace raytracer::objects
         : material{ material }
     {}
 
-    const materials::MaterialProperties &
+    const materials::MaterialProperties
     Object::get_texture(const Intersection &intersection) const
     {
         return material->get_point_properties(intersection);

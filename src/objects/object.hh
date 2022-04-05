@@ -21,7 +21,7 @@ namespace raytracer::objects
         intersects_ray(const Ray &ray) const = 0;
         virtual vectors::Vector3
         get_normal(const Intersection &intersection) const = 0;
-        virtual const materials::MaterialProperties &
+        virtual const materials::MaterialProperties
         get_texture(const Intersection &intersection) const;
 
         MaterialPtr material;
