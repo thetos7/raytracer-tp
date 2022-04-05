@@ -1,6 +1,7 @@
 #include "mesh.hh"
 
 #include "intersection/intersection.hh"
+#include "materials/material_properties.hh"
 #include "utils/utils.hh"
 
 namespace raytracer::objects
@@ -31,7 +32,7 @@ namespace raytracer::objects
         return intersection.object->get_normal(intersection);
     }
 
-    const materials::MaterialProperties &
+    const materials::MaterialProperties
     Mesh::get_texture(const Intersection &intersection) const
     {
         return intersection.object->get_texture(intersection);
