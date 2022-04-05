@@ -17,13 +17,8 @@ namespace raytracer
             int vcoord = _height * v;
             auto diffuseColor = _diffuseMap.pixel_get(ucoord, vcoord);
             auto specularColor = _specularMap.pixel_get(ucoord, vcoord);
-            auto specularSpreadColor = _specularSpreadMap.pixel_get(ucoord, vcoord);
-            auto reflectivityColor = _reflectivityMap.pixel_get(ucoord, vcoord);
             auto diffuseVector = vectors::Vector3(diffuseColor.r / 255., diffuseColor.g / 255., diffuseColor.b / 255.);
-            auto specularVector = vectors::Vector3::all(specularColor.r / _specularFactor);
-            auto specularSpread = specularSpreadColor.r / _specularSpreadFactor;
-            auto reflectivityVector = vectors::Vector3::all(reflectivityColor.r / _reflectivityFactor);
-            return MaterialProperties(diffuseVector, specularVector, specularSpread, reflectivityVector);
+            return MaterialProperties(diffuseVector, specularColor.r / 255, _specularSpread, _reflectivity);
         }
     } // namespace materials
 } // namespace raytracer

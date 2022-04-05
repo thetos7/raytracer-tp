@@ -75,11 +75,9 @@ namespace raytracer
                 auto m = std::make_shared<UniformMaterial>(
                     Vector3::from_vector(materialJsonObject["diffuse"]
                                              .get<std::vector<double>>()),
-                    Vector3::from_vector(materialJsonObject["specular"]
-                                             .get<std::vector<double>>()),
+                    materialJsonObject["specular"].get<double>(),
                     materialJsonObject["specularSpread"].get<double>(),
-                    Vector3::from_vector(materialJsonObject["reflectivity"]
-                                             .get<std::vector<double>>()));
+                    materialJsonObject["reflectivity"].get<double>());
                 std::string name =
                     materialJsonObject["name"].get<std::string>();
                 materials[name] = m;
@@ -184,17 +182,25 @@ namespace raytracer
                 auto size = objectJsonObject["size"].get<double>();
                 auto divisions = objectJsonObject["divisions"].get<size_t>();
                 auto threshold = objectJsonObject["threshold"].get<double>();
-                auto sources = std::vector<std::shared_ptr<blob_sources::BlobSource>>();
-                for (json sourceJsonObject : objectJsonObject["sources"]) {
+                auto sources =
+                    std::vector<std::shared_ptr<blob_sources::BlobSource>>();
+                for (json sourceJsonObject : objectJsonObject["sources"])
+                {
                     std::string sourceType = sourceJsonObject["type"];
-                    if (sourceType == "point") {
+                    if (sourceType == "point")
+                    {
                         auto radius = sourceJsonObject["radius"].get<double>();
-                        auto center = Point3::from_vector(sourceJsonObject["center"].get<std::vector<double>>());
-                        auto blobPoint = std::make_shared<blob_sources::BlobPoint>(radius, center);
+                        auto center = Point3::from_vector(
+                            sourceJsonObject["center"]
+                                .get<std::vector<double>>());
+                        auto blobPoint =
+                            std::make_shared<blob_sources::BlobPoint>(radius,
+                                                                      center);
                         sources.push_back(blobPoint);
                     }
                 }
-                auto o = std::make_shared<Blob>(center, size, divisions, threshold, sources, mat);
+                auto o = std::make_shared<Blob>(center, size, divisions,
+                                                threshold, sources, mat);
                 scene.objects_.push_back(o);
                 std::cout << "Loaded a blob from json.\n";
                 std::cout << *o << '\n';

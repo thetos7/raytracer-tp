@@ -5,10 +5,12 @@
 #include "colors/rgb.hh"
 #include "engine/engine.hh"
 #include "image/linear_image.hh"
+#include "image/rgb_image.hh"
 #include "json/json-import.hh"
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
+#include "materials/textured_material.hh"
 #include "materials/uniform_material.hh"
 #include "objects/blob.hh"
 #include "objects/blob_sources/blob_point.hh"
@@ -20,8 +22,6 @@
 #include "scene/scene.hh"
 #include "utils/utils.hh"
 #include "vectors/vector3.hh"
-#include "materials/textured_material.hh"
-#include "image/rgb_image.hh"
 
 int main(int argc, char *argv[])
 {
@@ -62,46 +62,45 @@ int main(int argc, char *argv[])
 
     auto minecraftTexture = std::make_shared<TexturedMaterial>(TexturedMaterial{
         image::RgbImage::load_from_png("../Testing/textures/grass/diffuse.png"),
-        image::RgbImage::load_from_png("../Testing/textures/grass/specular.png"),
-        image::RgbImage::load_from_png("../Testing/textures/grass/specular_spread.png"),
-        image::RgbImage::load_from_png("../Testing/textures/grass/reflectivity.png")
-    });
+        image::RgbImage::load_from_png(
+            "../Testing/textures/grass/specular.png"),
+        0., 0. });
 
     auto lightGreyUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3::all(0.8),
-        Vector3::all(0.),
+        0.,
         1.,
-        Vector3::all(1.),
+        1.,
     });
     auto redUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(0.9, 0.2, 0.2),
-        Vector3::all(0.1),
+        0.1,
         .8,
-        Vector3::all(0.05),
+        0.05,
     });
     auto orangeUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(1.0, 0.5, 0.1),
-        Vector3::all(0.),
+        0.,
         1.,
-        Vector3::zero(),
+        0.,
     });
     auto greenUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(0.1, 0.6, 0.1),
-        Vector3::all(0.5),
+        0.5,
         16.,
-        Vector3::all(0.5),
+        0.5,
     });
     auto lightBlueUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(0.5, 0.5, 0.7),
-        Vector3::zero(),
+        0.,
         1.,
-        Vector3::zero(),
+        0.,
     });
     auto purpleUniform = std::make_shared<UniformMaterial>(UniformMaterial{
         Vector3(0.7, 0., 1.0),
-        Vector3::zero(),
+        0.,
         1.,
-        Vector3::zero(),
+        0.,
     });
 
     const auto camPos = Point3(0, -1, 0);

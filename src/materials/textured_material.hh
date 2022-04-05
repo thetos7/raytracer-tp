@@ -11,14 +11,14 @@ namespace raytracer
         public:
             TexturedMaterial(image::RgbImage diffuseMap,
                              image::RgbImage specularMap,
-                             image::RgbImage specularSpreadMap,
-                             image::RgbImage reflectivityMap)
+                             double specularSpread,
+                             double reflectivity)
                 : _height(diffuseMap.get_heigth())
                 , _width(diffuseMap.get_width())
                 , _diffuseMap(diffuseMap)
                 , _specularMap(specularMap)
-                , _specularSpreadMap(specularSpreadMap)
-                , _reflectivityMap(reflectivityMap){};
+                , _specularSpread(specularSpread)
+                , _reflectivity(reflectivity){};
 
             const MaterialProperties
             get_point_properties(Intersection intersection) const;
@@ -28,11 +28,8 @@ namespace raytracer
             unsigned _width;
             image::RgbImage _diffuseMap;
             image::RgbImage _specularMap;
-            double _specularFactor = 255;
-            image::RgbImage _specularSpreadMap;
-            double _specularSpreadFactor = 255;
-            image::RgbImage _reflectivityMap;
-            double _reflectivityFactor = 255;
+            double _specularSpread;
+            double _reflectivity;
         };
     } // namespace materials
 } // namespace raytracer
