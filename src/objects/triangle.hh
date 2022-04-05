@@ -10,10 +10,13 @@ namespace raytracer::objects
     class Triangle : public Object
     {
     public:
+        using UvCoord = vectors::Vector2;
         // points should be defined in a clockwise direction
         using PointsType = std::array<points::Point3, 3>;
         using NormalsType = std::array<vectors::Vector3, 3>;
-        using UvsType = std::array<vectors::Vector2, 3>;
+        using UvsType = std::array<UvCoord, 3>;
+        static constexpr UvsType DEFAULT_UVS{ UvCoord{ 0, 0 }, UvCoord{ 1, 0 },
+                                              UvCoord{ 0, 1 } };
 
         Triangle();
         Triangle(const PointsType &points, const Object::MaterialPtr &material);
@@ -24,7 +27,8 @@ namespace raytracer::objects
         Triangle(const PointsType &points, const NormalsType &normals,
                  const UvsType &uv_map, const Object::MaterialPtr &material);
         Triangle(const PointsType &points, const NormalsType &normals,
-                 const UvsType &uv_map, bool flat, const Object::MaterialPtr &material);
+                 const UvsType &uv_map, bool flat,
+                 const Object::MaterialPtr &material);
 
         virtual std::optional<Intersection>
         intersects_ray(const Ray &ray) const override;

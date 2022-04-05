@@ -47,17 +47,12 @@ namespace raytracer::objects
 
     Triangle::Triangle(const PointsType &points,
                        const Object::MaterialPtr &material)
-        : Triangle{ points,
-                    { Vector2{ 0, 0 }, Vector2{ 1, 0 }, Vector2{ 0, 1 } },
-                    material }
+        : Triangle{ points, Triangle::DEFAULT_UVS, material }
     {}
 
     Triangle::Triangle(const PointsType &points, const NormalsType &normals,
                        const Object::MaterialPtr &material)
-        : Triangle{ points,
-                    normals,
-                    { Vector2{ 0, 0 }, Vector2{ 1, 0 }, Vector2{ 0, 1 } },
-                    material }
+        : Triangle{ points, normals, Triangle::DEFAULT_UVS, material }
     {}
 
     Triangle::Triangle(const PointsType &points, const UvsType &uv_map,
