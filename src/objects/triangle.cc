@@ -144,8 +144,7 @@ namespace raytracer::objects
         return Intersection{
             ray,
             t,
-            uv.x,
-            uv.y,
+            uv,
             this,
             std::shared_ptr<void>(new TriangleIntersectionData{ bary_a, bary_b }),
         };

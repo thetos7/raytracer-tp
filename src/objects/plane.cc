@@ -31,7 +31,7 @@ namespace raytracer::objects
         {
             return {};
         }
-        return Intersection{ ray, t, 0, 0, this };
+        return Intersection{ ray, t, { 0, 0 }, this };
     }
 
     vectors::Vector3 Plane::get_normal(const Intersection &intersection) const

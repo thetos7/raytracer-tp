@@ -6,26 +6,26 @@
 #include "points/point3.hh"
 #include "ray/ray.hh"
 #include "utils/utils.hh"
+#include "vectors/vector2.hh"
 #include "vectors/vector3.hh"
 
 namespace raytracer
 {
+    using vectors::Vector2;
     using ObjectPtr = Intersection::ObjectPtr;
 
-    Intersection::Intersection(const Ray ray, const double t, const double u,
-                               const double v, ObjectPtr object,
-                               StoragePtr storage)
+    Intersection::Intersection(const Ray ray, const double t, const Vector2 &uv,
+                               ObjectPtr object, StoragePtr storage)
         : ray{ ray }
-        , u{ u }
-        , v{ v }
+        , uv{ uv }
         , object{ object }
         , t{ t }
         , storage{ storage }
     {}
 
     Intersection::Intersection(const Intersection &other)
-        : Intersection{ other.ray, other.t,      other.u,
-                        other.v,   other.object, other.storage }
+        : Intersection{ other.ray, other.t, other.uv, other.object,
+                        other.storage }
     {
         scene = other.scene;
     }
@@ -49,7 +49,7 @@ namespace raytracer
                              const Intersection &intersection)
     {
         return out << "Intersection{ ray: " << intersection.ray
-                   << ", u: " << intersection.u << ", v: " << intersection.v
+                   << ", uv: " << intersection.uv
                    << ", object: " << *intersection.object
                    << ", t: " << intersection.t << " }";
     }

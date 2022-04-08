@@ -175,15 +175,15 @@ int main(int argc, char *argv[])
 
     auto voronoiMaterial = std::make_shared<ShaderMaterial>(
         [&](const Intersection &intersection, MaterialProperties &props) {
-            auto fact = voronoi(Vector2(intersection.u, intersection.v));
+            auto fact = voronoi(intersection.uv);
             props.diffuse =
                 Vector3(0.9, 0.9, 0.2).lerp_to(Vector3(0.9, 0.5, 0.1), fact);
         });
 
     auto uvDebugMaterial = std::make_shared<ShaderMaterial>(
         [](const Intersection &intersection, MaterialProperties &props) {
-            props.diffuse.x = intersection.u;
-            props.diffuse.y = intersection.v;
+            props.diffuse.x = intersection.uv.x;
+            props.diffuse.y = intersection.uv.y;
         });
 
     const auto camPos = Point3(0, -1, 1);
