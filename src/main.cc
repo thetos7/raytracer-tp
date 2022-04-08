@@ -13,8 +13,8 @@
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
-#include "materials/textured_material.hh"
 #include "materials/shader_material.hh"
+#include "materials/textured_material.hh"
 #include "materials/uniform_material.hh"
 #include "objects/blob.hh"
 #include "objects/blob_sources/blob_point.hh"
@@ -61,7 +61,7 @@ double randfloat()
     return static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
 }
 
-double voronoi(const Intersection &intersection)
+double voronoi(Vector2 uv)
 {
     static std::vector<Vector2> points((VORO_SIZE + 2) * (VORO_SIZE + 2));
     static bool initialized = false;
@@ -94,11 +94,11 @@ double voronoi(const Intersection &intersection)
         initialized = true;
     }
     double nearest_dist = 4;
-    const int cx =
-        static_cast<int>(std::floor(intersection.u / VORO_CELL_SIZE));
-    const int cy =
-        static_cast<int>(std::floor(intersection.v / VORO_CELL_SIZE));
-    const Vector2 uv = { intersection.u, intersection.v };
+    const auto u = uv.x;
+    const auto v = uv.y;
+    const int cx = static_cast<int>(std::floor(u / VORO_CELL_SIZE));
+    const int cy = static_cast<int>(std::floor(v / VORO_CELL_SIZE));
+
     for (int ox = -1; ox <= 1; ++ox)
         for (int oy = -1; oy <= 1; ++oy)
         {
@@ -175,7 +175,7 @@ int main(int argc, char *argv[])
 
     auto voronoiMaterial = std::make_shared<ShaderMaterial>(
         [&](const Intersection &intersection, MaterialProperties &props) {
-            auto fact = voronoi(intersection);
+            auto fact = voronoi(Vector2(intersection.u, intersection.v));
             props.diffuse =
                 Vector3(0.9, 0.9, 0.2).lerp_to(Vector3(0.9, 0.5, 0.1), fact);
         });
@@ -241,11 +241,11 @@ int main(int argc, char *argv[])
             cubeMesh,
         },
         Scene::LightCollection{
-            std::make_shared<AmbientLight>(Vector3::all(.15)),
+            std::make_shared<AmbientLight>(Vector3::all(.05)),
             std::make_shared<PointLight>(Point3::origin() + Vector3::up() * 3,
-                                         Vector3::all(0.8)),
+                                         Vector3::all(0.5)),
             std::make_shared<SunLight>(Vector3(0.5, -1, -1),
-                                       Vector3(0.8, 0.8, 0.6)),
+                                       Vector3(0.7, 0.7, 0.55)),
         },
     };
 
