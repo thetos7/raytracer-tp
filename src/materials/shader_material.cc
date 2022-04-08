@@ -14,8 +14,8 @@ namespace raytracer::materials
     ShaderMaterial::get_point_properties(Intersection intersection) const
     {
         using namespace vectors;
-        MaterialProperties props(Vector3::zero(), Vector3::zero(), 0,
-                                 Vector3::zero());
+        MaterialProperties props(Vector3::zero(), 0, 0,
+                                 0);
         shader_(intersection, props);
         return props;
     }

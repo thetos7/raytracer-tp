@@ -15,6 +15,7 @@
 #include "objects/triangle.hh"
 #include "points/point3.hh"
 #include "vectors/vector3.hh"
+#include "colors/rgb.hh"
 
 using namespace points;
 using namespace vectors;
