@@ -13,6 +13,9 @@
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
+#include "materials/node_shader/node_shader.hh"
+#include "materials/node_shader/nodes/all_nodes.hh"
+#include "materials/node_shader_material.hh"
 #include "materials/shader_material.hh"
 #include "materials/textured_material.hh"
 #include "materials/uniform_material.hh"
@@ -31,10 +34,13 @@
 
 using namespace points;
 using namespace vectors;
+using namespace raytracer::materials::node_shader;
+using namespace nodes;
 using raytracer::materials::MaterialProperties;
 using raytracer::materials::ShaderMaterial;
 using raytracer::materials::UniformMaterial;
 using raytracer::materials::TexturedMaterial;
+using raytracer::materials::NodeShaderMaterial;
 using raytracer::lights::PointLight;
 using raytracer::lights::SunLight;
 using raytracer::lights::AmbientLight;
@@ -173,6 +179,17 @@ int main(int argc, char *argv[])
         0.,
     });
 
+    auto nodeShaderUvMaterial = std::make_shared<
+        NodeShaderMaterial>(NodeShaderMaterial{ std::make_shared<NodeShader>(
+        NodeShader::NodeCollection{
+            { "intersectionInfo", std::make_shared<IntersectionInfoNode>() },
+            { "uvConverter",
+              std::make_shared<PlanarToSpatialNode>(Node::PinAdressMap{
+                  { "in", PinAddress::from_str("intersectionInfo.uv") } }) },
+        },
+        PinAddress::from_str("uvConverter.out"), std::nullopt, std::nullopt,
+        std::nullopt) });
+
     auto voronoiMaterial = std::make_shared<ShaderMaterial>(
         [&](const Intersection &intersection, MaterialProperties &props) {
             auto fact = voronoi(intersection.uv);
@@ -209,7 +226,7 @@ int main(int argc, char *argv[])
             Point3{ 2, 0, 1 },
             Point3{ 2, 1, 0 },
         },
-        voronoiMaterial);
+        nodeShaderUvMaterial);
 
     const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/weird_tris.obj", orangeUniform, Vector3(3, 2, 0), 0.3, RotMatrix3(M_PI_2, 0, 0)));
 

@@ -22,6 +22,7 @@ namespace raytracer
         using ObjectPtr = const objects::Object *;
         using StoragePtr = std::shared_ptr<void>;
 
+        Intersection();
         Intersection(const Intersection &other);
         Intersection(const Ray ray, const double t, const Vector2 &uv,
                      ObjectPtr object, StoragePtr storage = nullptr);

@@ -14,6 +14,11 @@ namespace raytracer
     using vectors::Vector2;
     using ObjectPtr = Intersection::ObjectPtr;
 
+    Intersection::Intersection()
+        : Intersection(Ray(points::Point3::origin(), Vector3::all(0)), 0,
+                       Vector2::all(0), nullptr)
+    {}
+
     Intersection::Intersection(const Ray ray, const double t, const Vector2 &uv,
                                ObjectPtr object, StoragePtr storage)
         : ray{ ray }

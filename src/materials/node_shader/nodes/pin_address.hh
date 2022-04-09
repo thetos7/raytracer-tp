@@ -15,6 +15,7 @@ namespace raytracer::materials::node_shader::nodes
         {}
         string node_name;
         string pin_name;
+        static PinAddress from_str(std::string str);
     };
 
 } // namespace raytracer::materials::node_shader::nodes
