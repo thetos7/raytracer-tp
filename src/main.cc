@@ -142,12 +142,20 @@ int main(int argc, char *argv[])
                       },
                       5 // voronoi size
                       ) },
-                { "factorConverter",
-                  std::make_shared<ScalarToSpatialNode>(Node::PinAdressMap{
-                      { "in", PinAddress::from_str("voronoi.factor") },
-                  }) } },
-            PinAddress::from_str("factorConverter.out"), std::nullopt,
-            std::nullopt, std::nullopt) });
+                { "colorRamp",
+                  std::make_shared<ColorRampNode>(
+                      Node::PinAdressMap{
+                          { "value", PinAddress::from_str("voronoi.factor") },
+                      },
+                      ColorRampNode::StopCollection{
+                          { 0, { 0, 0, 1 } },
+                          { .35, { 0, 1, 1 } },
+                          { .5, { 0, 1, 0 } },
+                          { 65, { 1, 1, 0 } },
+                          { 1, { 1, 0, 0 } },
+                      }) } },
+            PinAddress::from_str("colorRamp.color"), std::nullopt, std::nullopt,
+            std::nullopt) });
 
     auto uvDebugMaterial = std::make_shared<ShaderMaterial>(
         [](const Intersection &intersection, MaterialProperties &props) {
@@ -182,6 +190,7 @@ int main(int argc, char *argv[])
 
     const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/weird_tris.obj", orangeUniform, Vector3(3, 2, 0), 0.3, RotMatrix3(M_PI_2, 0, 0)));
 
+    // The blob adds a lot of rendering time, it can take around 10mins with it
     // const auto purpleBlob = std::make_shared<Blob>(
     //     Point3(2, 0, 0), 2.2, 33, 0.4,
     //     Blob::SourceCollection{
