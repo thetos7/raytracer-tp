@@ -10,4 +10,5 @@ namespace raytracer::materials::node_shader::nodes
     class ValueNode;
     class VoronoiTextureNode;
     class ScalarToSpatialNode;
+    class ColorRampNode;
 } // namespace raytracer::materials::node_shader::nodes
