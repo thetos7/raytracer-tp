@@ -8,4 +8,6 @@ namespace raytracer::materials::node_shader::nodes
     class IntersectionInfoNode;
     class PlanarToSpatialNode;
     class ValueNode;
+    class VoronoiTextureNode;
+    class ScalarToSpatialNode;
 } // namespace raytracer::materials::node_shader::nodes

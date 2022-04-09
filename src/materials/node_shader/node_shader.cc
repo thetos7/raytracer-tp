@@ -63,8 +63,7 @@ namespace raytracer::materials::node_shader
         }
         else
         {
-            reflectivity_output_ =
-                std::make_shared<ConstantValueProvider>(0);
+            reflectivity_output_ = std::make_shared<ConstantValueProvider>(0);
         }
     }
 
@@ -73,7 +72,8 @@ namespace raytracer::materials::node_shader
         if (!nodes_.contains(pin.node_name))
         {
             std::ostringstream oss;
-            oss << "Reference to unknown node `" << pin.node_name << "`.";
+            oss << __FILE__ << " line " << __LINE__
+                << ": Reference to unknown node `" << pin.node_name << "`.";
             throw std::logic_error(oss.str());
         }
 

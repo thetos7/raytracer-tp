@@ -4,14 +4,14 @@
 
 namespace raytracer::materials::node_shader::nodes
 {
-    class PlanarToSpatialNode : public Node
+    class ScalarToSpatialNode : public Node
     {
     public:
         // Inputs:
-        // in: Vector2 - vector to convert
+        // in: double - scalar to convert
         using super_type = Node;
 
-        PlanarToSpatialNode(PinAdressMap inputs);
+        ScalarToSpatialNode(PinAdressMap inputs);
         virtual void compute(ComputationIdType cid) const override;
 
     private:

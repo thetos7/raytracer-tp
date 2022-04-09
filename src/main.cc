@@ -55,66 +55,6 @@ using raytracer::Scene;
 using raytracer::Camera;
 using colors::RGB;
 
-constexpr auto VORO_SIZE = 5;
-constexpr auto VORO_CELL_SIZE = 1. / VORO_SIZE;
-size_t voro_idx(int x, int y)
-{
-    return (y + 1) * (VORO_SIZE + 2) + (x + 1);
-}
-
-double randfloat()
-{
-    return static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
-}
-
-double voronoi(Vector2 uv)
-{
-    static std::vector<Vector2> points((VORO_SIZE + 2) * (VORO_SIZE + 2));
-    static bool initialized = false;
-    if (!initialized)
-    {
-        for (int y = 0; y < VORO_SIZE; ++y)
-            for (int x = 0; x < VORO_SIZE; ++x)
-            {
-                auto px = randfloat() * VORO_CELL_SIZE;
-                auto py = randfloat() * VORO_CELL_SIZE;
-                points[voro_idx(y, x)] = { px, py };
-            }
-        for (int x = 0; x < VORO_SIZE; ++x)
-        {
-            points[voro_idx(x, -1)] = points[voro_idx(x, VORO_SIZE - 1)];
-            points[voro_idx(x, VORO_SIZE)] = points[voro_idx(x, 0)];
-        }
-        for (int y = -1; y < VORO_SIZE + 1; ++y)
-        {
-            points[voro_idx(-1, y)] = points[voro_idx(VORO_SIZE - 1, y)];
-            points[voro_idx(VORO_SIZE, y)] = points[voro_idx(0, y)];
-        }
-        for (int y = -1; y < VORO_SIZE + 1; ++y)
-            for (int x = -1; x < VORO_SIZE + 1; ++x)
-            {
-                auto &p = points[voro_idx(x, y)];
-                p.x += x * VORO_CELL_SIZE;
-                p.y += y * VORO_CELL_SIZE;
-            }
-        initialized = true;
-    }
-    double nearest_dist = 4;
-    const auto u = uv.x;
-    const auto v = uv.y;
-    const int cx = static_cast<int>(std::floor(u / VORO_CELL_SIZE));
-    const int cy = static_cast<int>(std::floor(v / VORO_CELL_SIZE));
-
-    for (int ox = -1; ox <= 1; ++ox)
-        for (int oy = -1; oy <= 1; ++oy)
-        {
-            nearest_dist = std::min(
-                nearest_dist, (uv - points[voro_idx(cx + ox, cy + oy)]).norm());
-        }
-    const auto dist = nearest_dist / (VORO_CELL_SIZE);
-    return std::clamp(dist, 0., 1.);
-}
-
 int main(int argc, char *argv[])
 {
     if (argc == 2)
@@ -190,12 +130,24 @@ int main(int argc, char *argv[])
         PinAddress::from_str("uvConverter.out"), std::nullopt, std::nullopt,
         std::nullopt) });
 
-    auto voronoiMaterial = std::make_shared<ShaderMaterial>(
-        [&](const Intersection &intersection, MaterialProperties &props) {
-            auto fact = voronoi(intersection.uv);
-            props.diffuse =
-                Vector3(0.9, 0.9, 0.2).lerp_to(Vector3(0.9, 0.5, 0.1), fact);
-        });
+    auto nodeShaderVoronoiMaterial = std::make_shared<NodeShaderMaterial>(
+        NodeShaderMaterial{ std::make_shared<NodeShader>(
+            NodeShader::NodeCollection{
+                { "intersectionInfo",
+                  std::make_shared<IntersectionInfoNode>() },
+                { "voronoi",
+                  std::make_shared<VoronoiTextureNode>(
+                      Node::PinAdressMap{
+                          { "uv", PinAddress::from_str("intersectionInfo.uv") },
+                      },
+                      5 // voronoi size
+                      ) },
+                { "factorConverter",
+                  std::make_shared<ScalarToSpatialNode>(Node::PinAdressMap{
+                      { "in", PinAddress::from_str("voronoi.factor") },
+                  }) } },
+            PinAddress::from_str("factorConverter.out"), std::nullopt,
+            std::nullopt, std::nullopt) });
 
     auto uvDebugMaterial = std::make_shared<ShaderMaterial>(
         [](const Intersection &intersection, MaterialProperties &props) {
@@ -226,7 +178,7 @@ int main(int argc, char *argv[])
             Point3{ 2, 0, 1 },
             Point3{ 2, 1, 0 },
         },
-        nodeShaderUvMaterial);
+        nodeShaderVoronoiMaterial);
 
     const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/weird_tris.obj", orangeUniform, Vector3(3, 2, 0), 0.3, RotMatrix3(M_PI_2, 0, 0)));
 
