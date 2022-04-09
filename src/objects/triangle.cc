@@ -100,6 +100,9 @@ namespace raytracer::objects
         const auto t =
             (raw_face_normal_.dot(points_[0] - ray.origin)) / denom_plane;
 
+        if(t < 0)
+            return {}; // triangle behind origin
+
         // checking intersection point is in triangle
         const auto intersection_point = ray.origin + ray.direction * t;
 
