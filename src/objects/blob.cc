@@ -429,7 +429,7 @@ namespace raytracer::objects
                 const auto val_a = point_samples[idx_a] - threshold;
                 const auto val_b = point_samples[idx_b] - threshold;
 
-                const auto factor = -val_b / (val_a - val_b);
+                const auto factor = 1 - ((-val_b) / (val_a - val_b));
                 triangle_vertices[j] =
                     sample_point_pos(A).lerp_to(sample_point_pos(B), factor);
 
