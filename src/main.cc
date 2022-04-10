@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
             props.diffuse.y = intersection.v;
         });
 
-    const auto camPos = Point3(0, -1, 0);
+    const auto camPos = Point3(0, -1, 1);
     const auto camPoint = Point3(2, 0, 0);
     const auto camUp = Vector3::up();
     const auto redSphere =
