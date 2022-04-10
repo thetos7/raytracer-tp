@@ -130,6 +130,29 @@ int main(int argc, char *argv[])
         PinAddress::from_str("uvConverter.out"), std::nullopt, std::nullopt,
         std::nullopt) });
 
+    auto nodeShaderFractalNoiseMaterial =
+        std::make_shared<NodeShaderMaterial>(NodeShaderMaterial{
+            std::make_shared<NodeShader>(
+                NodeShader::NodeCollection{
+                    { "intersectionInfo",
+                      std::make_shared<IntersectionInfoNode>() },
+                    { "fractalNoise",
+                      std::make_shared<FractalNoiseTextureNode>(
+                          Node::PinAdressMap{
+                              { "uv",
+                                PinAddress::from_str("intersectionInfo.uv") } },
+                          3.0, 6) },
+                    { "factorConverter",
+                      std::make_shared<ScalarToSpatialNode>(Node::PinAdressMap{
+                          { "in",
+                            PinAddress::from_str("fractalNoise.factor") } }) },
+                    { "specularSpreadConstant",
+                      std::make_shared<ValueNode>(1.0) } },
+                PinAddress::from_str("factorConverter.out"),
+                PinAddress::from_str("fractalNoise.factor"),
+                PinAddress::from_str("specularSpreadConstant.value"),
+                std::nullopt),
+        });
     auto nodeShaderVoronoiMaterial = std::make_shared<NodeShaderMaterial>(
         NodeShaderMaterial{ std::make_shared<NodeShader>(
             NodeShader::NodeCollection{
@@ -163,8 +186,8 @@ int main(int argc, char *argv[])
             props.diffuse.y = intersection.uv.y;
         });
 
-    const auto camPos = Point3(0, -1, 1);
-    const auto camPoint = Point3(2, 0, 0);
+    const auto camPos = Point3(0, 0, 0);
+    const auto camPoint = Point3(4, 0, 0);
     const auto camUp = Vector3::up();
     const auto redSphere =
         std::make_shared<Sphere>(Point3(4, 0, 0), 1., minecraftTexture);
@@ -180,13 +203,31 @@ int main(int argc, char *argv[])
     const auto lightGreyPlane = std::make_shared<Plane>(
         Point3(0, 0, -1), Vector3::up(), lightGreyUniform);
 
-    const auto redTriangle = std::make_shared<Triangle>(
+    const auto &texMaterial = nodeShaderFractalNoiseMaterial;
+    const auto texTriangle1 = std::make_shared<Triangle>(
+        Triangle::PointsType{
+            Point3{ 2, 0, 1 },
+            Point3{ 2, 1, 1 },
+            Point3{ 2, 0, 0 },
+        },
+        Triangle::UvsType{
+            Vector2{ 0, 0 },
+            Vector2{ 1, 0 },
+            Vector2{ 0, 1 },
+        },
+        texMaterial);
+    const auto texTriangle2 = std::make_shared<Triangle>(
         Triangle::PointsType{
             Point3{ 2, 1, 1 },
-            Point3{ 2, 0, 1 },
             Point3{ 2, 1, 0 },
+            Point3{ 2, 0, 0 },
         },
-        nodeShaderVoronoiMaterial);
+        Triangle::UvsType{
+            Vector2{ 1, 0 },
+            Vector2{ 1, 1 },
+            Vector2{ 0, 1 },
+        },
+        texMaterial);
 
     const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/weird_tris.obj", orangeUniform, Vector3(3, 2, 0), 0.3, RotMatrix3(M_PI_2, 0, 0)));
 
@@ -217,6 +258,8 @@ int main(int argc, char *argv[])
             backgroundPlane,
             // redTriangle,
             cubeMesh,
+            texTriangle1,
+            texTriangle2,
         },
         Scene::LightCollection{
             std::make_shared<AmbientLight>(Vector3::all(.05)),
