@@ -15,4 +15,5 @@ namespace raytracer::materials::node_shader::nodes
     class BinaryMathNode;
     enum class BinaryMathOp;
     enum class UnaryMathOp;
+    class MixNode;
 } // namespace raytracer::materials::node_shader::nodes

@@ -5,6 +5,7 @@
 #include "math_nodes/binary_math_node.hh"
 #include "math_nodes/math_operations.hh"
 #include "math_nodes/unary_math_node.hh"
+#include "mix_node/mix_node.hh"
 #include "planar_to_spatial_node/planar_to_spatial_node.hh"
 #include "scalar_to_spatial_node/scalar_to_spatial_node.hh"
 #include "value_node/value_node.hh"
