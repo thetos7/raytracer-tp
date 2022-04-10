@@ -11,4 +11,8 @@ namespace raytracer::materials::node_shader::nodes
     class VoronoiTextureNode;
     class ScalarToSpatialNode;
     class ColorRampNode;
+    class UnaryMathNode;
+    class BinaryMathNode;
+    enum class BinaryMathOp;
+    enum class UnaryMathOp;
 } // namespace raytracer::materials::node_shader::nodes
