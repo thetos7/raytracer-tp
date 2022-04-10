@@ -29,6 +29,8 @@ namespace vectors
         double dot(const Vector2 &other) const;
         double norm() const;
         double square_norm() const;
+        Vector2 floor() const;
+        Vector2 fract() const;
         Vector2 normalized() const;
         Vector2 lerp_to(const Vector2 &other, double factor) const;
 
@@ -49,6 +51,7 @@ namespace vectors
 
     Vector2 operator*(const double &scalar, const Vector2 vect);
     Vector2 operator-(const Vector2 &vect);
+    Vector2 operator-(const double &scalar, const Vector2 &vect);
 
     std::ostream &operator<<(std::ostream &out, const Vector2 &vect);
 } // namespace vectors

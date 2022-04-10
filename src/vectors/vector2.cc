@@ -37,6 +37,22 @@ namespace vectors
         return this->dot(*this);
     }
 
+    Vector2 Vector2::floor() const
+    {
+        return Vector2{
+            std::floor(x),
+            std::floor(y),
+        };
+    }
+
+    Vector2 Vector2::fract() const
+    {
+        return Vector2{
+            utils::fract(x),
+            utils::fract(y),
+        };
+    }
+
     double Vector2::norm() const
     {
         return sqrt(square_norm());
@@ -160,6 +176,11 @@ namespace vectors
     Vector2 operator-(const Vector2 &vect)
     {
         return Vector2{ -vect.x, -vect.y };
+    }
+
+    Vector2 operator-(const double &scalar, const Vector2 &vect)
+    {
+        return Vector2::all(scalar) - vect;
     }
 
     std::ostream &operator<<(std::ostream &out, const Vector2 &vect)
