@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
         },
         uvDebugMaterial);
 
-    const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/cube_rot_tris.obj", orangeUniform, Point3(3, 2, 0)));
+    const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/weird_tris.obj", orangeUniform, Point3(3, 2, 0), 0.3));
 
     // const auto purpleBlob = std::make_shared<Blob>(
     //     Point3(2, 0, 0), 2.2, 33, 0.4,
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
             greenSphere,
             lightGreyPlane,
             backgroundPlane,
-            redTriangle,
+            // redTriangle,
             cubeMesh,
         },
         Scene::LightCollection{

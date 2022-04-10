@@ -24,7 +24,7 @@ namespace raytracer::objects
     {}
 
     Mesh Mesh::loadFromObj(const std::string &path,
-                           const Object::MaterialPtr &matPtr, const points::Point3 &center)
+                           const Object::MaterialPtr &matPtr, const points::Point3 &center, const double scale /* = 1. */)
     {
         tinyobj::ObjReader reader;
         if (!reader.ParseFromFile(path))
@@ -68,14 +68,13 @@ namespace raytracer::objects
                     // access to vertex
                     auto idx = shapes[s].mesh.indices[index_offset + v];
                     points[v].x =
-                        (double)
-                            attrib.vertices[3 * size_t(idx.vertex_index) + 0] + center.x;
+                        ((double)attrib.vertices[3 * size_t(idx.vertex_index) + 0]) * scale + center.x;
                     points[v].y =
-                        (double)
-                            attrib.vertices[3 * size_t(idx.vertex_index) + 1] + center.y;
+                        ((double)
+                            attrib.vertices[3 * size_t(idx.vertex_index) + 1]) * scale + center.y;
                     points[v].z =
-                        (double)
-                            attrib.vertices[3 * size_t(idx.vertex_index) + 2] + center.z;
+                        ((double)
+                            attrib.vertices[3 * size_t(idx.vertex_index) + 2]) * scale + center.z;
 
                     // Check if `normal_index` is zero or positive. negative =
                     // no normal data

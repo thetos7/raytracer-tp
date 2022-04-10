@@ -13,7 +13,7 @@ namespace raytracer::objects
     public:
         using TriangleCollection = std::vector<std::shared_ptr<Triangle>>;
         Mesh(const TriangleCollection &triangles);
-        static Mesh loadFromObj(const std::string &, const Object::MaterialPtr &, const points::Point3 &);
+        static Mesh loadFromObj(const std::string &, const Object::MaterialPtr &, const points::Point3 &, const double scale = 1.);
         virtual std::optional<Intersection>
         intersects_ray(const Ray &ray) const override;
         virtual vectors::Vector3
