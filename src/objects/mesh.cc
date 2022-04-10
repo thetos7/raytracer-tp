@@ -23,15 +23,18 @@ namespace raytracer::objects
 
     {}
 
-    Mesh Mesh::loadFromObj(const std::string &path,
-                           const Object::MaterialPtr &matPtr, const points::Point3 &center, const double scale /* = 1. */)
+    Mesh Mesh::loadFromObj(
+        const std::string &path, const Object::MaterialPtr &matPtr,
+        const vectors::Vector3 &center, const double scale /* = 1. */,
+        vectors::RotMatrix3 rot /* = vectors::RotMatrix3::Identity() */)
     {
         tinyobj::ObjReader reader;
         if (!reader.ParseFromFile(path))
         {
             if (!reader.Error().empty())
             {
-                throw std::invalid_argument("Can't read obj file " + reader.Error());
+                throw std::invalid_argument("Can't read obj file "
+                                            + reader.Error());
             }
         }
         if (!reader.Warning().empty())
@@ -68,14 +71,19 @@ namespace raytracer::objects
                     // access to vertex
                     auto idx = shapes[s].mesh.indices[index_offset + v];
                     points[v].x =
-                        ((double)attrib.vertices[3 * size_t(idx.vertex_index) + 0]) * scale + center.x;
+                        ((double)
+                             attrib.vertices[3 * size_t(idx.vertex_index) + 0])
+                        * scale;
                     points[v].y =
                         ((double)
-                            attrib.vertices[3 * size_t(idx.vertex_index) + 1]) * scale + center.y;
+                             attrib.vertices[3 * size_t(idx.vertex_index) + 1])
+                        * scale;
                     points[v].z =
                         ((double)
-                            attrib.vertices[3 * size_t(idx.vertex_index) + 2]) * scale + center.z;
-
+                             attrib.vertices[3 * size_t(idx.vertex_index) + 2])
+                        * scale;
+                    points[v] = rot * points[v];
+                    points[v] += center;
                     // Check if `normal_index` is zero or positive. negative =
                     // no normal data
                     if (idx.normal_index >= 0)
@@ -91,7 +99,7 @@ namespace raytracer::objects
                             (double)attrib
                                 .normals[3 * size_t(idx.normal_index) + 2];
                     }
-
+                    normals[v] = rot * normals[v];
                     // Check if `texcoord_index` is zero or positive. negative =
                     // no texcoord data
                     if (idx.texcoord_index >= 0)
