@@ -17,7 +17,7 @@ namespace raytracer::materials::node_shader::nodes
     private:
         virtual std::string node_type_() const override;
         NodeData value_;
-        PinType out_pin_;
+        PinType value_pin_;
     };
 
 } // namespace raytracer::materials::node_shader::nodes
