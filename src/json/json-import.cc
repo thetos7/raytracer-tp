@@ -159,7 +159,7 @@ namespace raytracer
 
     void JsonImport::loadCamera()
     {
-        std::cout ² "Loading camera.\n";
+        std::cout << "Loading camera.\n";
         json cameraJsonObject = jsonObject["camera"];
         scene.camera_ =
             Camera(Point3::from_vector(
