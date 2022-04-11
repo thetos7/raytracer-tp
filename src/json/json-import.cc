@@ -76,6 +76,9 @@ namespace raytracer
             }
             return std::make_shared<VoronoiTextureNode>(inputs, size);
         }
+        if (type == "scalar_to_spatial") {
+            return std::make_shared<ScalarToSpatialNode>(loadInputs(obj["inputs"]));
+        }
     }
 
     std::shared_ptr<NodeShader> loadNodeShader(const json &obj)
