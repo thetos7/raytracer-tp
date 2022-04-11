@@ -17,6 +17,7 @@ namespace raytracer
         Scene importScene();
 
     private:
+        std::string jsonPath;
         Scene scene;
         nlohmann::json jsonObject;
         std::map<std::string, std::shared_ptr<materials::Material>> materials;

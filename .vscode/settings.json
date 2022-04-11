@@ -63,7 +63,8 @@
     "map": "cpp",
     "ratio": "cpp",
     "iomanip": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "variant": "cpp"
   },
   "cmake.configureEnvironment": {
     "CC": "/usr/bin/clang",

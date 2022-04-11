@@ -25,6 +25,7 @@
 #include "utils/utils.hh"
 #include "vectors/vector2.hh"
 #include "vectors/vector3.hh"
+#include "vectors/rot_matrix3.hh"
 
 int main(int argc, char *argv[])
 {
@@ -139,6 +140,8 @@ int main(int argc, char *argv[])
         },
         uvDebugMaterial);
 
+    const auto cubeMesh = std::make_shared<Mesh>(Mesh::loadFromObj("../Testing/obj_files/weird_tris.obj", orangeUniform, Vector3(3, 2, 0), 0.3, RotMatrix3(M_PI_2, 0, 0)));
+
     // const auto purpleBlob = std::make_shared<Blob>(
     //     Point3(2, 0, 0), 2.2, 33, 0.4,
     //     Blob::SourceCollection{
@@ -163,7 +166,8 @@ int main(int argc, char *argv[])
             greenSphere,
             lightGreyPlane,
             backgroundPlane,
-            redTriangle,
+            // redTriangle,
+            cubeMesh,
         },
         Scene::LightCollection{
             std::make_shared<AmbientLight>(Vector3::all(.15)),
