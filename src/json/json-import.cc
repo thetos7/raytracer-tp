@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "colors/rgb.hh"
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
@@ -15,7 +16,6 @@
 #include "objects/triangle.hh"
 #include "points/point3.hh"
 #include "vectors/vector3.hh"
-#include "colors/rgb.hh"
 
 using namespace points;
 using namespace vectors;
@@ -27,8 +27,16 @@ using PointsType = std::array<points::Point3, 3>;
 
 namespace raytracer
 {
+    static void missingFieldErrorMessage(const std::string &fieldMissing,
+                                         const std::string &objectName)
+    {
+        std::cerr << "Missing or invalid field \"" << fieldMissing
+                  << "\" in object \"" << objectName << "\".\n";
+    }
+
     JsonImport::JsonImport(const std::string &jsonPath)
     {
+        this->jsonPath = jsonPath;
         this->scene = Scene();
         this->loadJsonObject(jsonPath);
     }
@@ -95,6 +103,9 @@ namespace raytracer
                         materialJsonObject["specularMap"].get<std::string>()),
                     materialJsonObject["specularSpread"].get<double>(),
                     materialJsonObject["reflectivity"].get<double>());
+                std::string name =
+                    materialJsonObject["name"].get<std::string>();
+                materials[name] = m;
             }
         }
     }
@@ -142,10 +153,28 @@ namespace raytracer
     void JsonImport::loadObjects()
     {
         std::cout << "Loading objects.\n";
+        if (!jsonObject.contains("objects")
+            || !jsonObject["objects"].is_array())
+        {
+            missingFieldErrorMessage("objects", "JSON");
+            return;
+        }
         json objectsJsonObject = jsonObject["objects"];
         for (auto objectJsonObject : objectsJsonObject)
         {
+            if (!objectJsonObject.contains("type")
+                || !objectJsonObject["type"].is_string())
+            {
+                missingFieldErrorMessage("type", "Object");
+                continue;
+            }
             std::string type = objectJsonObject["type"];
+            if (!objectJsonObject.contains("material")
+                || !objectJsonObject["material"].is_string())
+            {
+                missingFieldErrorMessage("material", type);
+                continue;
+            }
             auto mat =
                 materials[objectJsonObject["material"].get<std::string>()];
             if (type == "sphere")
@@ -255,6 +284,37 @@ namespace raytracer
                 scene.objects_.push_back(o);
                 std::cout << "Loaded a blob from json.\n";
                 std::cout << *o << '\n';
+            }
+            else if (type == "mesh_obj")
+            {
+                if (!objectJsonObject.contains("objPath")
+                    || !objectJsonObject["objPath"].is_string())
+                {
+                    missingFieldErrorMessage("objPath", type);
+                    continue;
+                }
+                auto path = objectJsonObject["objPath"].get<std::string>();
+                if (!objectJsonObject.contains("center")
+                    || !objectJsonObject["center"].is_array())
+                {
+                    missingFieldErrorMessage("center", type);
+                    continue;
+                }
+                auto center = Vector3::from_vector(
+                    objectJsonObject["center"].get<std::vector<double>>());
+                double scale = 0.;
+                if (objectJsonObject.contains("scale")
+                    && objectJsonObject["scale"].is_number_float())
+                    scale = objectJsonObject["scale"].get<double>();
+                auto rotate = Vector3(0., 0., 0.);
+                if (objectJsonObject.contains("rotate")
+                    && objectJsonObject["rotate"].is_number_float())
+                    rotate = Vector3::from_vector(
+                        objectJsonObject["rotate"].get<std::vector<double>>());
+                auto o = std::make_shared<Mesh>(Mesh::loadFromObj(
+                    path, mat, center, scale,
+                    RotMatrix3(rotate.x, rotate.y, rotate.z)));
+                scene.objects_.push_back(o);
             }
         }
     }
