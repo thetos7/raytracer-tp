@@ -7,6 +7,9 @@
 #include "lights/ambient_light.hh"
 #include "lights/point_light.hh"
 #include "lights/sun_light.hh"
+#include "materials/node_shader/node_shader.hh"
+#include "materials/node_shader/nodes/all_nodes.hh"
+#include "materials/node_shader_material.hh"
 #include "materials/textured_material.hh"
 #include "materials/uniform_material.hh"
 #include "objects/blob.hh"
@@ -24,6 +27,8 @@ using namespace raytracer::materials;
 using json = nlohmann::json;
 using namespace raytracer::objects;
 using PointsType = std::array<points::Point3, 3>;
+using namespace node_shader;
+using namespace nodes;
 
 namespace raytracer
 {
@@ -32,6 +37,100 @@ namespace raytracer
     {
         std::cerr << "Missing or invalid field \"" << fieldMissing
                   << "\" in object \"" << objectName << "\".\n";
+    }
+
+    std::optional<Node::PinAdressMap> loadInputs(const json &obj)
+    {
+        Node::PinAdressMap inputs;
+        if (!obj.is_object())
+        {
+            std::cerr << "input map is not an object\n";
+            return {};
+        }
+        for (auto &[k, v] : obj.items())
+        {
+            if (!v.is_string())
+            {
+                missingFieldErrorMessage(k, "inputs");
+                continue;
+            }
+            auto str_value = v.get<std::string>();
+            inputs.insert({ k, PinAddress::from_str(str_value) });
+        }
+    }
+
+    std::shared_ptr<Node> loadNode(const json &obj)
+    {
+        const auto type = obj.get<std::string>();
+        if (type == "intersection_info")
+        {
+            return std::make_shared<IntersectionInfoNode>();
+        }
+        if (type == "voronoi_texture")
+        {
+            const auto inputs = loadInputs(obj["inputs"]);
+            int size = 5;
+            if (obj.contains("size"))
+            {
+                size = obj["size"].get<int>();
+            }
+            return std::make_shared<VoronoiTextureNode>(inputs, size);
+        }
+    }
+
+    std::shared_ptr<NodeShader> loadNodeShader(const json &obj)
+    {
+        std::optional<PinAddress> diffuse;
+        std::optional<PinAddress> specular;
+        std::optional<PinAddress> specular_spread;
+        std::optional<PinAddress> reflectivity;
+        if (obj.contains("diffuse_output") && obj["diffuse_output"].is_string())
+        {
+            diffuse =
+                PinAddress::from_str(obj["diffuse_output"].get<std::string>());
+        }
+        if (obj.contains("specular_output")
+            && obj["specular_output"].is_string())
+        {
+            specular =
+                PinAddress::from_str(obj["specular_output"].get<std::string>());
+        }
+        if (obj.contains("specular_spread_output")
+            && obj["specular_spread_output"].is_string())
+        {
+            specular_spread = PinAddress::from_str(
+                obj["specular_spread_output"].get<std::string>());
+        }
+        if (obj.contains("reflectivity_output")
+            && obj["reflectivity_output"].is_string())
+        {
+            reflectivity = PinAddress::from_str(
+                obj["reflectivity_output"].get<std::string>());
+        }
+        if (!(diffuse || specular || specular_spread || reflectivity))
+        {
+            std::cerr << "Warning: Node shader has no output defined.\n";
+        }
+        if (!obj.contains("nodes"))
+        {
+            missingFieldErrorMessage("nodes", "node_shader");
+            return nullptr; // should SEGV
+        }
+
+        NodeShader::NodeCollection nodes;
+        for (auto &[node_name, node_obj] : obj["nodes"].items())
+        {
+            if (!node_obj.is_object())
+            {
+                std::cerr << "Node `" << node_name
+                          << "` is not an object, skipping";
+                continue;
+            }
+            nodes.insert({ node_name, loadNode(node_obj) });
+        }
+
+        return std::make_shared<NodeShader>(nodes, diffuse, specular,
+                                            specular_spread, reflectivity);
     }
 
     JsonImport::JsonImport(const std::string &jsonPath)
@@ -57,7 +156,7 @@ namespace raytracer
 
     void JsonImport::loadCamera()
     {
-        std::cout << "Loading camera.\n";
+        std::cout ² "Loading camera.\n";
         json cameraJsonObject = jsonObject["camera"];
         scene.camera_ =
             Camera(Point3::from_vector(
@@ -106,6 +205,11 @@ namespace raytracer
                 std::string name =
                     materialJsonObject["name"].get<std::string>();
                 materials[name] = m;
+            }
+            if (type == "node")
+            {
+                auto shader = loadNodeShader(materialJsonObject["shader"]);
+                auto m = std::make_shared<NodeShaderMaterial>();
             }
         }
     }
