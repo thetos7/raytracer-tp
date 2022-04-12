@@ -159,14 +159,15 @@ namespace raytracer::objects
 
     std::ostream &Mesh::print(std::ostream &out) const
     {
-        if (utils::compact_enabled(out))
+        out << "Mesh, nb poly: " << this->triangles_.size() << '\n';
+        /* if (utils::compact_enabled(out))
         {
             out << "Mesh{ [ ";
             utils::stream_join(out, triangles_, ", ") << " ] }";
             return out;
         }
         out << "Mesh { triangles: [ ";
-        utils::stream_join(out, triangles_, ", ") << " ] }";
+        utils::stream_join(out, triangles_, ", ") << " ] }"; */
         return out;
     }
 } // namespace raytracer::objects

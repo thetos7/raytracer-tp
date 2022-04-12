@@ -304,16 +304,16 @@ namespace raytracer
                     objectJsonObject["center"].get<std::vector<double>>());
                 double scale = 0.;
                 if (objectJsonObject.contains("scale")
-                    && objectJsonObject["scale"].is_number_float())
+                    && objectJsonObject["scale"].is_number())
                     scale = objectJsonObject["scale"].get<double>();
                 auto rotate = Vector3(0., 0., 0.);
                 if (objectJsonObject.contains("rotate")
-                    && objectJsonObject["rotate"].is_number_float())
+                    && objectJsonObject["rotate"].is_array())
                     rotate = Vector3::from_vector(
                         objectJsonObject["rotate"].get<std::vector<double>>());
                 auto o = std::make_shared<Mesh>(Mesh::loadFromObj(
                     path, mat, center, scale,
-                    RotMatrix3(rotate.x, rotate.y, rotate.z)));
+                    RotMatrix3(rotate.x * M_PI / 180, rotate.y * M_PI / 180, rotate.z * M_PI / 180)));
                 scene.objects_.push_back(o);
             }
         }
