@@ -103,6 +103,11 @@ namespace raytracer
             const auto inputs = *loadInputs(obj["inputs"]);
             return std::make_shared<ScalarToSpatialNode>(inputs);
         } // scalar_to_spatial
+        if (type == "planar_to_spatial")
+        {
+            const auto inputs = *loadInputs(obj["inputs"]);
+            return std::make_shared<PlanarToSpatialNode>(inputs);
+        } // planar_to_spatial
         if (type == "color_ramp")
         {
             const auto inputs = *loadInputs(obj["inputs"]);
