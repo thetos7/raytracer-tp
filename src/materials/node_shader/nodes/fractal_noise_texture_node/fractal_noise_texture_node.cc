@@ -42,7 +42,7 @@ namespace raytracer::materials::node_shader::nodes
         , scale_(scale)
         , octaves_(octaves)
     {
-        factor_pin_ = std::make_shared<ValueProvider>(0, this);
+        factor_pin_ = std::make_shared<ValueProvider>(0., this);
 
         outputs_ = {
             { "factor", factor_pin_ },

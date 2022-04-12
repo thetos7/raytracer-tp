@@ -5,7 +5,7 @@ namespace raytracer::materials::node_shader::nodes
     IntersectionInfoNode::IntersectionInfoNode()
         : super_type({})
         , uv_pin_(std::make_shared<ValueProvider>(Vector2(), this))
-        , t_pin_(std::make_shared<ValueProvider>(0, this))
+        , t_pin_(std::make_shared<ValueProvider>(0., this))
         , ray_origin_pin_(std::make_shared<ValueProvider>(Vector3(), this))
         , ray_direction_pin_(std::make_shared<ValueProvider>(Vector3(), this))
     {

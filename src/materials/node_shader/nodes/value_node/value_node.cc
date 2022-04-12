@@ -6,7 +6,7 @@ namespace raytracer::materials::node_shader::nodes
         : super_type({})
         , value_(value)
     {
-        value_pin_ = std::make_shared<ValueProvider>(0, this);
+        value_pin_ = std::make_shared<ValueProvider>(0., this);
 
         outputs_ = {
             { "value", value_pin_ },

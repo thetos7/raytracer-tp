@@ -19,6 +19,7 @@ namespace raytracer::materials::node_shader
         , cid_(0)
         , current_intersection_()
     {
+        using nodes::NodeData;
         for (auto &[k, v] : nodes)
         {
             v->set_context(this);
@@ -35,7 +36,7 @@ namespace raytracer::materials::node_shader
         else
         {
             diffuse_output_ =
-                std::make_shared<ConstantValueProvider>(Vector3::zero());
+                std::make_shared<ConstantValueProvider>(NodeData(Vector3::zero()));
         }
 
         if (specular_output)
@@ -44,7 +45,8 @@ namespace raytracer::materials::node_shader
         }
         else
         {
-            specular_output_ = std::make_shared<ConstantValueProvider>(0);
+            
+            specular_output_ = std::make_shared<ConstantValueProvider>(0.);
         }
 
         if (specular_spread_output)
@@ -54,7 +56,7 @@ namespace raytracer::materials::node_shader
         else
         {
             specular_spread_output_ =
-                std::make_shared<ConstantValueProvider>(0);
+                std::make_shared<ConstantValueProvider>(0.);
         }
 
         if (reflectivity_output)
@@ -63,7 +65,7 @@ namespace raytracer::materials::node_shader
         }
         else
         {
-            reflectivity_output_ = std::make_shared<ConstantValueProvider>(0);
+            reflectivity_output_ = std::make_shared<ConstantValueProvider>(0.);
         }
     }
 

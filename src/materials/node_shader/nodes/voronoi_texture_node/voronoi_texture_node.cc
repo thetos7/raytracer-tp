@@ -21,7 +21,7 @@ namespace raytracer::materials::node_shader::nodes
         , points_((size + 2) * (size + 2))
         , initialized_(false)
     {
-        factor_pin_ = std::make_shared<ValueProvider>(0, this);
+        factor_pin_ = std::make_shared<ValueProvider>(0., this);
         outputs_ = {
             { "factor", factor_pin_ },
         };

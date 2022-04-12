@@ -10,7 +10,7 @@ namespace raytracer::materials::node_shader::nodes
     MixNode::MixNode(PinAdressMap inputs)
         : super_type(inputs)
     {
-        result_pin_ = std::make_shared<ValueProvider>(0, this);
+        result_pin_ = std::make_shared<ValueProvider>(0., this);
 
         outputs_ = {
             { "result", result_pin_ },
