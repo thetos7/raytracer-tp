@@ -1,0 +1,70 @@
+{
+    "materials": [
+        {
+            "name": "lightGrey",
+            "type": "uniform",
+            "diffuse": [0.8, 0.8, 0.8],
+            "specular": 0.0,
+            "specularSpread": 1.0,
+            "reflectivity": 0.0
+        },
+        {
+            "name": "orange",
+            "type": "uniform",
+            "diffuse": [1.0, 0.5, 0.1],
+            "specular": 0.0,
+            "specularSpread": 1.0,
+            "reflectivity": 0.0
+        },
+        {
+            "name": "terracota_blue",
+            "type": "textured",
+            "diffuseMap": "../Testing/textures/terracota/diffuse.png",
+            "specularMap": "../Testing/textures/terracota/specular.png",
+            "specularSpread": 0,
+            "reflectivity":0
+        }
+    ],
+    "camera": {
+        "position": [0.0, 0.0, 3.0],
+        "focus": [4.0, 0.0, 0.0],
+        "up": [0.0, 0.0, 1.0],
+        "fov" : 1.5,
+        "aspectRatio" : 1.78,
+        "zmin" : 0.5
+    },
+    "lights" : [
+        {
+            "type": "ambientLight",
+            "color": [0.15, 0.15, 0.15]
+        },
+        {
+            "type": "pointLight",
+            "position": [1.0, 0.0, 4.0],
+            "intensity" : [0.8, 0.8, 0.8]
+        }
+    ],
+    "objects" : [
+        {
+            "type": "mesh_obj",
+            "objPath": "../Testing/obj_files/torus_tris.obj",
+            "center": [4, 0, 0],
+            "scale": 2,
+            "rotate":[0 , 0, 90],
+            "material": "terracota_blue"
+
+        },
+        {
+            "type": "plane",
+            "reference": [20.0, 0.0, 0.0],
+            "normal": [-1.0, 0.0, 0.0],
+            "material": "lightGrey"
+        },
+        {
+            "type": "plane",
+            "reference": [0.0, 0.0, -1.0],
+            "normal": [0.0, 0.0, 1.0],
+            "material": "lightGrey"
+        }
+    ]
+}
