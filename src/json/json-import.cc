@@ -60,13 +60,34 @@ namespace raytracer
         return inputs;
     }
 
+    std::optional<NodeData> loadAnyNodeData(const json &data)
+    {
+        if (data.is_number_float())
+        {
+            return data.get<double>();
+        }
+        if (data.is_array())
+        {
+            const auto v = data.get<std::vector<double>>();
+            if (v.size() == 2)
+            {
+                return Vector2::from_vector(v);
+            }
+            if (v.size() == 3)
+            {
+                return Vector3::from_vector(v);
+            }
+        }
+        return std::nullopt;
+    }
+
     std::shared_ptr<Node> loadNode(const json &obj)
     {
         const auto type = obj["type"].get<std::string>();
         if (type == "intersection_info")
         {
             return std::make_shared<IntersectionInfoNode>();
-        }
+        } // intersection_info
         if (type == "voronoi_texture")
         {
             const auto inputs = *loadInputs(obj["inputs"]);
@@ -76,12 +97,12 @@ namespace raytracer
                 size = obj["size"].get<int>();
             }
             return std::make_shared<VoronoiTextureNode>(inputs, size);
-        }
+        } // voronoi_texture
         if (type == "scalar_to_spatial")
         {
             const auto inputs = *loadInputs(obj["inputs"]);
             return std::make_shared<ScalarToSpatialNode>(inputs);
-        }
+        } // scalar_to_spatial
         if (type == "color_ramp")
         {
             const auto inputs = *loadInputs(obj["inputs"]);
@@ -110,7 +131,23 @@ namespace raytracer
                 stops.emplace_back(value, color);
             }
             return std::make_shared<ColorRampNode>(inputs, stops);
-        }
+        } // color_ramp
+        if (type == "value")
+        {
+            if (!(obj.contains("value")))
+            {
+                missingFieldErrorMessage("value", "ValueNode");
+                return nullptr;
+            }
+            const auto value = loadAnyNodeData(obj["value"]);
+            if (!value)
+            {
+                std::cerr << "field `value` of ValueNode does not match any "
+                             "NodeData type\n";
+                return nullptr;
+            }
+            return std::make_shared<ValueNode>(*value);
+        } // value
         return nullptr;
     }
 
