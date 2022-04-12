@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "wave_texture",
+  "title": "WaveTexture node",
+  "description": "A node for computing the value of a wave texture at given coordinates",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["wave_texture"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "uv": {
+          "description": "The uv coordinates' address",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["uv"]
+    },
+    "scale": {
+      "description": "The scaling factor applied to the texture",
+      "type": "number",
+      "default": 1.0
+    },
+    "angle": {
+      "description": "The angle in radians to which the waves will be perpendicular to",
+      "type": "number",
+      "default": 0.0
+    },
+    "offset": {
+      "description": "The offset of the waves",
+      "type": "number",
+      "default": 0.0
+    }
+  },
+  "required": ["inputs"]
+}

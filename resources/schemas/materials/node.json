@@ -12,6 +12,9 @@
       "$ref": "./nodes/fractal_noise_texture.json"
     },
     {
+      "$ref": "./nodes/wave_texture.json"
+    },
+    {
       "$ref": "./nodes/scalar_to_spatial.json"
     },
     {

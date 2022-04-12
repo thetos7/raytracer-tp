@@ -11,3 +11,4 @@
 #include "scalar_to_spatial_node/scalar_to_spatial_node.hh"
 #include "value_node/value_node.hh"
 #include "voronoi_texture_node/voronoi_texture_node.hh"
+#include "wave_texture_node/wave_texture_node.hh"

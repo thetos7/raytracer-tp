@@ -126,6 +126,42 @@ namespace raytracer
             return std::make_shared<FractalNoiseTextureNode>(inputs, scale,
                                                              octaves);
         } // fractal_noise_texture
+        if (type == "wave_texture")
+        {
+            double angle = 0.0;
+            double scale = 1.0;
+            double offset = 0.0;
+            if (obj.contains("angle"))
+            {
+                if (!obj["angle"].is_number_float())
+                {
+                    missingFieldErrorMessage("angle", "WaveTexture");
+                    return nullptr;
+                }
+                angle = obj["angle"].get<double>();
+            }
+            if (obj.contains("scale"))
+            {
+                if (!obj["scale"].is_number_float())
+                {
+                    missingFieldErrorMessage("scale", "WaveTexture");
+                    return nullptr;
+                }
+                scale = obj["scale"].get<double>();
+            }
+            if (obj.contains("offset"))
+            {
+                if (!obj["offset"].is_number_float())
+                {
+                    missingFieldErrorMessage("offset", "WaveTexture");
+                    return nullptr;
+                }
+                offset = obj["offset"].get<double>();
+            }
+            const auto inputs = *loadInputs(obj["inputs"]);
+            return std::make_shared<WaveTextureNode>(inputs, angle, scale,
+                                                     offset);
+        } // wave_texture
         if (type == "scalar_to_spatial")
         {
             const auto inputs = *loadInputs(obj["inputs"]);

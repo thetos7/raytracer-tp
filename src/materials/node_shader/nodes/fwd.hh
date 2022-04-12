@@ -17,4 +17,5 @@ namespace raytracer::materials::node_shader::nodes
     enum class UnaryMathOp;
     class MixNode;
     class FractalNoiseTextureNode;
+    class WaveTextureNode;
 } // namespace raytracer::materials::node_shader::nodes
