@@ -18,4 +18,8 @@ namespace raytracer::materials::node_shader::nodes
     class MixNode;
     class FractalNoiseTextureNode;
     class WaveTextureNode;
+    class ConstructPlanarNode;
+    class ConstructSpatialNode;
+    class DestructSpatialNode;
+    class DestructPlanarNode;
 } // namespace raytracer::materials::node_shader::nodes

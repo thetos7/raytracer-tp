@@ -1,6 +1,10 @@
 #pragma once
 
 #include "color_ramp_node/color_ramp_node.hh"
+#include "construct_planar/construct_planar_node.hh"
+#include "construct_spatial/construct_spatial_node.hh"
+#include "destruct_planar/destruct_planar_node.hh"
+#include "destruct_spatial/destruct_spatial_node.hh"
 #include "fractal_noise_texture_node/fractal_noise_texture_node.hh"
 #include "intersection_info_node/intersection_info_node.hh"
 #include "math_nodes/binary_math_node.hh"

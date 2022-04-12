@@ -21,6 +21,18 @@
       "$ref": "./nodes/planar_to_spatial.json"
     },
     {
+      "$ref": "./nodes/construct_spatial.json"
+    },
+    {
+      "$ref": "./nodes/construct_planar.json"
+    },
+    {
+      "$ref": "./nodes/destruct_spatial.json"
+    },
+    {
+      "$ref": "./nodes/destruct_planar.json"
+    },
+    {
       "$ref": "./nodes/color_ramp.json"
     },
     {
