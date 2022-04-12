@@ -3,7 +3,7 @@
   "$id": "binary_math",
   "title": "BinaryMath node",
   "description": "A node for computing binary math operations, such as additions or multiplications.",
-  "allOf": [{ "$ref": "./node_base" }],
+  "allOf": [{ "$ref": "./node_base.json" }],
   "type": "object",
   "properties": {
     "type": {
@@ -15,7 +15,7 @@
       "properties": {
         "lhs": {
           "description": "left-hand side's pin address",
-          "$ref": "./pin_adddress.json"
+          "$ref": "./pin_address.json"
         },
         "rhs": {
           "description": "right-hand side's pin address",

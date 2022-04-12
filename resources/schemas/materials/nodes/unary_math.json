@@ -15,7 +15,7 @@
       "properties": {
         "in": {
           "description": "operand's pin address",
-          "$ref": "./pin_adddress.json"
+          "$ref": "./pin_address.json"
         }
       },
       "required": ["in"]
