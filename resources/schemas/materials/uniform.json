@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "uniform",
+  "title": "Uniform",
+  "description": "A Uniform material",
+  "allOf": [{ "$ref": "./material_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["uniform"]
+    },
+    "diffuse": {
+      "description": "The diffuse component of the material, describes its color",
+      "$ref": "../vector3.json"
+    },
+    "specular": {
+      "description": "The specular factor of the material",
+      "type": "number",
+      "minimum": 0
+    },
+    "specularSpread": {
+      "description": "The specular spread/roughness of the material",
+      "type": "number"
+    },
+    "reflectivity": {
+      "description": "The material reflectivity factor",
+      "type": "number"
+    }
+  },
+  "required": ["diffuse", "specular", "specularSpread", "reflectivity"]
+}

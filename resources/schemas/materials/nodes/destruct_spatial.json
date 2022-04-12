@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "destruct_spatial",
+  "title": "DestructPlanar conversion node",
+  "description": "A node for destructuring a spatial (vector3) value to its individual components (x, y, z).",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["destruct_spatial"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "in": {
+          "description": "The input vector pin address",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["in"]
+    }
+  },
+  "required": ["inputs"]
+}

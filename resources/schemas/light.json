@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "light",
+    "title": "Light",
+    "description": "Light schema",
+    "oneOf": [
+        {
+            "$ref": "./lights/point_light.json"
+        },
+        {
+            "$ref": "./lights/ambient_light.json"
+        },
+        {
+            "$ref": "./lights/sun_light.json"
+        }
+    ]
+  }
+  

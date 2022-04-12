@@ -7,26 +7,6 @@
 #include "utils/utils.hh"
 namespace vectors
 {
-    Vector3 Vector3::unit()
-    {
-        return Vector3{ 1, 1, 1 };
-    }
-
-    Vector3 Vector3::zero()
-    {
-        return Vector3{ 0, 0, 0 };
-    }
-
-    Vector3 Vector3::up()
-    {
-        return Vector3{ 0, 0, 1 };
-    }
-
-    Vector3 Vector3::all(double value)
-    {
-        return Vector3{ value, value, value };
-    }
-
     Vector3 Vector3::from_vector(const std::vector<double> &v)
     {
         return Vector3{ v[0], v[1], v[2] };

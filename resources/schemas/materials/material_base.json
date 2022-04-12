@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "material_base",
+  "type": "object",
+  "properties": {
+    "type": {
+      "description": "The material type",
+      "type": "string"
+    },
+    "name": {
+      "description": "The material name, referenced by objects.",
+      "type": "string"
+    }
+  },
+  "required": ["type", "name"]
+}

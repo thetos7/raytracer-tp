@@ -7,26 +7,6 @@
 #include "utils/utils.hh"
 namespace vectors
 {
-    Vector2 Vector2::unit()
-    {
-        return Vector2{ 1, 1 };
-    }
-
-    Vector2 Vector2::zero()
-    {
-        return Vector2{ 0, 0 };
-    }
-
-    Vector2 Vector2::up()
-    {
-        return Vector2{ 0, -1 };
-    }
-
-    Vector2 Vector2::all(double value)
-    {
-        return Vector2{ value, value };
-    }
-
     Vector2 Vector2::from_vector(const std::vector<double> &v)
     {
         return Vector2{ v[0], v[1] };
@@ -35,6 +15,22 @@ namespace vectors
     double Vector2::square_norm() const
     {
         return this->dot(*this);
+    }
+
+    Vector2 Vector2::floor() const
+    {
+        return Vector2{
+            std::floor(x),
+            std::floor(y),
+        };
+    }
+
+    Vector2 Vector2::fract() const
+    {
+        return Vector2{
+            utils::fract(x),
+            utils::fract(y),
+        };
     }
 
     double Vector2::norm() const
@@ -160,6 +156,11 @@ namespace vectors
     Vector2 operator-(const Vector2 &vect)
     {
         return Vector2{ -vect.x, -vect.y };
+    }
+
+    Vector2 operator-(const double &scalar, const Vector2 &vect)
+    {
+        return Vector2::all(scalar) - vect;
     }
 
     std::ostream &operator<<(std::ostream &out, const Vector2 &vect)

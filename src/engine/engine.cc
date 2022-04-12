@@ -59,7 +59,7 @@ namespace raytracer
                 auto percent = (y / (float)height);
                 constexpr auto PROGRESS_WIDTH = 50;
                 auto bar_count =
-                    static_cast<size_t>(std::round(percent * PROGRESS_WIDTH));
+                    static_cast<size_t>(std::ceil(percent * PROGRESS_WIDTH));
                 std::cout << "<\e[32m" << std::string(bar_count, '=')
                           << "\e[39m"
                           << std::string(PROGRESS_WIDTH - bar_count, ' ')

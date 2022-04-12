@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "blob",
+  "title": "Blob",
+  "description": "A blob object",
+  "allOf": [{ "$ref": "./object_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["blob"]
+    },
+    "center": {
+      "description": "The blob's center point position",
+      "$ref": "../vector3.json"
+    },
+    "size": {
+      "description": "The blob's mesh generation domain size",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "divisions": {
+      "description": "The number of divisions/cells of the mesh generation domain along each axis.",
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "threshold": {
+      "description": "The surface threshold of the blob",
+      "type": "number"
+    },
+    "sources": {
+      "description": "The blob's collection of 'energy' sources",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "description": "A blob point source",
+            "type": "object",
+            "properties": {
+              "type": {
+                "description": "The blob source type",
+                "enum": ["point"]
+              },
+              "radius": {
+                "description": "The point source's radius",
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "center": {
+                "description": "The point source's center",
+                "$ref": "../vector3.json"
+              }
+            },
+            "required": ["type", "radius", "center"]
+          }
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["center", "size", "divisions", "threshold", "sources"]
+}

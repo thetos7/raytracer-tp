@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "scene_schema",
+  "title": "Scene",
+  "description": "A raytracing scene",
+  "type": "object",
+  "properties": {
+    "camera": {
+      "description": "The scene's camera settings",
+      "$ref": "./camera.json"
+    },
+    "lights": {
+      "description": "The scene's light collection",
+      "type": "array",
+      "items": {
+        "$ref": "./light.json"
+      }
+    },
+    "objects": {
+      "description": "The scene's object collection",
+      "type": "array",
+      "items": {
+        "$ref": "./object.json"
+      }
+    },
+    "materials": {
+      "description": "The scene's material collection",
+      "type": "array",
+      "items": {
+        "$ref": "./material.json"
+      }
+    }
+  },
+  "required": ["camera", "lights", "objects", "materials"]
+}

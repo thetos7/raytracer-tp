@@ -65,6 +65,6 @@ namespace utils
     template <typename T>
     inline auto lerp(const T &a, const T &b, double factor)
     {
-        return a * factor + b * (1 - factor);
+        return a * (1 - factor) + b * factor;
     }
 } // namespace utils

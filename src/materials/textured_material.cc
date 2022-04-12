@@ -11,8 +11,8 @@ namespace raytracer
         const MaterialProperties
         TexturedMaterial::get_point_properties(Intersection intersection) const
         {
-            double u = intersection.u;
-            double v = intersection.v;
+            double u = intersection.uv.x;
+            double v = intersection.uv.y;
             int ucoord = _width * u;
             int vcoord = _height * v;
             auto diffuseColor = _diffuseMap.pixel_get(ucoord, vcoord);

@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "construct_spatial",
+  "title": "ConstructSpatial conversion node",
+  "description": "A node for constructing a spatial (vector2) value from its individual components (x, y, z).",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["construct_spatial"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "x": {
+          "description": "The x value pin address",
+          "$ref": "./pin_address.json"
+        },
+        "y": {
+          "description": "The y value pin address",
+          "$ref": "./pin_address.json"
+        },
+        "z": {
+          "description": "The z value pin address",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["x", "y", "z"]
+    }
+  },
+  "required": ["inputs"]
+}

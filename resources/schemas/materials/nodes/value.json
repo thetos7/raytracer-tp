@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "value",
+  "title": "Value node",
+  "description": "A node for representing a constant value",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["value"]
+    },
+    "value": {
+      "description": "The constant to wrap",
+      "$ref": "./node_data.json"
+    }
+  },
+  "required": []
+}

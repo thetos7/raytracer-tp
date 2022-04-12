@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "mix",
+  "title": "Mix node",
+  "description": "A node for linearly interpolating two values depending on a variable factor. when factor is zero, the result is equal to left, when factor is one, the result is right.",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["mix"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "left": {
+          "description": "The left value's pin address of the interpolation",
+          "$ref": "./pin_address.json"
+        },
+        "right": {
+          "description": "The right value's pin address of the interpolation",
+          "$ref": "./pin_address.json"
+        },
+        "factor": {
+          "description": "The factor's pin address",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["left", "right", "factor"]
+    }
+  },
+  "required": ["inputs"]
+}

@@ -1,5 +1,6 @@
 #include "utils.hh"
 
+#include <cmath>
 #include <ostream>
 
 namespace utils
@@ -27,5 +28,10 @@ namespace utils
     bool compact_enabled(std::ostream &out)
     {
         return out.iword(get_compact()) == 1;
+    }
+
+    double fract(double x)
+    {
+        return x - std::floor(x);
     }
 } // namespace utils

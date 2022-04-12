@@ -12,10 +12,26 @@ namespace vectors
         double y;
         double z;
 
-        static Vector3 unit();
-        static Vector3 zero();
-        static Vector3 up();
-        static Vector3 all(double value);
+        static constexpr Vector3 unit()
+        {
+            return Vector3{ 1, 1, 1 };
+        }
+
+        static constexpr Vector3 zero()
+        {
+            return Vector3{ 0, 0, 0 };
+        }
+
+        static constexpr Vector3 up()
+        {
+            return Vector3{ 0, 0, 1 };
+        }
+
+        static constexpr Vector3 all(double value)
+        {
+            return Vector3{ value, value, value };
+        }
+
         static Vector3 from_vector(const std::vector<double> &);
 
         constexpr Vector3()

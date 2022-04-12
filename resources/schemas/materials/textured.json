@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "textured",
+  "title": "Textured Material",
+  "description": "A Textured material",
+  "allOf": [{ "$ref": "./material_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["textured"]
+    },
+    "diffuseMap": {
+      "description": "The path to the diffuse/albedo texture",
+      "type": "string"
+    },
+    "specularMap": {
+      "description": "The path to the specular map",
+      "type": "string"
+    },
+    "specularSpread": {
+      "description": "The material's specular spread/roughness value",
+      "type": "number",
+      "minimum": 0
+    },
+    "reflectivity": {
+      "description": "The material's reflectivity value",
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "required": ["diffuseMap", "specularMap", "specularSpread", "reflectivity"]
+}

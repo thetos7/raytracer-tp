@@ -1,0 +1,176 @@
+{
+  "$schema": "../../resources/schemas/scene.json",
+  "materials": [
+    {
+      "name": "procTex",
+      "type": "node",
+      "shader": {
+        "diffuse_output": "colorRamp.color",
+        "nodes": {
+          "intersectionInfo": { "type": "intersection_info" },
+          "colorRamp": {
+            "type": "color_ramp",
+            "inputs": {
+              "value": "amplifiedTex.result"
+            },
+            "stops": [
+              { "value": 0.0, "color": [0.01, 0.69, 0.24] },
+              { "value": 0.7, "color": [0.65, 0.35, 0.01] },
+              { "value": 0.8, "color": [0.67, 0.67, 0.67] },
+              { "value": 1.4, "color": [1.0, 1.0, 1.0] }
+            ]
+          },
+          "voronoiGammaValue": {
+            "type": "value",
+            "value": 2.0
+          },
+          "amplitude": {
+            "type": "value",
+            "value": 1.4
+          },
+          "noiseGammaValue": {
+            "type": "value",
+            "value": 4.0
+          },
+          "voronoiAmplitude": {
+            "type": "value",
+            "value": 0.9
+          },
+          "voronoiBias": {
+            "type": "value",
+            "value": 0.4
+          },
+          "noiseBias": {
+            "type": "value",
+            "value": 0.5
+          },
+          "noiseAmplitude": {
+            "type": "value",
+            "value": 4.0
+          },
+          "noiseGamma": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "fractalTex.factor",
+              "rhs": "noiseGammaValue.value"
+            },
+            "op": "power"
+          },
+          "amplifiedNoise": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "noiseGamma.result",
+              "rhs": "noiseAmplitude.value"
+            },
+            "op": "multiplication"
+          },
+          "raisedVoronoi": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "adjustedVoronoi.result",
+              "rhs": "voronoiBias.value"
+            },
+            "op": "addition"
+          },
+          "raisedNoise": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "amplifiedNoise.result",
+              "rhs": "noiseBias.value"
+            },
+            "op": "addition"
+          },
+          "voronoiGamma": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "voronoiTex.factor",
+              "rhs": "voronoiGammaValue.value"
+            },
+            "op": "power"
+          },
+          "adjustedVoronoi": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "voronoiGamma.result",
+              "rhs": "voronoiAmplitude.value"
+            },
+            "op": "multiplication"
+          },
+          "combiner": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "raisedVoronoi.result",
+              "rhs": "raisedNoise.result"
+            },
+            "op": "multiplication"
+          },
+          "amplifiedTex": {
+            "type": "binary_math",
+            "inputs": {
+              "lhs": "combiner.result",
+              "rhs": "amplitude.value"
+            },
+            "op": "multiplication"
+          },
+          "voronoiTex": {
+            "type": "voronoi_texture",
+            "inputs": {
+              "uv": "intersectionInfo.uv"
+            }
+          },
+          "fractalTex": {
+            "type": "fractal_noise_texture",
+            "inputs": {
+              "uv": "intersectionInfo.uv"
+            },
+            "scale": 3.0
+          }
+        }
+      }
+    }
+  ],
+  "camera": {
+    "position": [0.0, 0.0, 0.0],
+    "focus": [2.0, 0.0, 0.0],
+    "up": [0.0, 0.0, 1.0],
+    "fov": 1.5,
+    "aspectRatio": 1.78,
+    "zmin": 0.5
+  },
+  "lights": [
+    {
+      "type": "ambientLight",
+      "color": [1.0, 1.0, 1.0]
+    }
+  ],
+  "objects": [
+    {
+      "type": "triangle",
+      "points": [
+        [2.0, -1.0, 1.0],
+        [2.0, 1.0, 1.0],
+        [2.0, -1.0, -1.0]
+      ],
+      "uvMap": [
+        [0.0, 0.0],
+        [1.0, 0.0],
+        [0.0, 1.0]
+      ],
+      "material": "procTex"
+    },
+    {
+      "type": "triangle",
+      "points": [
+        [2.0, 1.0, 1.0],
+        [2.0, 1.0, -1.0],
+        [2.0, -1.0, -1.0]
+      ],
+      "uvMap": [
+        [1.0, 0.0],
+        [1.0, 1.0],
+        [0.0, 1.0]
+      ],
+      "material": "procTex"
+    }
+  ]
+}

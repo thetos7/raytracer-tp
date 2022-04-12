@@ -64,7 +64,8 @@
     "ratio": "cpp",
     "iomanip": "cpp",
     "valarray": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "set": "cpp"
   },
   "cmake.configureEnvironment": {
     "CC": "/usr/bin/clang",
@@ -73,5 +74,11 @@
   "cmake.configureOnOpen": false,
   "cmake.configureOnEdit": false,
   "cmake.generator": "Unix Makefiles",
-  "cmake.parallelJobs": 8
+  "cmake.parallelJobs": 8,
+  "json.schemas": [
+    {
+      "fileMatch": ["*.scene.json"],
+      "url": "./resources/schemas/scene.json"
+    }
+  ]
 }

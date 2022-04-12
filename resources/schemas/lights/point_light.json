@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "point_light",
+  "title": "PointLight",
+  "description": "PointLight schema",
+  "type": "object",
+  "allOf": [{ "$ref": "./light_base.json" }],
+  "properties": {
+    "type": {
+      "enum": ["pointLight"]
+    },
+    "position": {
+      "description": "The light position",
+      "$ref": "../vector3.json"
+    },
+    "intensity": {
+      "description": "The light intensity. This determines the light's color",
+      "$ref": "../vector3.json"
+    }
+  },
+  "required": ["type", "intensity", "position"]
+}

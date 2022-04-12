@@ -25,6 +25,8 @@ namespace utils
     template <typename T>
     inline auto lerp(const T &a, const T &b, double factor);
 
+    double fract(double x);
+
     std::ostream &compact_on(std::ostream &out);
     std::ostream &compact_off(std::ostream &out);
     bool compact_enabled(std::ostream &out);

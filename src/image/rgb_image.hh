@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "colors/fwd.hh"
+#include "colors/rgb.hh"
 
 namespace image
 {
