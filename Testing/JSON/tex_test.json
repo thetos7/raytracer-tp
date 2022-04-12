@@ -4,14 +4,20 @@
       "name": "procTex",
       "type": "node",
       "shader": {
-        "diffuse_output": "converter.out",
+        "diffuse_output": "colorRamp.color",
         "nodes": {
           "intersectionInfo": { "type": "intersection_info" },
-          "converter": {
-            "type": "scalar_to_spatial",
+          "colorRamp": {
+            "type": "color_ramp",
             "inputs": {
-              "in": "voronoiTex.factor"
-            }
+              "value": "voronoiTex.factor"
+            },
+            "stops": [
+              { "value": 1.0, "color": [0.01, 0.69, 0.24] },
+              { "value": 0.3, "color": [0.65, 0.35, 0.01] },
+              { "value": 0.2, "color": [0.67, 0.67, 0.67] },
+              { "value": 0.0, "color": [1.0, 1.0, 1.0] }
+            ]
           },
           "voronoiTex": {
             "type": "voronoi_texture",
@@ -41,28 +47,28 @@
     {
       "type": "triangle",
       "points": [
-        [2.0,-1.0,1.0],
-        [2.0,1.0,1.0],
-        [2.0,-1.0,-1.0]
+        [2.0, -1.0, 1.0],
+        [2.0, 1.0, 1.0],
+        [2.0, -1.0, -1.0]
       ],
       "uvMap": [
-        [0.0,0.0],
-        [1.0,0.0],
-        [0.0,1.0]
+        [0.0, 0.0],
+        [1.0, 0.0],
+        [0.0, 1.0]
       ],
       "material": "procTex"
     },
     {
       "type": "triangle",
       "points": [
-        [2.0,1.0,1.0],
-        [2.0,1.0,-1.0],
-        [2.0,-1.0,-1.0]
+        [2.0, 1.0, 1.0],
+        [2.0, 1.0, -1.0],
+        [2.0, -1.0, -1.0]
       ],
       "uvMap": [
-        [1.0,0.0],
-        [1.0,1.0],
-        [0.0,1.0]
+        [1.0, 0.0],
+        [1.0, 1.0],
+        [0.0, 1.0]
       ],
       "material": "procTex"
     }

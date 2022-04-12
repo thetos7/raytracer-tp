@@ -82,6 +82,35 @@ namespace raytracer
             const auto inputs = *loadInputs(obj["inputs"]);
             return std::make_shared<ScalarToSpatialNode>(inputs);
         }
+        if (type == "color_ramp")
+        {
+            const auto inputs = *loadInputs(obj["inputs"]);
+            if (!(obj.contains("stops") && obj["stops"].is_array()))
+            {
+                missingFieldErrorMessage("stops", "color_ramp");
+                return nullptr;
+            }
+            ColorRampNode::StopCollection stops;
+            for (const auto &stop : obj["stops"])
+            {
+                if (!(stop.contains("value")
+                      && stop["value"].is_number_float()))
+                {
+                    missingFieldErrorMessage("value", "ColorStop");
+                    return nullptr;
+                }
+                if (!(stop.contains("color") && stop["color"].is_array()))
+                {
+                    missingFieldErrorMessage("color", "ColorStop");
+                    return nullptr;
+                }
+                const auto value = stop["value"].get<double>();
+                const auto color = Vector3::from_vector(
+                    stop["color"].get<std::vector<double>>());
+                stops.emplace_back(value, color);
+            }
+            return std::make_shared<ColorRampNode>(inputs, stops);
+        }
         return nullptr;
     }
 
