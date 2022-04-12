@@ -98,6 +98,34 @@ namespace raytracer
             }
             return std::make_shared<VoronoiTextureNode>(inputs, size);
         } // voronoi_texture
+        if (type == "fractal_noise_texture")
+        {
+            const auto inputs = *loadInputs(obj["inputs"]);
+            double scale = 1.0;
+            size_t octaves = 6;
+            if (obj.contains("scale"))
+            {
+                if (!obj["scale"].is_number_float())
+                {
+                    missingFieldErrorMessage("scale",
+                                             "FractalNoiseTextureNode");
+                    return nullptr;
+                }
+                scale = obj["scale"].get<double>();
+            }
+            if (obj.contains("octaves"))
+            {
+                if (!obj["octaves"].is_number_unsigned())
+                {
+                    missingFieldErrorMessage("octaves",
+                                             "FractalNoiseTextureNode");
+                    return nullptr;
+                }
+                octaves = obj["octaves"].get<size_t>();
+            }
+            return std::make_shared<FractalNoiseTextureNode>(inputs, scale,
+                                                             octaves);
+        } // fractal_noise_texture
         if (type == "scalar_to_spatial")
         {
             const auto inputs = *loadInputs(obj["inputs"]);

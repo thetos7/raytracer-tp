@@ -11,7 +11,8 @@ namespace raytracer::materials::node_shader::nodes
         // uv: Vector2 - Uv coordinate of sample
         using super_type = Node;
 
-        FractalNoiseTextureNode(PinAdressMap inputs, double scale, size_t octaves);
+        FractalNoiseTextureNode(PinAdressMap inputs, double scale = 1.0,
+                                size_t octaves = 6);
         virtual void compute(ComputationIdType cid) const override;
 
     private:
