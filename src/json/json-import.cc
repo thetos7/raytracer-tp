@@ -179,6 +179,11 @@ namespace raytracer
                 unary_math_op_from_str(obj["op"].get<std::string>());
             return std::make_shared<UnaryMathNode>(inputs, op);
         } // unary_math
+        if (type == "mix")
+        {
+            const auto inputs = *loadInputs(obj["inputs"]);
+            return std::make_shared<MixNode>(inputs);
+        } // mix
         return nullptr;
     }
 
