@@ -7,26 +7,6 @@
 #include "utils/utils.hh"
 namespace vectors
 {
-    Vector2 Vector2::unit()
-    {
-        return Vector2{ 1, 1 };
-    }
-
-    Vector2 Vector2::zero()
-    {
-        return Vector2{ 0, 0 };
-    }
-
-    Vector2 Vector2::up()
-    {
-        return Vector2{ 0, -1 };
-    }
-
-    Vector2 Vector2::all(double value)
-    {
-        return Vector2{ value, value };
-    }
-
     Vector2 Vector2::from_vector(const std::vector<double> &v)
     {
         return Vector2{ v[0], v[1] };

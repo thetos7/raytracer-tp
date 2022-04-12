@@ -11,10 +11,26 @@ namespace vectors
         double x;
         double y;
 
-        static Vector2 unit();
-        static Vector2 zero();
-        static Vector2 up();
-        static Vector2 all(double value);
+        static constexpr Vector2 unit()
+        {
+            return Vector2{ 1, 1 };
+        }
+
+        static constexpr Vector2 zero()
+        {
+            return Vector2{ 0, 0 };
+        }
+
+        static constexpr Vector2 up()
+        {
+            return Vector2{ 0, -1 };
+        }
+
+        static constexpr Vector2 all(double value)
+        {
+            return Vector2{ value, value };
+        }
+
         static Vector2 from_vector(const std::vector<double> &);
 
         constexpr Vector2()
