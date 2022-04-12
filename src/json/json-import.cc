@@ -57,18 +57,19 @@ namespace raytracer
             auto str_value = v.get<std::string>();
             inputs.insert({ k, PinAddress::from_str(str_value) });
         }
+        return inputs;
     }
 
     std::shared_ptr<Node> loadNode(const json &obj)
     {
-        const auto type = obj.get<std::string>();
+        const auto type = obj["type"].get<std::string>();
         if (type == "intersection_info")
         {
             return std::make_shared<IntersectionInfoNode>();
         }
         if (type == "voronoi_texture")
         {
-            const auto inputs = loadInputs(obj["inputs"]);
+            const auto inputs = *loadInputs(obj["inputs"]);
             int size = 5;
             if (obj.contains("size"))
             {
@@ -76,9 +77,12 @@ namespace raytracer
             }
             return std::make_shared<VoronoiTextureNode>(inputs, size);
         }
-        if (type == "scalar_to_spatial") {
-            return std::make_shared<ScalarToSpatialNode>(loadInputs(obj["inputs"]));
+        if (type == "scalar_to_spatial")
+        {
+            const auto inputs = *loadInputs(obj["inputs"]);
+            return std::make_shared<ScalarToSpatialNode>(inputs);
         }
+        return nullptr;
     }
 
     std::shared_ptr<NodeShader> loadNodeShader(const json &obj)
@@ -181,7 +185,20 @@ namespace raytracer
         json materialsJsonObject = jsonObject["materials"];
         for (auto materialJsonObject : materialsJsonObject)
         {
+            if (!materialJsonObject.contains("type"))
+            {
+                missingFieldErrorMessage("type", "Material");
+                std::cerr << "Missing mandatory material field, skipping...\n";
+                continue;
+            }
             std::string type = materialJsonObject["type"];
+            if (!materialJsonObject.contains("name"))
+            {
+                missingFieldErrorMessage("name", "Material");
+                std::cerr << "Missing mandatory material field, skipping...\n";
+                continue;
+            }
+            std::string name = materialJsonObject["name"].get<std::string>();
             if (type == "uniform")
             {
                 auto m = std::make_shared<UniformMaterial>(
@@ -190,8 +207,6 @@ namespace raytracer
                     materialJsonObject["specular"].get<double>(),
                     materialJsonObject["specularSpread"].get<double>(),
                     materialJsonObject["reflectivity"].get<double>());
-                std::string name =
-                    materialJsonObject["name"].get<std::string>();
                 materials[name] = m;
                 std::cout << "Loaded uniform material \"" << name
                           << "\" from json.\n";
@@ -205,14 +220,13 @@ namespace raytracer
                         materialJsonObject["specularMap"].get<std::string>()),
                     materialJsonObject["specularSpread"].get<double>(),
                     materialJsonObject["reflectivity"].get<double>());
-                std::string name =
-                    materialJsonObject["name"].get<std::string>();
                 materials[name] = m;
             }
             if (type == "node")
             {
                 auto shader = loadNodeShader(materialJsonObject["shader"]);
-                auto m = std::make_shared<NodeShaderMaterial>();
+                auto m = std::make_shared<NodeShaderMaterial>(shader);
+                materials[name] = m;
             }
         }
     }
@@ -282,8 +296,15 @@ namespace raytracer
                 missingFieldErrorMessage("material", type);
                 continue;
             }
-            auto mat =
-                materials[objectJsonObject["material"].get<std::string>()];
+            const auto mat_name =
+                objectJsonObject["material"].get<std::string>();
+            auto mat = materials[mat_name];
+            if (mat == nullptr)
+            {
+                std::cerr << "Material `" << mat_name
+                          << "` not found or null.\nPlease verify that your "
+                             "objects reference existing listed materials.";
+            }
             if (type == "sphere")
             {
                 auto o = std::make_shared<Sphere>(
