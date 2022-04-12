@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "planar_to_spatial",
+  "title": "PlanarToSpatial conversion node",
+  "description": "A node for converting a planar (vector2) value to a spatial (vector3) one. The first two components of the out vector ar set to those of the in vector, the last is set to zero.",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["planar_to_spatial"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "in": {
+          "description": "The input vector pin address",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["in"]
+    }
+  },
+  "required": ["inputs"]
+}

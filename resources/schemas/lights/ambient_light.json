@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "ambient_light",
+  "title": "AmbientLight",
+  "description": "AmbientLight schema",
+  "type": "object",
+  "allOf": [{ "$ref": "./light_base.json" }],
+  "properties": {
+    "type": {
+      "enum": ["ambientLight"]
+    },
+    "color": {
+      "description": "The light color",
+      "$ref": "../vector3.json"
+    }
+  },
+  "required": ["type", "color"]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "node",
+  "anyOf": [
+    {
+      "$ref": "./nodes/intersection_info.json"
+    },
+    {
+      "$ref": "./nodes/voronoi_texture.json"
+    },
+    {
+      "$ref": "./nodes/fractal_noise_texture.json"
+    },
+    {
+      "$ref": "./nodes/scalar_to_spatial.json"
+    },
+    {
+      "$ref": "./nodes/planar_to_spatial.json"
+    },
+    {
+      "$ref": "./nodes/color_ramp.json"
+    },
+    {
+      "$ref": "./nodes/value.json"
+    },
+    {
+      "$ref": "./nodes/binary_math.json"
+    },
+    {
+      "$ref": "./nodes/unary_math.json"
+    },
+    {
+      "$ref": "./nodes/mix.json"
+    }
+  ]
+}

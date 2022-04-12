@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "camera",
+  "title": "Camera",
+  "description": "Camera schema",
+  "type": "object",
+  "properties": {
+    "position": {
+      "description": "The camera position in 3D space",
+      "$ref": "./vector3.json"
+    },
+    "focus": {
+      "description": "The camera's focus point in the 3D environment",
+      "$ref": "./vector3.json"
+    },
+    "up": {
+      "description": "The camera's general up direction",
+      "$ref": "./vector3.json"
+    },
+    "fov": {
+      "description": "The camera's field of view, defined in radians",
+      "type": "number",
+      "minimum": 0
+    },
+    "aspectRatio": {
+      "description": "The output image aspect ratio",
+      "type": "number",
+      "minimum": 0
+    },
+    "zmin": {
+      "description": "The focal distance, that is the distance to the image plane.\nNote: if this value is negative, the image will be reversed.\nThis value should never be zero.",
+      "type": "number"
+    }
+  },
+  "required": ["position", "focus", "up", "fov", "aspectRatio", "zmin"]
+}

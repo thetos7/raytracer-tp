@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "light_base",
+  "title": "LightBase",
+  "description": "LightBase schema",
+  "type": "object",
+  "properties": {
+    "type": {
+      "description": "The light type",
+      "type": "string"
+    }
+  },
+  "required": ["type"]
+}

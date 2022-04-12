@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "unary_math",
+  "title": "UnaryMath node",
+  "description": "A node for computing unary math operations, like negating a number of computing the 2nd norm of a vector.",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["unary_math"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "in": {
+          "description": "operand's pin address",
+          "$ref": "./pin_adddress.json"
+        }
+      },
+      "required": ["in"]
+    },
+    "op": {
+      "description": "The operation to compute",
+      "enum": ["negation", "norm", "sq_norm"]
+    }
+  },
+  "required": ["inputs", "op"]
+}

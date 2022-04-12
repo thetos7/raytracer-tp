@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "node_base",
+  "type": "object",
+  "properties": {
+    "type": {
+      "description": "The node type",
+      "type": "string"
+    }
+  },
+  "required": ["type"]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "sun_light",
+  "title": "SunLight",
+  "description": "SunLight schema",
+  "type": "object",
+  "allOf": [{ "$ref": "./light_base.json" }],
+  "properties": {
+    "type": {
+      "enum": ["sunLight"]
+    },
+    "direction": {
+      "description": "The light direction",
+      "$ref": "../vector3.json"
+    },
+    "color": {
+      "description": "The light color",
+      "$ref": "../vector3.json"
+    }
+  },
+  "required": ["type", "direction", "color"]
+}

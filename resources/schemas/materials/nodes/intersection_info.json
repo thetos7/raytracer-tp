@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "intersection_info",
+    "title": "IntersectionInfo node",
+    "description": "A node for representing a the intersection input",
+    "allOf": [{ "$ref": "./node_base.json" }],
+    "type": "object",
+    "properties": {
+      "type": {
+        "enum": ["intersection_info"]
+      }
+    },
+    "required": []
+  }
+  

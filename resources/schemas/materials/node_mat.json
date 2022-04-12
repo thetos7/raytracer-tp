@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "node_mat",
+  "title": "Node Material",
+  "description": "A Node-based procedural material",
+  "allOf": [{ "$ref": "./material_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["node"]
+    },
+    "shader": {
+      "description": "The shader used for computing the material properties at each pixel",
+      "type": "object",
+      "properties": {
+        "diffuse_output": {
+          "description": "The diffuse ouput property's source pin",
+          "$ref": "./nodes/pin_address.json"
+        },
+        "specular_output": {
+          "description": "The specular ouput property's source pin",
+          "$ref": "./nodes/pin_address.json"
+        },
+        "specular_spread_output": {
+          "description": "The specular spread/roughness ouput property's source pin",
+          "$ref": "./nodes/pin_address.json"
+        },
+        "reflectivity_output": {
+          "description": "The reflectivity ouput property's source pin",
+          "$ref": "./nodes/pin_address.json"
+        },
+        "nodes": {
+          "description": "The shader's node graph definition",
+          "type": "object",
+          "minItems": 1,
+          "patternProperties": {
+            "^[^.]+$": {
+              "$ref": "./node.json"
+            }
+          }
+        }
+      },
+      "required": ["nodes"]
+    }
+  },
+  "required": ["shader"]
+}

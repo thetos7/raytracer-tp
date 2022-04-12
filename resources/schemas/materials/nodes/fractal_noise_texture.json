@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "fractal_noise_texture",
+  "title": "FractalNoiseTexture node",
+  "description": "A node for computing the value of a fractal noise texture at given coordinates",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["fractal_noise_texture"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "uv": {
+          "description": "The uv coordinates' address",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["uv"]
+    },
+    "scale": {
+      "description": "The scaling factor applied to the texture",
+      "type": "number",
+      "default": 1.0
+    },
+    "octaves": {
+      "description": "The number of octaves to generate the noise",
+      "type": "integer",
+      "default": 6,
+      "exclusiveMinimum": 0
+    }
+  },
+  "required": ["inputs"]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "scalar_to_spatial",
+  "title": "ScalarToSpatial conversion node",
+  "description": "A node for converting a scalar value to a spatial (vector3) one. All components on the out vector are set to the in value",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["scalar_to_spatial"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "in": {
+          "description": "The input vector pin address",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["in"]
+    }
+  },
+  "required": ["inputs"]
+}

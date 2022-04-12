@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "object",
+  "title": "Object",
+  "description": "An object",
+  "anyOf": [
+    {
+      "$ref": "./objects/triangle.json"
+    },
+    {
+      "$ref": "./objects/sphere.json"
+    },
+    {
+      "$ref": "./objects/plane.json"
+    },
+    {
+      "$ref": "./objects/mesh_obj.json"
+    },
+    {
+      "$ref": "./objects/blob.json"
+    }
+  ]
+}

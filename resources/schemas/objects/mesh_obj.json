@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "mesh_obj",
+  "title": "Mesh Object",
+  "description": "A Mesh object",
+  "allOf": [{ "$ref": "./object_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["mesh_obj"]
+    },
+    "center": {
+      "description": "The object's center point position",
+      "$ref": "../vector3.json"
+    },
+    "scale": {
+      "description": "The object's scale factor",
+      "type": "number"
+    },
+    "objPath": {
+      "description": "The file path in relation to the executable's directory towards the obj file",
+      "type": "string"
+    }
+  },
+  "required": ["center", "objPath", "scale"]
+}

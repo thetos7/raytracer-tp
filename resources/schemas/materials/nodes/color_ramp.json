@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "color_ramp",
+  "title": "ColorRamp node",
+  "description": "A node for mapping scalar values to a color according to a predfined color gradient",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["color_ramp"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "The pin address of the value to map",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["value"]
+    },
+    "stops": {
+      "description": "The collection of color stops describing the color gradient",
+      "type": "array",
+      "items": {
+        "description": "A color stop",
+        "type": "object",
+        "properties": {
+          "value": {
+            "description": "The value at which the color is equal this stop's color",
+            "type": "number"
+          },
+          "color": {
+            "description": "The color at this stop",
+            "$ref": "../../vector3.json"
+          }
+        },
+        "required": ["value", "color"]
+      },
+      "minItems": 2
+    }
+  },
+  "required": ["stops", "inputs"]
+}

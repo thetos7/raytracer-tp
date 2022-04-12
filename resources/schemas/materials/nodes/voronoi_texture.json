@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "voronoi_texture",
+  "title": "Voronoi texture node",
+  "description": "A node for computing a voronoi texture at some input coordinates",
+  "allOf": [{ "$ref": "./node_base.json" }],
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": ["voronoi_texture"]
+    },
+    "inputs": {
+      "description": "The node's inputs",
+      "type": "object",
+      "properties": {
+        "uv": {
+          "description": "The address of the pin from which to get the current UV coordinates",
+          "$ref": "./pin_address.json"
+        }
+      },
+      "required": ["uv"]
+    },
+    "size": {
+      "description": "The voronoi grid size, higher allows more variety and detail",
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "default": 5
+    }
+  },
+  "required": ["inputs"]
+}
