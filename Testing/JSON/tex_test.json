@@ -1,0 +1,70 @@
+{
+  "materials": [
+    {
+      "name": "procTex",
+      "type": "node",
+      "shader": {
+        "diffuse_output": "converter.out",
+        "nodes": {
+          "intersectionInfo": { "type": "intersection_info" },
+          "converter": {
+            "type": "scalar_to_spatial",
+            "inputs": {
+              "in": "voronoiTex.factor"
+            }
+          },
+          "voronoiTex": {
+            "type": "voronoi_texture",
+            "inputs": {
+              "uv": "intersectionInfo.uv"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "camera": {
+    "position": [0.0, 0.0, 0.0],
+    "focus": [2.0, 0.0, 0.0],
+    "up": [0.0, 0.0, 1.0],
+    "fov": 1.5,
+    "aspectRatio": 1.78,
+    "zmin": 0.5
+  },
+  "lights": [
+    {
+      "type": "ambientLight",
+      "color": [1.0, 1.0, 1.0]
+    }
+  ],
+  "objects": [
+    {
+      "type": "triangle",
+      "points": [
+        [2.0,-1.0,1.0],
+        [2.0,1.0,1.0],
+        [2.0,-1.0,-1.0]
+      ],
+      "uvMap": [
+        [0.0,0.0],
+        [1.0,0.0],
+        [0.0,1.0]
+      ],
+      "material": "procTex"
+    },
+    {
+      "type": "triangle",
+      "points": [
+        [2.0,1.0,1.0],
+        [2.0,1.0,-1.0],
+        [2.0,-1.0,-1.0]
+      ],
+      "uvMap": [
+        [1.0,0.0],
+        [1.0,1.0],
+        [0.0,1.0]
+      ],
+      "material": "procTex"
+    }
+  ]
+}
