@@ -148,6 +148,32 @@ namespace raytracer
             }
             return std::make_shared<ValueNode>(*value);
         } // value
+        if (type == "binary_math")
+        {
+            const auto inputs = *loadInputs(obj["inputs"]);
+            if (!(obj.contains("op") && obj["op"].is_string()))
+            {
+                missingFieldErrorMessage("op", "BinaryMathNode");
+                return nullptr;
+            }
+
+            const auto op =
+                binary_math_op_from_str(obj["op"].get<std::string>());
+            return std::make_shared<BinaryMathNode>(inputs, op);
+        } // binary_math
+        if (type == "unary_math")
+        {
+            const auto inputs = *loadInputs(obj["inputs"]);
+            if (!(obj.contains("op") && obj["op"].is_string()))
+            {
+                missingFieldErrorMessage("op", "BinaryMathNode");
+                return nullptr;
+            }
+
+            const auto op =
+                unary_math_op_from_str(obj["op"].get<std::string>());
+            return std::make_shared<UnaryMathNode>(inputs, op);
+        } // unary_math
         return nullptr;
     }
 
