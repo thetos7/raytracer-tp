@@ -70,7 +70,7 @@ namespace raytracer::materials::node_shader::nodes
     {
         double nearest_dist = 4;
 
-        auto uv = std::get<Vector2>(inputs_.at("uv")->get(cid));
+        auto uv = std::get<Vector2>(inputs_.at("uv")->get(cid)).fract();
 
         const auto u = uv.x;
         const auto v = uv.y;
