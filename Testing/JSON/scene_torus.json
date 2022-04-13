@@ -23,7 +23,63 @@
             "specularMap": "../Testing/textures/terracota/specular.png",
             "specularSpread": 0,
             "reflectivity":0
-        }
+        },
+        {
+            "name": "procTex",
+            "type": "node",
+            "shader": {
+              "diffuse_output": "mult1.result",
+              "specular_output": "specular.value",
+              "specular_spread_output": "specularSpread.value",
+              "nodes": {
+                "intersectionInfo": {
+                  "type": "intersection_info"
+                },
+                "zero": {
+                  "type":"value",
+                  "value": 0.0
+                },
+                "specular": {
+                    "type":"value",
+                    "value": 0.0
+                },
+                "specularSpread": {
+                    "type":"value",
+                    "value": 0.0
+                },
+                "u,v": {
+                  "type":"destruct_planar",
+                  "inputs": {
+                    "in": "intersectionInfo.uv"
+                  }
+                },
+                "simpleColor": {
+                  "type": "value",
+                  "value": [
+                    0.4,
+                    0.20,
+                    0.08
+                  ]
+                },
+                "wavex": {
+                  "type": "wave_texture",
+                  "angle": 0.0,
+                  "inputs": {
+                    "uv": "intersectionInfo.uv"
+                  },
+                  "scale": 700.0
+                },
+                "mult1": {
+                  "type": "binary_math",
+                  "op": "multiplication",
+                  "inputs": {
+                    "lhs": "wavex.factor",
+                    "rhs": "simpleColor.value"
+                  }
+                }
+              }
+            }
+          }
     ],
     "camera": {
         "position": [0.0, 0.0, 3.0],
@@ -51,7 +107,7 @@
             "center": [4, 0, 0],
             "scale": 2,
             "rotate":[0 , 0, 90],
-            "material": "terracota_blue"
+            "material": "procTex"
 
         },
         {
