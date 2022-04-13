@@ -25,6 +25,7 @@ Implementation of a raytracing engine
   * Spheres
   * Meshes
 - Graph-based Procedural texturing with many node types
+  * configurable and parsable via JSON
 - obj scene importer
 - JSON-based scene format (with schemas)
 
@@ -52,4 +53,18 @@ will render a predetermined demo scene
 ./raytracer-tp <path-to-json-scene>
 ```
 will render a scene bassed on the contents of the json file.
+
+## Authors & main contributions
+- Ancelin Bouchet: 
+  - base raytracing engine (objects, materials)
+  - Graph-based procedural texture system
+  - procedural texture nodes
+  - JSON import for procedural texture nodes
+  - JSON schemas
+
+- Yorick Madelain:
+  - PNG import
+  - OBJ import
+  - JSON import
+  - final renders & demo materials
 
