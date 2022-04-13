@@ -12,13 +12,13 @@
           },
           "noise":{
             "type":"fractal_noise_texture",
-            "scale": 8.5,
-            "octaves": 10,
+            "scale": 1.5,
+            "octaves": 25,
             "inputs": {
               "uv": "intersection_info.uv"
             }
           },
-          "noise_vec2": {
+          "noised_vec2": {
             "type":"construct_planar",
             "inputs": {
               "x":"noise.factor",
@@ -28,37 +28,18 @@
           "voronoi":{
             "type":"voronoi_texture",
             "inputs": {
-              "uv": "noise_vec2.result"
+              "uv": "intersection_info.uv"
             },
-            "size": 20
-          },
-          "wavex":{
-            "type":"wave_texture",
-            "angle": 0.0,
-            "offset": 0.0,
-            "scale": 50.0,
-            "inputs": {
-              "uv": "noise_vec2.result"
-            }
-          },
-          "multiply":{
-            "type":"binary_math",
-            "op": "multiplication",
-            "inputs": {
-              "lhs": "voronoi.factor",
-              "rhs": "wavex.factor"
-            }
+            "size": 40
           },
           "colorRamp": {
             "type": "color_ramp",
             "inputs": {
-              "value": "multiply.result"
+              "value": "voronoi.factor"
             },
             "stops": [
-              { "value": 0.0, "color": [0.04, 0.078, 0.262] },
-              { "value": 0.5, "color": [0.036, 0.416, 0.285] },
-              { "value": 0.777, "color": [0.090, 0.381, 0.500] },
-              { "value" : 1.0, "color": [0.043, 0.045, 1.0] }
+              { "value": 0.0, "color": [1.0, 1.0, 1.0] },
+              { "value" : 1.0, "color": [0.0, 0.0, 1.0] }
             ]
           }
         }

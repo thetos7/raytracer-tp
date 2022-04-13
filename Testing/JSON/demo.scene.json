@@ -1,0 +1,127 @@
+{
+    "$schema": "../../resources/schemas/scene.json",
+    "materials": [
+        {
+            "name": "lightGrey",
+            "type": "uniform",
+            "diffuse": [0.8, 0.8, 0.8],
+            "specular": 0.0,
+            "specularSpread": 1.0,
+            "reflectivity": 0.0
+        },
+      {
+        "name": "blueShades",
+        "type": "node",
+        "shader": {
+          "diffuse_output": "colorRamp.color",
+          "nodes": {
+            "intersection_info": {
+              "type": "intersection_info"
+            },
+            "noise":{
+              "type":"fractal_noise_texture",
+              "scale": 8.5,
+              "octaves": 10,
+              "inputs": {
+                "uv": "intersection_info.uv"
+              }
+            },
+            "noise_vec2": {
+              "type":"construct_planar",
+              "inputs": {
+                "x":"noise.factor",
+                "y":"noise.factor"
+              }
+            },
+            "voronoi":{
+              "type":"voronoi_texture",
+              "inputs": {
+                "uv": "noise_vec2.result"
+              },
+              "size": 20
+            },
+            "wavex":{
+              "type":"wave_texture",
+              "angle": 0.0,
+              "offset": 0.0,
+              "scale": 50.0,
+              "inputs": {
+                "uv": "noise_vec2.result"
+              }
+            },
+            "multiply":{
+              "type":"binary_math",
+              "op": "multiplication",
+              "inputs": {
+                "lhs": "voronoi.factor",
+                "rhs": "wavex.factor"
+              }
+            },
+            "colorRamp": {
+              "type": "color_ramp",
+              "inputs": {
+                "value": "multiply.result"
+              },
+              "stops": [
+                { "value": 0.0, "color": [0.04, 0.078, 0.262] },
+                { "value": 0.5, "color": [0.036, 0.416, 0.285] },
+                { "value": 0.777, "color": [0.090, 0.381, 0.500] },
+                { "value" : 1.0, "color": [0.043, 0.045, 1.0] }
+              ]
+            }
+          }
+        }
+      }
+  ],
+  "camera": {
+      "position": [-7.0, 5.0, 6.0],
+      "focus": [4.0, 0.0, 0.0],
+      "up": [0.0, 0.0, 1.0],
+      "fov" : 1.5,
+      "aspectRatio" : 1.78,
+      "zmin" : 0.5
+  },
+  "lights" : [
+      {
+          "type": "ambientLight",
+          "color": [0.15, 0.15, 0.15]
+      },
+      {
+          "type": "pointLight",
+          "position": [1.0, 0.0, 4.0],
+          "intensity" : [0.8, 0.8, 0.8]
+      }
+  ],
+  "objects" : [
+      {
+          "type": "mesh_obj",
+          "objPath": "../Testing/obj_files/torus_tris.obj",
+          "center": [4, 0, 0],
+          "scale": 2,
+          "rotate":[0 , 0, 90],
+          "material": "blueShades"
+
+      },
+      {
+        "type": "mesh_obj",
+        "objPath": "../Testing/obj_files/cube_tris.obj",
+        "center": [2, 2, 0],
+        "scale": 2,
+        "rotate":[0 , 0, 90],
+        "material": "blueShades"
+
+    },
+      {
+          "type": "plane",
+          "reference": [20.0, 0.0, 0.0],
+          "normal": [-1.0, 0.0, 0.0],
+          "material": "lightGrey"
+      },
+      {
+          "type": "plane",
+          "reference": [0.0, 0.0, -1.0],
+          "normal": [0.0, 0.0, 1.0],
+          "material": "lightGrey"
+      }
+  ]
+  }
