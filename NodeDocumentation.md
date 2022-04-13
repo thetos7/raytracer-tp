@@ -2,6 +2,10 @@
 
 - [Node documentation](#node-documentation)
   - [Concepts](#concepts)
+    - [Pin system](#pin-system)
+    - [Internal compute](#internal-compute)
+    - [NodeData](#nodedata)
+    - [Control Flow](#control-flow)
   - [Nodes](#nodes)
     - [Input nodes](#input-nodes)
       - [ValueNode](#valuenode)
@@ -25,12 +29,16 @@
 
 ## Concepts
 
+### Pin system
 Nodes work using a "pin" system where each pin can be referenced using a formatted string as their "address" following the format `<node-name>.<pin-name>`. Each node type exposes a number of output pins and expects a number of input pins to be specified. The input pins of a node are specified using a map mapping each expected input to a pin address. Pin addresses are resolved at run-time by the NodeShader which allows nodes to link up with each other. Pins allow lazy computation of the nodes' values as well as caching so that reusing a node's output has little to no performance cost. Think of it like creating variables.
 
+### Internal compute
 Each node type has its own `compute` method which acts as a little program, read the input pins, processing them and writing to the outputs.
 
+### NodeData
 Data that flows through the graph can be of three types: floating point numbers, 2d vectors or 3d vectors.
 
+### Control Flow
 The control flows backwards through the graph, from outputs to inputs.
 
 ## Nodes
