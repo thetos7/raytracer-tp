@@ -6,7 +6,7 @@ namespace vectors {
     RotMatrix3::RotMatrix3(double x, double y, double z) {
         matrix[0][0] = cos(x) * cos(y);
         matrix[0][1] = cos(x) * sin(y) * sin(z) - sin(x) * cos(z);
-        matrix[0][2] = cos(x) * sin(y) * cos(z) + sin(x) * sin(y);
+        matrix[0][2] = cos(x) * sin(y) * cos(z) + sin(x) * sin(z);
         matrix[1][0] = sin(x) * cos(y);
         matrix[1][1] = sin(x) * sin(y) * sin(z) + cos(x) * cos(z);
         matrix[1][2] = sin(x) * sin(y) * cos(z) - cos(x) * sin(z);

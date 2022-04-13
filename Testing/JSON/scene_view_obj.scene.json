@@ -1,0 +1,62 @@
+{
+    "materials": [
+        {
+            "name": "lightGrey",
+            "type": "uniform",
+            "diffuse": [0.8, 0.8, 0.8],
+            "specular": 0.0,
+            "specularSpread": 1.0,
+            "reflectivity": 0.0
+        },
+        {
+            "name": "orange",
+            "type": "uniform",
+            "diffuse": [1.0, 0.5, 0.1],
+            "specular": 0.0,
+            "specularSpread": 1.0,
+            "reflectivity": 0.0
+        }
+    ],
+    "camera": {
+        "position": [0.0, 0.0, -5.0],
+        "focus": [0.0, 0.0, 3.0],
+        "up": [0.0, -1.0, 0.0],
+        "fov" : 1.5,
+        "aspectRatio" : 1.78,
+        "zmin" : 1.5
+    },
+    "lights" : [
+        {
+            "type": "ambientLight",
+            "color": [0.15, 0.15, 0.15]
+        },
+        {
+            "type": "pointLight",
+            "position": [0.0, -3.0, -5.0],
+            "intensity" : [0.8, 0.8, 0.8]
+        }
+    ],
+    "objects" : [
+        {
+            "type": "mesh_obj",
+            "objPath": "../Testing/obj_files/suzanne_tris.obj",
+            "center": [0, 0, 0],
+            "scale": 1.5,
+            "rotate":[180 , 180, -10],
+            "material": "orange"
+
+        },
+        {
+            "type": "plane",
+            "reference": [0.0, 0.0, 10.0],
+            "normal": [0.0, 0.0, -1.0],
+            "material": "lightGrey"
+        },
+        {
+            "type": "plane",
+            "reference": [0.0, 4.0, 0.0],
+            "normal": [0.0, -1.0, 0.0],
+            "material": "lightGrey"
+        }
+    ]
+}
