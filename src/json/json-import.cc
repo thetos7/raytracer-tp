@@ -484,6 +484,10 @@ namespace raytracer
             }
             const auto mat_name =
                 objectJsonObject["material"].get<std::string>();
+            if (!materials.contains(mat_name)) {
+                std::cerr << "Invalid material name : " << mat_name << '\n';
+                continue;
+            }
             auto mat = materials[mat_name];
             if (mat == nullptr)
             {
