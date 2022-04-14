@@ -14,9 +14,14 @@
         "type": "node",
         "shader": {
           "diffuse_output": "colorRamp.color",
+          "reflectivity_output": "reflectivity.value",
           "nodes": {
             "intersection_info": {
               "type": "intersection_info"
+            },
+            "reflectivity":{
+                "type":"value",
+                "value": 0.0
             },
             "noise":{
               "type":"fractal_noise_texture",
@@ -71,6 +76,104 @@
             }
           }
         }
+      },
+      {
+        "name": "checkers",
+        "type": "node",
+        "shader": {
+          "diffuse_output": "colorRamp.color",
+          "nodes": {
+            "intersection_info": {
+              "type": "intersection_info"
+            },
+            "wavex":{
+              "type":"wave_texture",
+              "angle": 0.0,
+              "offset": 0.0,
+              "scale": 50.0,
+              "inputs": {
+                "uv": "intersection_info.uv"
+              }
+            },
+            "wavey":{
+              "type":"wave_texture",
+              "angle": 1.5707963267948966,
+              "offset": 0.0,
+              "scale": 50.0,
+              "inputs": {
+                "uv": "intersection_info.uv"
+              }
+            },
+            "mult":{
+              "type":"binary_math",
+              "op":"multiplication",
+              "inputs": {
+                "lhs": "wavey.factor",
+                "rhs": "wavex.factor"
+              }
+            },
+            "colorRamp": {
+              "type": "color_ramp",
+              "inputs": {
+                "value": "mult.result"
+              },
+              "stops": [
+                { "value": 0.0, "color": [0.0, 0.0, 0.0] },
+                { "value" : 1.0, "color": [1.0, 1.0, 1.0] }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "name": "sponge",
+        "type": "node",
+        "shader": {
+          "diffuse_output": "colorRamp.color",
+          "specular_output": "mult.result",
+          "specular_spread_output": "spread.value",
+          "nodes": {
+            "intersection_info": {
+              "type": "intersection_info"
+            },
+            "spread":{
+                "type":"value",
+                "value":1.4
+            },
+            "voronoi":{
+                "type":"voronoi_texture",
+                "inputs": {
+                  "uv": "intersection_info.uv"
+                },
+                "size": 30
+              },
+            "voronoi2":{
+                "type":"voronoi_texture",
+                "inputs": {
+                  "uv": "intersection_info.uv"
+                },
+                "size": 20
+              },
+            "mult":{
+              "type":"binary_math",
+              "op":"multiplication",
+              "inputs": {
+                "lhs": "voronoi.factor",
+                "rhs": "voronoi2.factor"
+              }
+            },
+            "colorRamp": {
+              "type": "color_ramp",
+              "inputs": {
+                "value": "mult.result"
+              },
+              "stops": [
+                { "value": 0.0, "color": [0.3, 0.3, 0.0] },
+                { "value" : 1.0, "color": [1.0, 1.0, 0.0] }
+              ]
+            }
+          }
+        }
       }
   ],
   "camera": {
@@ -88,7 +191,7 @@
       },
       {
           "type": "pointLight",
-          "position": [1.0, 0.0, 4.0],
+          "position": [4.0, 0.0, 10.0],
           "intensity" : [0.8, 0.8, 0.8]
       }
   ],
@@ -97,7 +200,7 @@
           "type": "mesh_obj",
           "objPath": "../Testing/obj_files/torus_tris.obj",
           "center": [4, 0, 0],
-          "scale": 2,
+          "scale": 3,
           "rotate":[0 , 0, 90],
           "material": "blueShades"
 
@@ -105,12 +208,21 @@
       {
         "type": "mesh_obj",
         "objPath": "../Testing/obj_files/cube_tris.obj",
-        "center": [2, 2, 0],
-        "scale": 2,
-        "rotate":[0 , 0, 90],
-        "material": "blueShades"
+        "center": [4, 6, 0],
+        "scale": 2.0,
+        "rotate":[0 , 0, 0],
+        "material": "checkers"
 
-    },
+      },
+      {
+        "type": "mesh_obj",
+        "objPath": "../Testing/obj_files/cube_rot_tris.obj",
+        "center": [4, -6, 2],
+        "scale": 2.0,
+        "rotate":[0 , 0, 0],
+        "material": "sponge"
+
+      },
       {
           "type": "plane",
           "reference": [20.0, 0.0, 0.0],

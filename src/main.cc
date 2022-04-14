@@ -57,6 +57,7 @@ using colors::RGB;
 
 int main(int argc, char *argv[])
 {
+    std::srand(std::time(0));
     if (argc == 2)
     {
         raytracer::JsonImport jsonImport = raytracer::JsonImport(argv[1]);
@@ -70,7 +71,6 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    std::srand(std::time(0));
     constexpr int height = 480;
     constexpr double aspectRatio = 16. / 9.;
     constexpr int width = height * aspectRatio;
