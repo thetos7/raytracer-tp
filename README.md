@@ -29,6 +29,12 @@ Implementation of a raytracing engine
 - obj scene importer
 - JSON-based scene format (with schemas)
 
+## External libraries used
+
+* [NlohmannJSON]([https://github.com/nlohmann/json)
+* [TinyObjLoader](https://github.com/tinyobjloader/tinyobjloader)
+* [LodePNG](https://github.com/lvandeve/lodepng)
+
 ## Building
 
 In the repo's directory, run:
