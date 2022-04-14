@@ -118,8 +118,8 @@
                 "value": "mult.result"
               },
               "stops": [
-                { "value": 0.0, "color": [0.0, 0.0, 0.0] },
-                { "value" : 1.0, "color": [1.0, 1.0, 1.0] }
+                { "value": -0.00000001, "color": [0.0, 0.0, 0.0] },
+                { "value" : 0.0, "color": [1.0, 1.0, 1.0] }
               ]
             }
           }
@@ -208,7 +208,7 @@
       {
         "type": "mesh_obj",
         "objPath": "../Testing/obj_files/cube_tris.obj",
-        "center": [4, 6, 0],
+        "center": [4, 6, 2],
         "scale": 2.0,
         "rotate":[0 , 0, 0],
         "material": "checkers"
